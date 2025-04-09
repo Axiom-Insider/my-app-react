@@ -1,11 +1,12 @@
-import Navbar from "../../components/Navbar/Navbar"
+import NavbarAdm from "../../components/Navbar/NavbarAdm"
+
 
 
 function App() {
 
   return (
     <div>
-      <Navbar />
+      <NavbarAdm />
       <h1>Ola MUNDO</h1>
     </div>
   )

@@ -1,12 +1,17 @@
 .navbar{
-    height: 80px;
+    height: 60px;
     display: flex;
     justify-content: start;
     align-items: center;
-    padding:10px;
+    padding:5px;
     color: var(--text-cor);
     background-color: var(--primeira-cor);
     
+}
+
+.menuLogo{
+    padding-left: 30px;
+    padding: 15px;
 }
 
 .logo{
@@ -19,15 +24,20 @@
     list-style: none;
     gap: 20px;
     font-size: 20px;
-    margin-left: 120px;
+    margin-left: 70px;
+
+    li{
+        padding-top: 20px;
+    }
 }
 
 li{
-    border-bottom: 2px solid transparent;
-    padding: 10px;
+    border-bottom: 1px solid transparent;
+    padding: 5px;
     transition: 0.3s;
      span{
         opacity: 0.5;
+        transition: 0.3s;
     }
 }
 
@@ -38,13 +48,18 @@ li:hover .icone-hover, li:hover .text-icone{
 
 
 li:hover{
-    border-bottom: 2px solid #3498db;
-    padding: 10px;
+    border-bottom: 1px solid #ffffff;
     cursor: pointer;
    
 }
 
+.text-icone{
+    font-size: 20px;
+    font-weight: 600;
+}
+
 .icone-hover{
+    font-size: 18px;
     opacity: 0.5;
     transition: 0.3s;
 }
