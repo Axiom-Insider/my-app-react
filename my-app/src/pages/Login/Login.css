@@ -1,14 +1,29 @@
 
+
+.fundoPreto{
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* fundo escuro com transparência */
+  z-index: 0; /* atrás do conteúdo */
+}
+
 .container {
     display: flex;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
-    margin-top: 5%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    background-image: url("../../assets/fachada-polo.jpg");
   }
   
   .box {
-    background-color: #0052cc; /* azul */
+    z-index: 1;
+    background-color: #0052cc; /* cor de fundo do formulário */
     padding: 30px;
+    margin-top: 5%;
     border-radius: 30px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
     color: white;
@@ -27,6 +42,7 @@
 
   .titulo {
     text-align: left;
+    font-size: 25px;
     font-style: italic;
     margin-bottom: 20px;
   }
@@ -48,6 +64,16 @@
     margin-bottom: 10px;
   }
   
+  .input::placeholder{
+    font-style: italic;
+  }
+  
+  .boxBotao{
+    display: flex;
+    justify-content: right;
+    align-self: right;
+    margin-top: 20px;
+  }
 
   .botao {
     display: flex;
@@ -55,7 +81,7 @@
     align-items: center;
     background-color: #007bff;
     color: white;
-    width: 40px;
+    width: 65px;
     height: 40px;
     border-radius: 999px;
     margin: 10px;
@@ -65,6 +91,6 @@
   }
   
   .botao:hover {
-    background-color: #005dc1;
+    background-color: #004c9c;
   }
   
