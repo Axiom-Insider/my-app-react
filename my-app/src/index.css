@@ -1,0 +1,18 @@
+*{
+  margin: 0;
+  padding: 0;
+
+}
+
+body{
+  background-color: #292B2C;
+}
+
+:root{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  --primeira-cor:#0948A7;
+  --segunda-cor:#fff;
+  --terceira-cor:#0D6EFD;
+  --text-cor:white;
+  --botao-cor:#0D6EFD;
+}
