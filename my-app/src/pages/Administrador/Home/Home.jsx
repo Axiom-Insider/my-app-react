@@ -1,4 +1,4 @@
-import NavbarAdm from "../../components/Navbar/NavbarAdm"
+import NavbarAdm from "../../../components/Navbar/NavbarAdm"
 
 
 

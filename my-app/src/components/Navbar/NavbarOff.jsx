@@ -13,7 +13,6 @@ const NavbarOff = ()=> {
         <ul className='menuLogo'>
             <span className='logo'>PoloUAB</span>
         </ul>
-        
         <ul className="menu">
             <li onClick={()=> navigate("/login")}><MdLogin  className='icone-hover'/> <span className='text-icone'> Login</span></li>
         </ul>
