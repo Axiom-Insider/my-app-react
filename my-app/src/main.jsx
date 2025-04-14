@@ -8,6 +8,7 @@ import Login from './pages/Login/Login.jsx'
 //configurando rotas
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomeFuncionario from './pages/Funcionario/Home/Home.jsx'
+import Historico from './pages/Funcionario/Historico/Historico.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path:'/funcionario/home',
     element: <HomeFuncionario />
+  },
+  {
+    path:'/funcionario/historico',
+    element: <Historico /> ,
   }
 ])
 
