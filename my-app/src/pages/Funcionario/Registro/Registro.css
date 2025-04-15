@@ -1,0 +1,10 @@
+.tempo{
+    width: 50px;
+    height: 30px;
+    background-color: white;
+    border-radius: 30px;
+    color: black;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+}
