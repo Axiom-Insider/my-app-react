@@ -1,28 +1,49 @@
-import './Navbar.css'
-import { useNavigate} from 'react-router-dom'
-import { FaBusinessTime, FaHome } from 'react-icons/fa'
-import { MdTimer } from 'react-icons/md'
-import { GiExitDoor } from 'react-icons/gi'
+import { BsHouseDoor, BsPencil, BsCalendar3, BsBoxArrowRight } from 'react-icons/bs';
+import { RxHamburgerMenu } from "react-icons/rx";
+import "./Navbar.css"
 
-export default function NavbarFuncionario() {
-
-    const navigate = useNavigate()
+function NavbarFuncionario() {
 
   return (
-    <div>
-       <div className='navbarOff'>
-            <nav className="navbar">
-              <ul className='menuLogo'>
-                  <span className='logo'>PoloUAB</span>
-              </ul>
-              <ul className="menu">
-                  <li onClick={()=> navigate("/funcionario/home")}><FaHome  className='icone-hover'/> <span className='text-icone'> Home</span></li>
-                  <li onClick={()=> navigate("/registro")}><MdTimer  className='icone-hover'/> <span className='text-icone'> Registro</span></li>
-                  <li onClick={()=> navigate("/funcionario/historico")}><FaBusinessTime  className='icone-hover'/> <span className='text-icone'> Histórico</span></li>
-                  <li><GiExitDoor  className='icone-hover'/> <span className="text-icone"> Sair</span></li>
-              </ul>
-            </nav>
-          </div>
-    </div>
+      <nav className="navbar navbar-expand-lg gap-3">
+        <a className="navbar-logo" href="#">PoloUAB</a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span className="menu"><RxHamburgerMenu /></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-3">
+            <li className="nav-item">
+              <a className="nav-link" href="/funcionario/home">
+                <BsHouseDoor className="me-1" /> Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/registro">
+                <BsPencil className="me-1" /> Registrar Horário
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/funcionario/historico">
+                <BsCalendar3 className="me-1" /> Histórico
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/sair">
+                <BsBoxArrowRight className="me-1" /> Sair
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
   )
 }
+
+export default NavbarFuncionario
+

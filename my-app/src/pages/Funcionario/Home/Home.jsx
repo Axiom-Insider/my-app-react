@@ -7,7 +7,6 @@ export default function HomeFuncionario() {
   return (
     <div>
       <NavbarFuncionario />
-     
       <div className="container-home">
         <div className="box-home">
                   <div class="head">

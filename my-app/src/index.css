@@ -8,6 +8,10 @@ body{
   background-color: #292B2C;
 }
 
+a{
+  text-decoration: none;
+}
+
 :root{
   font-family:Arial, Helvetica, sans-serif;
   --primeira-cor:#0948A7;
