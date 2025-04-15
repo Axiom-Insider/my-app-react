@@ -9,7 +9,7 @@ export default function HomeFuncionario() {
       
       <div className="container-home">
         <div className="box">      
-            <div class="card">
+            <div class="carda">
                 <div class="avatar">👤</div>
                 <div class="info">
                     <div class="name">Francisco Martins Gonçalves Gomes</div>

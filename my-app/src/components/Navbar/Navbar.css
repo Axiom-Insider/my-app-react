@@ -1,115 +1,76 @@
-.navbar {
-    height: 60px;
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 5px;
-    color: var(--text-cor);
-    background-color: var(--primeira-cor);
-    flex-wrap: wrap;
-    z-index: 1;
+.navbar{
+  background-color: var(--primeira-cor);
+}
+
+.navbar-logo{
+  padding-left: 10px;
+  color: var(--text-cor);
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.navbar-toggler{
+  margin-right: 10px;
+  color: white;
+  border: 1px solid white;
+}
+
+.navbar-toggler:focus{
+  border: none;
+}
+
+ul{
+  gap: 20px;
+}
+
+.menu{
+  color: white;
+}
+
+.nav-link{
+  border-bottom: 1px solid transparent;
+  opacity: 1;
+  transition: 0.3s;
+  color: var(--text-cor);
+  font-weight: bold;
+}
+
+.nav-link:hover{
+  border-bottom: 1px solid #ffffff;
+  opacity: 0.5;
+  color: var(--text-cor);
+  transition: 0.3s;
+}
+
+@media (max-width: 993px) {
+  .nav-link:hover{
+    border-bottom: none;
   }
-  
-  .menuLogo {
-    padding-left: 30px;
-    padding: 15px;
+  .nav-link{
+    border-bottom: none;
   }
-  
-  .logo {
-    font-weight: 600;
-    font-size: 30px;
+
+  ul{
+    gap: 3px;
   }
-  
-  .menu {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    font-size: 20px;
-    margin-left: 70px;
-    flex-wrap: wrap;
+
+  li{
+    text-align: center;
+    border-top: 1px solid #012b62;
+    border-bottom: 1px solid #012b62;
   }
-  
-  .menu li {
-    padding-top: 20px;
-    border-bottom: 1px solid transparent;
-    padding: 5px;
-    transition: 0.3s;
+  .navbar-collapse {
+    background-color: #003f91; /* azul mais escuro */
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
-  
-  .menu li span {
-    opacity: 0.5;
-    transition: 0.3s;
+
+  .navbar-nav .nav-link {
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
   }
-  
-  li:hover .icone-hover,
-  li:hover .text-icone {
-    opacity: 1;
-    transition: 0.3s;
-  }
-  
-  li:hover {
-    border-bottom: 1px solid #ffffff;
-    cursor: pointer;
-  }
-  
-  .text-icone {
-    font-size: 20px;
-    font-weight: 600;
-  }
-  
-  .icone-hover {
-    font-size: 18px;
-    opacity: 0.5;
-    transition: 0.3s;
-  }
-  
-  /* HOVER FIX EXTRA */
-  .icone-hover:hover .text-icone {
-    opacity: 1;
-    transition: 0.3s;
-  }
-  
-  /* =========================
-     📱 Media Queries 
-     ========================= */
-  
-  /* Telas pequenas (celulares) */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
-    }
-  
-    .menuLogo {
-      padding-left: 10px;
-      padding-bottom: 10px;
-    }
-  
-    .logo {
-      font-size: 24px;
-    }
-  
-    .menu {
-      flex-direction: column;
-      gap: 10px;
-      margin-left: 0;
-      width: 100%;
-    }
-  
-    .menu li {
-      padding-top: 10px;
-      width: 100%;
-    }
-  
-    .text-icone {
-      font-size: 18px;
-    }
-  
-    .icone-hover {
-      font-size: 16px;
-    }
-  }
-  
+}
+
+
+
+
