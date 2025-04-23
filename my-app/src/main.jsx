@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <HomeFuncionario />
   },
   {
-    path: '/registro',
+    path: '/funcionario/registro',
     element: <Registro />,
   },
   {

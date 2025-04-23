@@ -20,7 +20,7 @@
 }
 
 ul{
-  gap: 20px;
+  gap: 10px;
 }
 
 .menu{
@@ -29,17 +29,25 @@ ul{
 
 .nav-link{
   border-bottom: 1px solid transparent;
-  opacity: 1;
+  opacity: 0.5;
   transition: 0.3s;
   color: var(--text-cor);
   font-weight: bold;
 }
 
+.nav-link.ativo{
+  color: var(--text-cor);
+  border-bottom: 1px solid #ffffff;
+  opacity: 1;
+  transition: 0.3s;
+}
+
 .nav-link:hover{
   border-bottom: 1px solid #ffffff;
-  opacity: 0.5;
+  opacity: 1;
   color: var(--text-cor);
   transition: 0.3s;
+  cursor: pointer;
 }
 
 @media (max-width: 993px) {
