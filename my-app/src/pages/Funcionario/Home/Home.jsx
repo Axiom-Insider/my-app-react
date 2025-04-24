@@ -5,7 +5,7 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 
 export default function HomeFuncionario() {
 
-  const [data, setData] = useState(new Date())
+  const [data] = useState(new Date())
 
   return (
     <div>
@@ -13,8 +13,8 @@ export default function HomeFuncionario() {
       <div className="d-flex justify-content-center align-items-center">
         <div className="row">
           <div className="col">
-            <div className="date"><strong>Data:</strong>{data.toLocaleDateString("pt-BR")}</div>
-            <div className="box">
+            <div className="date">{data.toLocaleDateString("pt-BR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</div>
+            <div className="box-home">
               <div className="head">
                 <span className='avatar'> <IoPersonCircleSharp/> </span>
                 <span className="nome">Francisco Martins Gonçalves Gomes</span>
