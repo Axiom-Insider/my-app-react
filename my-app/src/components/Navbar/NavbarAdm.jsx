@@ -12,7 +12,15 @@ const NavbarAdm = ()=> {
     <div>
       <nav className="navbar">
         <ul className='menuLogo'>
-            <span className='logo'>PoloUAB</span>
+        <div className="navbar-logo" href="#">
+        <span style={{ animationDelay: '0s' }}>P</span>
+        <span style={{ animationDelay: '0.1s' }}>o</span>
+        <span style={{ animationDelay: '0.2s' }}>l</span>
+        <span style={{ animationDelay: '0.3s' }}>o</span>
+        <span style={{ animationDelay: '0.4s' }}>U</span>
+        <span style={{ animationDelay: '0.5s' }}>A</span>
+        <span style={{ animationDelay: '0.6s' }}>B</span>
+      </div>
         </ul>
         
         <ul className="menu">

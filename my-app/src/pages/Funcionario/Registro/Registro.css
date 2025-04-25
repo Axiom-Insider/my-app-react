@@ -69,3 +69,20 @@
     100% { transform: scale(1); }
   }
   
+
+
+  @media (max-width: 500px) {
+        .box-registro{
+            width: 300px;
+        }
+
+        .hora{
+            width: 150px;
+            font-size: 18px;
+        }
+
+        .data-registro{
+            margin-left: 23%;
+        }
+
+  }

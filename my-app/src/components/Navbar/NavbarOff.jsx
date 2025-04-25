@@ -10,7 +10,15 @@ const NavbarOff = ()=> {
 
   return (
     <nav className="navbar navbar-expand-lg gap-3">
-    <a className="navbar-logo" href="#">PoloUAB</a>
+    <div className="navbar-logo" href="#">
+        <span style={{ animationDelay: '0s' }}>P</span>
+        <span style={{ animationDelay: '0.1s' }}>o</span>
+        <span style={{ animationDelay: '0.2s' }}>l</span>
+        <span style={{ animationDelay: '0.3s' }}>o</span>
+        <span style={{ animationDelay: '0.4s' }}>U</span>
+        <span style={{ animationDelay: '0.5s' }}>A</span>
+        <span style={{ animationDelay: '0.6s' }}>B</span>
+      </div>
     <button
       className="navbar-toggler"
       type="button"

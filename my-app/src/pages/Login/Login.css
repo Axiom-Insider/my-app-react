@@ -90,12 +90,13 @@
     background-color: #007bff;
     color: white;
     width: 65px;
-    height: 40px;
+    height: 45px;
     border-radius: 999px;
     margin: 10px;
     cursor: pointer;
     font-size: 20px;
     transition: background 0.3s;
+    font-size: 22px;
   }
   
   .botao:hover {
@@ -105,7 +106,7 @@
   
   @media (max-width: 500px) {
     .box{
-      width: 350px;
+      width: 320px;
     }
 
     .input {
