@@ -11,9 +11,11 @@
 
 .data-registro{
     padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
     text-align: center;
     margin-top: 5%;
-    margin-left: 40%;
+    justify-self: right;
     border-radius: 30px;
     background-color: #0052cc;
     color: var(--text-cor);
@@ -79,10 +81,6 @@
         .hora{
             width: 150px;
             font-size: 18px;
-        }
-
-        .data-registro{
-            margin-left: 23%;
         }
 
   }

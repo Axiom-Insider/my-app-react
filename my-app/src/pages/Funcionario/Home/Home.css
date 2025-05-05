@@ -1,8 +1,10 @@
 .date{
   padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-align: center;
+  justify-self: right;
   margin-top: 5%;
-  margin-left: 50%;
   border-radius: 30px;
   background-color: #0052cc;
   color: var(--text-cor);
@@ -77,9 +79,6 @@
   }
   .avatar{
     font-size: 55px;
-  }
-  .date{
-    margin-left: 23%;
   }
 
   .box-home:hover{
