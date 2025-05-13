@@ -1,9 +1,28 @@
 .alertas{
-    width: 50%;
+    width: 60%;
     z-index: 1;
+    margin-top: 5%;
     background-color: #0052cc; 
-    padding: 5px;
     border-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
     color: white;   
+}
+
+.linha{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 1px;
+}
+
+.data{
+    margin-top: 18px;
+    background: #0047a0;
+}
+
+.titulo-home{
+    background: #0047a0;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 30px;
 }
