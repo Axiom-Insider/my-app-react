@@ -1,37 +1,73 @@
-import { GiExitDoor, GiPalmTree } from 'react-icons/gi'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import './Navbar.css'
-import { FaClock, FaHome } from 'react-icons/fa'
-import { BsFillPersonVcardFill } from 'react-icons/bs'
-import {useNavigate} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
+import { BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs'
+import {ImClock } from 'react-icons/im'
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { LuTreePalm } from 'react-icons/lu'
 
 const NavbarAdm = ()=> {
 
-  const nagation = useNavigate()
+  const location = useLocation()
+
+  const verificadoPagina = (navbar) => {
+    return navbar === location.pathname.split('/')[2] ? " ativo" : " "
+  }
 
   return (
-    <div>
-      <nav className="navbar">
-        <ul className='menuLogo'>
-        <div className="navbar-logo" href="#">
-        <span style={{ animationDelay: '0s' }}>P</span>
-        <span style={{ animationDelay: '0.1s' }}>o</span>
-        <span style={{ animationDelay: '0.2s' }}>l</span>
-        <span style={{ animationDelay: '0.3s' }}>o</span>
-        <span style={{ animationDelay: '0.4s' }}>U</span>
-        <span style={{ animationDelay: '0.5s' }}>A</span>
-        <span style={{ animationDelay: '0.6s' }}>B</span>
-      </div>
-        </ul>
-        
-        <ul className="menu">
-            <li onClick={() => nagation("/")}><FaHome className='icone-hover'/> <span className='text-icone'> Home</span></li>
-            <li><FaClock className='icone-hover '/> <span className="text-icone"> Horários</span></li>
-            <li><GiPalmTree className='icone-hover'/> <span className="text-icone"> Feriados</span></li>
-            <li><BsFillPersonVcardFill className='icone-hover'/> <span className="text-icone"> Funcionários</span></li>
-            <li><GiExitDoor  className='icone-hover'/> <span className="text-icone"> Sair</span></li>
-        </ul>
-      </nav>
-    </div>
+    <nav className="navbar navbar-expand-lg gap-3">
+          <div className="navbar-logo" href="#">
+            <span style={{ animationDelay: '0s' }}>P</span>
+            <span style={{ animationDelay: '0.1s' }}>o</span>
+            <span style={{ animationDelay: '0.2s' }}>l</span>
+            <span style={{ animationDelay: '0.3s' }}>o</span>
+            <span style={{ animationDelay: '0.4s' }}>U</span>
+            <span style={{ animationDelay: '0.5s' }}>A</span>
+            <span style={{ animationDelay: '0.6s' }}>B</span>
+          </div>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span className="menu"><RxHamburgerMenu /></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+          { //Horarios, feriados, funcionarios, cadastro
+            }
+            <ul className="navbar-nav ms-3">
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('home')} href='/administrador/home' >
+                  <BsHouseDoor className="me-1" /> Home
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('horarios')} href='/administrador/horarios' >
+                  <ImClock className="me-1" /> Horarios
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
+                <LuTreePalm className="me-1" /> Feriados
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
+                <HiOutlineUserGroup className="me-1" /> Funcionarios
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('sair')} href="/sair">
+                  <BsBoxArrowRight className="me-1" /> Sair
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
   )
 }
 

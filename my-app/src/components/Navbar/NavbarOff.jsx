@@ -32,7 +32,7 @@ const NavbarOff = ()=> {
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav ms-3">
         <li className="nav-item">
-          <a className="nav-link" href="/funcionario/home">
+          <a className="nav-link ativo" href="/funcionario/home">
             <MdLogin className="me-1" /> Login
           </a>
         </li>

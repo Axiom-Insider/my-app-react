@@ -1,38 +1,33 @@
-.box-historico{
+.box-historico {
   margin-top: 5%;
   color: var(--text-cor);
   padding: 20px;
   width: 100%;
 }
 
-#mes{
+/* Ajustes nos selects */
+#mes,
+#ano {
   font-weight: bold;
   border: none;
-  justify-content: left;
-  width: 150px;
+  width: 100%;
   cursor: pointer;
 }
 
-#ano{
-  font-weight: bold;
-  border: none;
-  justify-content: left;
-  width: 150px;
-  cursor: pointer;
-}
-
-
+/* Tabela customizada */
 .tabela {
   background-color: #0157c9;
   border-collapse: collapse;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  width: 100%;
 }
 
 th, td {
   padding: 16px 24px;
   text-align: center;
+  white-space: nowrap;
 }
 
 th {
@@ -41,16 +36,36 @@ th {
 }
 
 td {
-  background-color: #0163e1;
   font-size: 16px;
 }
 
-.tabela tbody tr:hover{
-  background-color: #003b89;
+ tr:hover {
+  background-color: #01439a;
+  font-weight: bold;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 10;
+  transition: all 0.1s ease;
+  cursor: pointer;
 }
+
 
 tr, th {
   border-bottom: 1px solid #003b89;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tabela {
+    font-size: 14px;
+    width: 300px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+  }
 }
 
 

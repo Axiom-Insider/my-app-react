@@ -3,12 +3,13 @@ import { createRoot } from 'react-dom/client'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
-import Home from './pages/Administrador/Home/Home.jsx'
-import Login from './pages/Login/Login.jsx'
+
 
 
 //configurando rotas
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from './pages/Login/Login.jsx'
+import Home from './pages/Administrador/Home/Home.jsx'
 import HomeFuncionario from './pages/Funcionario/Home/Home.jsx'
 import Registro from './pages/Funcionario/Registro/Registro.jsx'
 import Historico from './pages/Funcionario/Historico/Historico.jsx'
@@ -16,7 +17,6 @@ import Historico from './pages/Funcionario/Historico/Historico.jsx'
 const router = createBrowserRouter([
   {
     path: '/administrador/home',
-    errorElement: <div>error</div>,
     element: <Home />,
   },
   {
