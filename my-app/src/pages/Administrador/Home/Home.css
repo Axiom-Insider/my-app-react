@@ -3,7 +3,8 @@
     z-index: 1;
     margin-top: 5%;
     background-color: #0052cc; 
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
     color: white;   
 }
@@ -11,18 +12,58 @@
 .linha{
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 1px;
+    justify-content: space-between;
+    border-top: 1px solid #003b89;
+    padding: 10px;
+    font-size: 17px;
+}
+
+.grupo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 47px;
+    height: 45px;
+    padding: 5px;
+    background: #0047a0;
+}
+
+.clock{
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+
+.head-home{
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 65px;
+    background: #0047a0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
 }
 
 .data{
-    margin-top: 18px;
-    background: #0047a0;
+    font-weight: bold;
+    background-color: rgb(125, 125, 125);
+    border: 1px solid white;
+    padding: 3px;
+    border-radius: 20px;
+    margin-right: 30px;
+    margin-top: 5px;
 }
 
 .titulo-home{
-    background: #0047a0;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 30px;
+    margin-left: -14%;
+    font-size: 25px;
 }
