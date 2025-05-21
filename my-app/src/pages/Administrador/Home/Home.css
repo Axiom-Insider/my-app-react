@@ -1,7 +1,8 @@
 .alertas{
-    width: 80%;
+    width: 70%;
     z-index: 1;
     margin-top: 5%;
+    margin-bottom: 5%;
     background-color: #0052cc; 
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -9,85 +10,118 @@
     color: white;   
 }
 
-.entrada{
-    border: 1px solid white;
-    padding: 5px;
-    font-size: 15px;
-    border-radius: 40px;
-    color: #00ec04;
-    background-color: #0289047a;
-}
-
-.saida{
-    border: 1px solid white;
-    padding: 5px;
-    font-size: 15px;
-    border-radius: 40px;
-    color: #0092fb;
-    background-color: #02418970;
-}
-
-.linha{
+.linha-funcionario {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #003b89;
-    padding: 10px;
-    font-size: 17px;
-}
+    background-color: #0052cc;
+    border: 1px solid #003399;
+    padding: 10px 16px;
+    gap: 16px;
+    color: white;
+    font-family: sans-serif;
+  }
 
-
-.grupo{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.cargo{
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.705);
-}
-.info, .cargo{
-    max-width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .linha-funcionario:hover {
+    background-color: #0047b3;
   }
   
+  .presente{
+    font-size: 15px;
+    background-color: #006644;
+    color: #00ff66;
+    padding: 5px;
+    border-radius: 20px;
+  }
 
-.grupo2{
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-}
-
-.grupo3{
-    padding: 4px 8px;
-    border-radius: 6px; /* leve arredondado opcional */
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    margin-right: 15px;
-}
-
-.grupo3:hover{
-    background-color: rgba(255, 255, 255, 0.2); /* leve destaque no fundo */
-    transform: scale(1.1); /* aumenta levemente */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* brilho leve */
-}
-
-.icone{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
+  /* Ícone redondo */
+  .icone {
+    width: 45px;
+    height: 45px;
+    background-color: #003399;
     border: 1px solid white;
     border-radius: 50%;
-    width: 47px;
-    height: 45px;
-    padding: 5px;
-    background: #0047a0;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Informações do funcionário */
+  .info {
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .nome {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .cargo {
+    font-size: 14px;
+    color: #cce0ff;
+  }
+  
+  /* Agrupador de horários */
+  .botoes-horarios {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Label "Entrada:" e "Saída:" */
+  .grupo-horario {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  /* Estilo do horário */
+  .horario {
+    padding: 5px 12px;
+    border: 1px solid white;
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    height: 32px;
+    white-space: nowrap;
+      background-color: #006644;
+    color: #00ff66;
+  }
+  
+  
+  
+  /* Botão de 3 pontos alinhado */
+  .opcoes {
+    height: 36px;
+    width: 36px;
+    padding-top: 3px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+  .opcoes:hover {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2); /* fundo sutil */
+    transform: scale(1.05); /* leve aumento */
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+  }
+  
 
 .clock{
     margin-bottom: 10px;
@@ -115,6 +149,6 @@
 }
 
 .titulo-home{
-    margin-right: 35%;
+    margin-left: 10px;
     font-size: 25px;
 }

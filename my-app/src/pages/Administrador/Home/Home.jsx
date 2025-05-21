@@ -6,6 +6,13 @@ import { TfiMoreAlt } from "react-icons/tfi"
 
 function App() {
 
+  const iniciais = (nome)=>{
+    var dividido = nome.split(' ')
+    var primeira = dividido[0].charAt(0).toUpperCase();
+    var segunda = dividido[1].charAt(0).toUpperCase();
+    return `${primeira}${segunda}`
+  }
+
   const dados = [
     { nome: 'Francisco Martins Gonçalves Gomes', cargo: 'Técnico de Informática', entrada: '08:04', saida: '13:05' },
     { nome: 'Ana Beatriz Almeida Souza', cargo: 'Assistente Administrativa', entrada: '08:10', saida: '12:30' },
@@ -37,38 +44,50 @@ function App() {
       <div className="container d-flex justify-content-center align-items-center">
         <div className="alertas">
           <div className="head-home">
-            <div className="clock"><FaRegClock /> </div>
             <div className="titulo-home">
-              Funcionários que já bateram o ponto
+              Status de funcionários 
             </div>
             <div className="data">12/03/2025</div>
           </div>
-            <div className="row alinhado">
-              <div className="col"><div className="icone">FM</div> </div>
-              <div className="col"><div className="info">Francisco Martins Gonçalves Gomes</div></div>
-              <div className="col">Tecnico de Informatica</div>
-              <div className="col"><div className="entrada">Entrada: 08:03</div></div>
-              <div className="col"><div className="saida">Saída: 13:05</div></div>
-              <div className="col"><div className="grupo3"><TfiMoreAlt /></div></div>
+          <div class="linha-funcionario">
+            <div class="icone">FM</div>
+            <div class="info">
+              <div class="nome">Francisco Martins Gonçalves Gomes</div>
+              <div class="cargo">Técnico de Informática</div>
             </div>
-
-            {dados.map(dados=>( 
-                <div className="linha">
-            <div className="grupo">
-              <div className="icone">FM</div> 
-              <div className="info">{dados.nome}</div>
-              <div className="cargo">{dados.cargo}</div> 
+            <div class="botoes-horarios">
+              <div class="grupo-horario">
+                <span class="label">Entrada:</span>
+                <span class="horario entrada">08:03</span>
+              </div>
+              <div class="grupo-horario">
+                <span class="label">Saída:</span>
+                <span class="horario saida">13:05</span>
+              </div>  
             </div>
-            <div className="grupo2">
-             <div className="entrada">Entrada: {dados.entrada}</div> <div className="saida">Saída: {dados.saida}</div> 
-            </div>
-            <div className="grupo3">
-            <TfiMoreAlt />
-            </div>
+            <div className="presente">Presente</div>
+            <div className="saiu">Saiu</div>
           </div>
-            ))}
-        
-
+          {dados.map(dados=>(
+            <div class="linha-funcionario">
+            <div class="icone">{iniciais(dados.nome)}</div>
+            <div class="info">
+              <div class="nome">{dados.nome}</div>
+              <div class="cargo">{dados.cargo}</div>
+            </div>
+            <div class="botoes-horarios">
+              <div class="grupo-horario">
+                <span class="label">Entrada:</span>
+                <span class="horario entrada">{dados.entrada}</span>
+              </div>
+              <div class="grupo-horario">
+                <span class="label">Saída:</span>
+                <span class="horario saida">{dados.saida}</span>
+              </div>  
+            </div>
+            <div class="opcoes"><TfiMoreAlt></TfiMoreAlt></div>
+          </div>
+          ))}
         </div>
       </div>
     </div>
