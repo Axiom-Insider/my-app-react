@@ -28,8 +28,16 @@
   .presente{
     font-size: 15px;
     background-color: #006644;
-    color: #00ff66;
-    padding: 5px;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+
+  .saiu{
+    font-size: 15px;
+    background-color: #d50303;
+    color: #ffffff;
+    padding: 5px 10px;
     border-radius: 20px;
   }
 
@@ -96,9 +104,13 @@
     min-width: 64px;
     height: 32px;
     white-space: nowrap;
-      background-color: #006644;
+    background-color: #006644;
     color: #00ff66;
+    .saida{
+      color: black;
+    }
   }
+
   
   
   
