@@ -13,33 +13,19 @@
 .linha-funcionario {
     display: flex;
     align-items: center;
-    background-color: #0052cc;
+    background-color: #0E4DA4;
     border: 1px solid #003399;
     padding: 10px 16px;
     gap: 16px;
     color: white;
     font-family: sans-serif;
+    cursor: pointer;
   }
 
   .linha-funcionario:hover {
     background-color: #0047b3;
   }
   
-  .presente{
-    font-size: 15px;
-    background-color: #006644;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 20px;
-  }
-
-  .saiu{
-    font-size: 15px;
-    background-color: #d50303;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 20px;
-  }
 
   /* Ícone redondo */
   .icone {
@@ -85,7 +71,7 @@
   .grupo-horario {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 20px;
   }
   
   .label {
@@ -94,23 +80,25 @@
   
   /* Estilo do horário */
   .horario {
+    width: 90px;
+    margin-right: 50px;
     padding: 5px 12px;
     border: 1px solid white;
     border-radius: 20px;
-    font-size: 15px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 64px;
-    height: 32px;
     white-space: nowrap;
     background-color: #006644;
     color: #00ff66;
-    .saida{
-      color: black;
-    }
   }
 
+  .ausente{
+    background-color: rgba(172, 1, 1, 0.722);
+    color: rgb(244, 0, 0);
+  }
   
   
   
@@ -152,9 +140,9 @@
 }
 
 .data{
-    background-color: rgb(125, 125, 125);
-    padding: 5px;
-    font-size: 15px;
+    background-color: #0a3e88;
+    padding: 5px 10px;
+    font-size: 17px;
     border-radius: 20px;
     margin-right: 30px;
     margin-top: 5px;

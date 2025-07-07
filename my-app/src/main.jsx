@@ -13,8 +13,13 @@ import Home from './pages/Administrador/Home/Home.jsx'
 import HomeFuncionario from './pages/Funcionario/Home/Home.jsx'
 import Registro from './pages/Funcionario/Registro/Registro.jsx'
 import Historico from './pages/Funcionario/Historico/Historico.jsx'
+import Horarios from './pages/Administrador/Horarios/Horarios.jsx'
 
 const router = createBrowserRouter([
+  {
+    path:'/administrador/horarios',
+    element:<Horarios />
+  },
   {
     path: '/administrador/home',
     element: <Home />,
