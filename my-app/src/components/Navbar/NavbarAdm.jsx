@@ -5,6 +5,7 @@ import { BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs'
 import {ImClock } from 'react-icons/im'
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { LuTreePalm } from 'react-icons/lu'
+import { MdControlPoint } from 'react-icons/md'
 
 const NavbarAdm = ()=> {
 
@@ -41,28 +42,28 @@ const NavbarAdm = ()=> {
             <ul className="navbar-nav ms-3">
               <li className="nav-item">
                 <a className={'nav-link' + verificadoPagina('home')} href='/administrador/home' >
-                  <BsHouseDoor className="me-1" /> Home
+                  <BsHouseDoor className="me-1" />Home
                 </a>
               </li>
               <li className="nav-item">
                 <a className={'nav-link' + verificadoPagina('horarios')} href='/administrador/horarios' >
-                  <ImClock className="me-1" /> Horarios
+                  <MdControlPoint className="me-1" />Controle de Ponto
                 </a>
               </li>
               <li className="nav-item">
                 <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
-                <LuTreePalm className="me-1" /> Feriados
+                <LuTreePalm className="me-1" />Feriados
                 </a>
               </li>
               <li className="nav-item">
                 <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
-                <HiOutlineUserGroup className="me-1" /> Funcionarios
+                <HiOutlineUserGroup className="me-1" />Funcionarios
                 </a>
               </li>
 
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('sair')} href="/sair">
-                  <BsBoxArrowRight className="me-1" /> Sair
+                <a className={"sair nav-link " +  verificadoPagina('sair')} href="/sair">
+                  <BsBoxArrowRight className="me-1" />Sair
                 </a>
               </li>
             </ul>

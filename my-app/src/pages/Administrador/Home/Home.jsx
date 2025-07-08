@@ -55,7 +55,7 @@ function App() {
         <div className="alertas">
           <div className="head-home">
             <div className="titulo-home">
-              Status de funcionários 
+              Status de Funcionários 
             </div>
             <div className="data">{data.toLocaleDateString("pt-BR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</div>
           </div>

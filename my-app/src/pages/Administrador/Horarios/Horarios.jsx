@@ -8,21 +8,22 @@ const Horarios = () => {
 
   const [ativo, setAtivo] = useState('horarios')
   const [status, setStatus] = useState(null)
+  const [selecionado, setSelecionado] = useState(null)
+
 
   const dados = funcionarios()
 
-  const [funcionarioPesquisar, setFuncionarioPesquisar] = useState('');
+  const [funcionarioPesquisar, setFuncionarioPesquisar] = useState();
 
-  const [funcionarioFiltrado, setFuncionarioFiltrado] = useState(dados);
+  const [funcionarioFiltrado, setFuncionarioFiltrado] = useState([]);
 
     useEffect(()=>{
 
       const resultado = dados.filter(user => user.nome.includes(funcionarioPesquisar))
       setFuncionarioFiltrado(resultado)
-      console.log(resultado)
     }, [funcionarioPesquisar])
 
-  
+
   const iniciais = (nome)=>{
       var dividido = nome.split(' ')
       var primeira = dividido[0].charAt(0).toUpperCase();
@@ -30,10 +31,25 @@ const Horarios = () => {
       return `${primeira}${segunda}`
     }
 
-  const digitando = (event)=>{    
+  const digitando = (event)=>{  
+    setSelecionado(null)  
     setFuncionarioPesquisar(event.target.value)
   }
 
+  const funcionarioSelecionado = (id)=>{
+    
+      if(selecionado == id){
+        setSelecionado(null)
+        setFuncionarioFiltrado(dados)
+      }else{
+        setSelecionado(id)
+        const fun = funcionarioFiltrado.filter(user => user.id === id);
+        setFuncionarioFiltrado(fun)
+      } 
+
+    }
+
+  
   return (
     <div>
       <NavbarAdm />
@@ -41,7 +57,6 @@ const Horarios = () => {
         <div className="box-horarios">
           <div className="head">
             <div className={ativo == 'horarios'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('horarios')}>Horarios</div>
-            <div className={ativo == 'feriados'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('feriados')}>Feriados</div>
             <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=>setAtivo('ausencia')}>Férias/Ausência</div>
           </div>
             <div className="body-horarios">
@@ -71,9 +86,10 @@ const Horarios = () => {
 
                 <div className="horarios-linha">
                   {funcionarioFiltrado.map(dados =>(
-                    <div className='funcionarios' key={dados.nome}>
-                      <div className="icone">{iniciais(dados.nome)}</div> <div className="nome-horarios">{dados.nome}</div>
-                    </div>
+                    <div className={selecionado == dados.id ? 'funcionarios select' : 'funcionarios'} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
+                      <div className="icone" >{iniciais(dados.nome)}</div> 
+                      <div className="nome-horarios">{dados.nome}</div> 
+                      {selecionado == dados.id ? <div className='func-selecionado'>Selecionado</div> : ''}</div>
                   ))}
                 </div>
                 

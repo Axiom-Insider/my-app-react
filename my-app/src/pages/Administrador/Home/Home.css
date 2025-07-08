@@ -29,10 +29,10 @@
 
   /* Ícone redondo */
   .icone {
-    width: 45px;
-    height: 45px;
+    width: 47px;
+    height: 47px;
     background-color: #003399;
-    border: 1px solid white;
+    border: 1px solid #003399;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
   
   /* Estilo do horário */
   .horario {
-    width: 90px;
+    width: 85px;
     margin-right: 50px;
     padding: 5px 12px;
     border: 1px solid white;
