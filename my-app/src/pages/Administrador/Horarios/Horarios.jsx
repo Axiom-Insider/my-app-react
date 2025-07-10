@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Horarios.css"
 import funcionarios from '../funcionarios'
+import { FaCheck, FaRegClock } from 'react-icons/fa'
 
 
 const Horarios = () => {
@@ -56,10 +57,15 @@ const Horarios = () => {
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-horarios">
           <div className="head">
-            <div className={ativo == 'horarios'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('horarios')}>Horarios</div>
-            <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=>setAtivo('ausencia')}>Férias/Ausência</div>
+            <div className={ativo == 'horarios'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('horarios')}><FaRegClock /> Horarios</div>
+            <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=> {setAtivo('ausencia') 
+              setSelecionado(null)
+              setFuncionarioFiltrado([])
+              }}>Férias/Atestado</div>
           </div>
-            <div className="body-horarios">
+
+            {ativo ==  'horarios' ? 
+              <div className="body-horarios">
               <div className="linha">
                  <div className="horarios-linha">
                    <label className="form-label">Data:</label>
@@ -78,7 +84,7 @@ const Horarios = () => {
                   <input className='form-check-input check' type="checkbox" checked={status == 'saida' ? true : false} onClick={()=> setStatus('saida')} name="status" id="" />
                 </div>
               </div>
-
+              
                 <div className="horarios-linha">
                   <label className="form-label">Funcionário: </label>
                   <input onChange={digitando} className='form-control' value={funcionarioPesquisar} type="search" name="" id="" placeholder='nome do funcionário...'/>
@@ -89,11 +95,47 @@ const Horarios = () => {
                     <div className={selecionado == dados.id ? 'funcionarios select' : 'funcionarios'} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
                       <div className="icone" >{iniciais(dados.nome)}</div> 
                       <div className="nome-horarios">{dados.nome}</div> 
-                      {selecionado == dados.id ? <div className='func-selecionado'>Selecionado</div> : ''}</div>
+                      {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
                   ))}
                 </div>
-                
+                  {selecionado ? <div className="horarios-linha"><button className='btn btn-success'>Atualizar horário</button></div> : ''} 
             </div>
+            : 
+            <div className="body-ferias">
+                <div className="linha">
+                  <div className="horarios-linha">
+                    <label className="form-label">Data Entrada:</label>
+                    <input className='form-control formulario' type="date" name="data-entrada" id="" />
+                  </div>
+                  <div className="horarios-linha">
+                  <label className="form-label">Data Saída:</label>
+                  <input className='form-control formulario' type="date" name="data-saida" id="" />
+                </div>
+                <div className="horarios-linha">
+                  <label className="form-label">Ferias:</label>
+                  <input className='form-check-input check' type="checkbox" checked={status == 'ferias' ? true : false} onClick={()=> setStatus('ferias')} name="status" id="" />
+                </div>
+                <div className="horarios-linha">
+                  <label className="form-label">Atestado:</label>
+                  <input className='form-check-input check' type="checkbox" checked={status == 'atestado' ? true : false} onClick={()=> setStatus('atestado')} name="status" id="" />
+                </div>
+                </div>
+                <div className="horarios-linha">
+                  <label className="form-label">Funcionário: </label>
+                  <input onChange={digitando} className='form-control' value={funcionarioPesquisar} type="search" name="" id="" placeholder='nome do funcionário...'/>
+                </div>
+                <div className="horarios-linha">
+                  {funcionarioFiltrado.map(dados =>(
+                    <div className={selecionado == dados.id ? 'funcionarios select' : 'funcionarios'} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
+                      <div className="icone" >{iniciais(dados.nome)}</div> 
+                      <div className="nome-horarios">{dados.nome}</div> 
+                      {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
+                  ))}
+                </div>
+                  {selecionado ? <div className="horarios-linha"><button className='btn btn-success'>Confirmar</button></div> : ''} 
+            </div>
+            }
+          
         </div>
       </div>
     </div>
