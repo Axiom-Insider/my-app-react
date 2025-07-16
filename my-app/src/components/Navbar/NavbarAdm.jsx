@@ -56,7 +56,7 @@ const NavbarAdm = ()=> {
                 </a>
               </li>
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
+                <a className={'nav-link' + verificadoPagina('funcionarios')} href='/administrador/funcionarios' >
                 <HiOutlineUserGroup className="me-1" />Funcionarios
                 </a>
               </li>

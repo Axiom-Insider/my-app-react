@@ -3,12 +3,14 @@ import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Horarios.css"
 import funcionarios from '../funcionarios'
 import { FaCheck, FaRegClock } from 'react-icons/fa'
+import { IoDocumentTextOutline } from 'react-icons/io5'
 
 
 const Horarios = () => {
 
   const [ativo, setAtivo] = useState('horarios')
   const [status, setStatus] = useState(null)
+  const [statusTwo, setStatusTwo] = useState(null)
   const [selecionado, setSelecionado] = useState(null)
 
 
@@ -20,7 +22,7 @@ const Horarios = () => {
 
     useEffect(()=>{
 
-      const resultado = dados.filter(user => user.nome.includes(funcionarioPesquisar))
+      const resultado = dados.filter(user => user.nome.toLowerCase().includes(funcionarioPesquisar))
       setFuncionarioFiltrado(resultado)
     }, [funcionarioPesquisar])
 
@@ -61,7 +63,7 @@ const Horarios = () => {
             <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=> {setAtivo('ausencia') 
               setSelecionado(null)
               setFuncionarioFiltrado([])
-              }}>Férias/Atestado</div>
+              }}><IoDocumentTextOutline /> Férias/Atestado</div>
           </div>
 
             {ativo ==  'horarios' ? 
@@ -112,12 +114,12 @@ const Horarios = () => {
                   <input className='form-control formulario' type="date" name="data-saida" id="" />
                 </div>
                 <div className="horarios-linha">
-                  <label className="form-label">Ferias:</label>
-                  <input className='form-check-input check' type="checkbox" checked={status == 'ferias' ? true : false} onClick={()=> setStatus('ferias')} name="status" id="" />
+                  <label className="form-label">Férias:</label>
+                  <input className='form-check-input check' type="checkbox" checked={statusTwo == 'férias' ? true : false} onClick={()=> setStatusTwo('férias')} name="status" id="" />
                 </div>
                 <div className="horarios-linha">
                   <label className="form-label">Atestado:</label>
-                  <input className='form-check-input check' type="checkbox" checked={status == 'atestado' ? true : false} onClick={()=> setStatus('atestado')} name="status" id="" />
+                  <input className='form-check-input check' type="checkbox" checked={statusTwo == 'atestado' ? true : false} onClick={()=> setStatusTwo('atestado')} name="status" id="" />
                 </div>
                 </div>
                 <div className="horarios-linha">
@@ -132,7 +134,7 @@ const Horarios = () => {
                       {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
                   ))}
                 </div>
-                  {selecionado ? <div className="horarios-linha"><button className='btn btn-success'>Confirmar</button></div> : ''} 
+                  {selecionado ? <div className="horarios-linha"><button className='btn btn-success'>Adicionar {statusTwo} </button></div> : ''} 
             </div>
             }
           
