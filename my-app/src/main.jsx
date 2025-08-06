@@ -15,8 +15,18 @@ import Registro from './pages/Funcionario/Registro/Registro.jsx'
 import Historico from './pages/Funcionario/Historico/Historico.jsx'
 import Horarios from './pages/Administrador/Horarios/Horarios.jsx'
 import Feriados from './pages/Administrador/Feriados/Feriados.jsx'
+import HistoricoAdm from "./pages/Administrador/Historico/Historico.jsx";
+import Funcionarios from './pages/Administrador/Funcionarios/Funcionarios.jsx';
 
 const router = createBrowserRouter([
+  {
+    path:'/administrador/funcionarios',
+    element:<Funcionarios />
+  },
+  {
+    path:'/administrador/historico',
+    element:<HistoricoAdm />
+  },
   {
     path:'/administrador/feriados',
     element:<Feriados />

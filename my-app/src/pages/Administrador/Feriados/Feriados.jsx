@@ -30,12 +30,12 @@ export default function Feriados() {
 
               <div className="linha">
                 <div className="horarios-linha">
-                  <label className='form-label'>Data de começo</label>
+                  <label className='form-label'>Data de início:</label>
                   <input className='form-control' type="date" name="" id="" />
                 </div>
                 
                 <div className="horarios-linha">
-                <label className='form-label'>Data de fim</label>
+                <label className='form-label'>Data de fim:</label>
                   <input className='form-control' type="date" name="" id="" />
                 </div>
               
@@ -46,22 +46,39 @@ export default function Feriados() {
               </div>
                 {botao === true ?  
                 <div className="horarios-linha">
-                  <button className='btn btn-success'>Criar Feriado</button>
+                  <button className='btn btn-success btn-f'>Criar Feriado</button>
                 </div> 
                 : null
                 }
-                  <div className="horarios-linha">
-                                  {dados.map(dados =>(
-                                    <div className={selecionado == dados.id ? 'funcionarios select' : 'funcionarios'} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
-                                      <div className="icone" >{iniciais(dados.nome)}</div> 
-                                      <div className="nome-horarios">{dados.nome}</div> 
-                                      {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
-                                  ))}
-                                </div>
-               {dados.map(feriados=>(
-                feriados.nome
-               ))}
 
+                <div className="horarios-linha selecte">
+                  <label htmlFor="" className="form-label">Ano:</label>
+                   <select className="form-select" name="ano" id="">
+                      <option value="">2024</option>
+                      <option value="">2025</option>
+                    </select>
+                </div>
+                  <div className="horarios-linha tables">
+                      <table>
+                        <thead>
+                          <tr className="tr-f">
+                            <th className="th-f" scope="col">Nome</th>
+                            <th className="th-f" scope="col">Data</th>
+                            <th className="th-f" scope="col">Permanente</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dados.map(feriados=>(
+                            <tr>
+                              <td>{feriados.nome}</td>
+                              <td>{feriados.data}|{feriados.dataSec}</td>
+                              <td>{feriados.nacional == true ? 'sim' : 'não'}</td>
+                            </tr>
+                          ))}
+                         
+                        </tbody>
+                    </table>
+                </div>
           </div>
         </div>
     </div>

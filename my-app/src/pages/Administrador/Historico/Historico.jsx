@@ -1,3 +1,4 @@
+import NavbarAdm from '../../../components/Navbar/NavbarAdm';
 import NavbarFuncionario from '../../../components/Navbar/NavbarFuncionario'
 import "./Historico.css"
 import usuarios from './usuarios';
@@ -22,7 +23,7 @@ export default function Historico() {
 
   return (
     <div>
-      <NavbarFuncionario />
+      <NavbarAdm />
       <div className="container d-flex justify-content-center align-items-center">
   <div className="box-historico w-100">
     <div className="row g-3">
