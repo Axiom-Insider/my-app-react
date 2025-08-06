@@ -75,9 +75,7 @@ function App() {
                 <span class="label"></span>
                 <span class={status(dados.saida)} >{dados.saida == null ? "--:--" : dados.saida}</span>
               </div> 
-             
             </div>
-            
           </div>
           ))}
         </div>

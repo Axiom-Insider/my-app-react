@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     element:<Funcionarios />
   },
   {
-    path:'/administrador/historico',
+    path:'/administrador/funcionarios/:id',
     element:<HistoricoAdm />
   },
   {

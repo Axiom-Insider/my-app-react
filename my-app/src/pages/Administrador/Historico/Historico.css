@@ -1,71 +1,12 @@
-.box-historico {
-  margin-top: 5%;
-  color: var(--text-cor);
-  padding: 20px;
-  width: 100%;
+.box-info{
+  width: 100px;
+  background-color: beige;
 }
-
-/* Ajustes nos selects */
-#mes,
-#ano {
-  font-weight: bold;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* Tabela customizada */
-.tabela {
-  background-color: #0157c9;
-  border-collapse: collapse;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-  width: 100%;
-}
-
-th, td {
-  padding: 16px 24px;
+.summary-cards > div {
+  background-color: #1d4e89;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   text-align: center;
-  white-space: nowrap;
+  flex-grow: 1;
 }
-
-.th-h {
-  background-color: #0047a0;
-  font-size: 18px;
-}
-
-td {
-  font-size: 16px;
-}
-
- .trHover:hover {
-  background-color: #01439a;
-  font-weight: bold;
-  transform: scale(1.03);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 10;
-  transition: all 0.1s ease;
-  cursor: pointer;
-}
-
-
-tr, th {
-  border-bottom: 1px solid #003b89;
-}
-
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .tabela {
-    font-size: 14px;
-    width: 300px;
-  }
-
-  th, td {
-    padding: 10px 12px;
-  }
-}
-
-

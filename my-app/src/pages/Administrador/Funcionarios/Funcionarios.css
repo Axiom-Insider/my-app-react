@@ -1,9 +1,37 @@
-.box-funcionarios{
-    width: 100%;
-    border-radius: 100px;
-    z-index: 1;
+
+.tabela-funcionarios{
+    width:100%;
+    color: white;
     margin-top: 5%;
-    background-color: #0052cc; 
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
-    color: white;  
+}
+
+.tabela-titulo{
+    font-weight: bolder;
+    font-size: 23px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.736);
+}
+
+.tabela-body{
+    flex-wrap: nowrap;
+    font-size: 18px;
+    padding: 10px 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.519);
+}
+
+.nome-f{
+    flex-wrap: nowrap;
+}
+
+.icon{
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    border-radius: 20px;
+    padding: 5px;
+    font-size: 35px;
+}
+.col-nome {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

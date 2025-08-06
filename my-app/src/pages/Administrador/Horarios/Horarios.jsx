@@ -60,10 +60,7 @@ const Horarios = () => {
         <div className="box-horarios">
           <div className="head">
             <div className={ativo == 'horarios'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('horarios')}><FaRegClock /> Horarios</div>
-            <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=> {setAtivo('ausencia') 
-              setSelecionado(null)
-              setFuncionarioFiltrado([])
-              }}><IoDocumentTextOutline /> Férias/Atestado</div>
+            <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('ausencia') }><IoDocumentTextOutline /> Férias/Atestado</div>
           </div>
 
             {ativo ==  'horarios' ? 

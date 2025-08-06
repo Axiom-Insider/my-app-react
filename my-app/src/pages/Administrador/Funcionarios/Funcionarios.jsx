@@ -1,36 +1,41 @@
+import { MdWorkHistory } from 'react-icons/md';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Funcionarios.css";
-import fun  from "./funcionarios";
+import fun from "./funcionarios";
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { PiCertificateFill } from 'react-icons/pi';
+import { FaTrash } from 'react-icons/fa';
 
 export default function Funcionarios() {
-    const dados = fun(); 
-    
-    const iniciais = (nome)=>{
-    var dividido = nome.split(' ')
-    var primeira = dividido[0].charAt(0).toUpperCase();
-    var segunda = dividido[1].charAt(0).toUpperCase();
-    return `${primeira}${segunda}`
-  }   
-return (
+  const dados = fun();
+
+  return (
     <div>
-        <NavbarAdm />
-         <div className="container d-flex justify-content-center align-items-center">
-            <div className="box-funcionarios">
-            {dados.map(dados=>(
-            <div class="linha-funcionario">
-            <div class="icone">{iniciais(dados.nome)}</div>
-            <div class="info">
-              <div class="nome">{dados.nome}</div>
-              <div class="cargo">{dados.cargo}</div>
-            </div>
-            <div class="botoes-horarios">
-             
-            </div>
-            
+      <NavbarAdm />
+      <div className="container d-flex justify-content-center align-items-center">
+        <div className="tabela-funcionarios">
+          <div className="row tabela-titulo ">
+            <div className="col">Matricula</div>
+            <div className="col">Nome</div>
+            <div className="col text-center">Opções</div>
           </div>
-          ))}
+          {dados.map(funcionarios=>(
+            <div className="row tabela-body align-items-center">
+              <div className="col">#{funcionarios.id}</div>
+              <div className="col col-nome">{funcionarios.nome}</div>
+              <div className="col text-center">
+                <div className="btn-group" role='group' >
+                <a href={"/administrador/funcionarios/"+funcionarios.id} className='btn btn-primary icon'><MdWorkHistory /></a> 
+                <button className='btn btn-primary icon'><PiCertificateFill /></button>
+                <button className='btn btn-danger icon'><RiLockPasswordFill /></button>
+                <button className='btn btn-danger icon'><FaTrash /></button>
+                </div>
+              </div>
             </div>
-         </div>
+          ))}
+        </div>
+
+      </div>
     </div>
   )
 }
