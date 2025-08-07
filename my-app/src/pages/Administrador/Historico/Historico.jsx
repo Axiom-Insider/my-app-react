@@ -2,9 +2,11 @@ import { useState } from 'react';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm';
 import "./Historico.css"
 import usuarios from './usuarios';
+import { FaFilePdf } from 'react-icons/fa';
+import { GrDocumentPdf } from 'react-icons/gr';
 
 export default function Historico() {
-  
+
   const [num, setNum] = useState(1);
 
   const mes = [
@@ -32,22 +34,37 @@ export default function Historico() {
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-historico w-100">
           <div className="summary-cards d-flex align-items-center gap-3 mb-3">
-    <div className="card-hour">Total: 30h</div>
-    <div className="card-extra">Extras: 2h</div>
-  </div>
-          <div className="row g-3">
-            <div className="col-6 col-md-3">
+            <div className="card-hour" title="Total de horas trabalhadas no mês">Total: 30h</div>
+            <div className="card-extra" title="Total de horas trabalhadas extras">Extras: 2h</div>
+            <div className="card-extra">Faltas ou Ausências: 3</div>
+          </div>
+          <div className="row g-3 mt-4">
+            <div className="col-2 ">
+              <label className='form-label' htmlFor="ano">Mes:</label>
               <select className="form-select" id="mes" aria-label="Selecionar mês">
                 {mes.map((nome, index) => (
                   <option key={index} value={index}>{nome}</option>
                 ))}
               </select>
             </div>
-            <div className="col-6 col-md-3">
+            <div className="col-2 ">
+              <label className='form-label' htmlFor="ano">Ano:</label>
               <select className="form-select" id="ano" aria-label="Selecionar ano" defaultValue="2025">
                 <option value="2025">2025</option>
                 <option value="2024">2024</option>
               </select>
+            </div>
+            <div className="col-3 col-pdf">
+              <label className='form-label' htmlFor="ano"></label>
+              <button className='btn btn-info pdf'>
+                <i className='icon-h'><GrDocumentPdf /> </i> Ponto PoloUAB
+              </button>
+            </div>
+            <div className="col-3">
+              <label className='form-label' htmlFor="ano"></label>
+              <button className='btn btn-info pdf'>
+                <i className='icon-h'><GrDocumentPdf /> </i> Ponto Confiança
+              </button>
             </div>
           </div>
           <div className="row mt-4">
@@ -65,7 +82,7 @@ export default function Historico() {
                 <tbody>
                   {dados.map((item) => (
                     <tr key={item.id} className="dados trHover">
-                      <td>{semana[0]} {()=> setNum(num+ 1)} {num}</td>
+                      <td>{semana[0]} {() => setNum(num + 1)} {num}</td>
                       <td>{ausenciaFeriados(item.ausencia, item.feriados)}</td>
                       <td>Natal</td>
                       <td>{item.hora_entrada}</td>
