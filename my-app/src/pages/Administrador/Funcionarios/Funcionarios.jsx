@@ -4,7 +4,6 @@ import "./Funcionarios.css";
 import fun from "./funcionarios";
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { PiCertificateFill } from 'react-icons/pi';
-import { FaTrash } from 'react-icons/fa';
 
 export default function Funcionarios() {
   const dados = fun();
@@ -28,7 +27,6 @@ export default function Funcionarios() {
                 <a href={"/administrador/funcionarios/"+funcionarios.id} className='btn btn-primary icon'><MdWorkHistory /></a> 
                 <button className='btn btn-primary icon'><PiCertificateFill /></button>
                 <button className='btn btn-danger icon'><RiLockPasswordFill /></button>
-                <button className='btn btn-danger icon'><FaTrash /></button>
                 </div>
               </div>
             </div>

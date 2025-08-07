@@ -6,6 +6,7 @@ import {ImClock } from 'react-icons/im'
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { LuTreePalm } from 'react-icons/lu'
 import { MdControlPoint } from 'react-icons/md'
+import { FaRegAddressCard } from 'react-icons/fa'
 
 const NavbarAdm = ()=> {
 
@@ -57,7 +58,12 @@ const NavbarAdm = ()=> {
               </li>
               <li className="nav-item">
                 <a className={'nav-link' + verificadoPagina('funcionarios')} href='/administrador/funcionarios' >
-                <HiOutlineUserGroup className="me-1" />Funcionarios
+                <HiOutlineUserGroup className="me-1" />Funcionários
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className={'nav-link' + verificadoPagina('registro')} href='/administrador/registro' >
+                <FaRegAddressCard className="me-1" />Registro de Funcionários
                 </a>
               </li>
 

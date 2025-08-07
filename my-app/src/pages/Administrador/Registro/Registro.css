@@ -1,0 +1,10 @@
+.form-control{
+    background-color: transparent;
+}
+
+.icone-pesquisa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

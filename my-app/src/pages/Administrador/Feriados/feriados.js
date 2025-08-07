@@ -4,7 +4,7 @@ export default ()=>{
     id: 1,
     nome: "Ano Novo",
     data: "2025-01-01",
-    dataSec: "2025-01-02",
+    dataSec: null,
     nacional: true
   },
   {
@@ -18,7 +18,7 @@ export default ()=>{
     id: 3,
     nome: "Tiradentes",
     data: "2025-04-21",
-    dataSec: "2025-04-22",
+    dataSec: null,
     nacional: true
   },
   {
@@ -39,14 +39,14 @@ export default ()=>{
     id: 1,
     nome: "Ano Novo",
     data: "2025-01-01",
-    dataSec: "2025-01-02",
+    dataSec: null,
     nacional: true
   },
   {
     id: 2,
     nome: "Carnaval",
     data: "2025-03-03",
-    dataSec: "2025-03-04",
+    dataSec: null,
     nacional: false
   },
   {

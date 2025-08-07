@@ -6,11 +6,28 @@
     border-top: 2px solid #0047a0;
 }
 .tables{
-    margin-top: 15px;
-}
-.btn-f{
     margin-top: 10px;
 }
+.btn-f{
+    transition: 0.5s;
+    margin-top: 10px;
+}
+.escondido{
+    display: none;
+    }
+
 .selecte{
     margin-top: 30px;
+}
+.perman{
+    color: rgb(0, 195, 0);
+    font-size: 17px;
+}
+
+.perman-close{
+    color: rgb(220, 0, 0);
+    font-size: 23px;
+}
+td{
+    padding: 10px;
 }

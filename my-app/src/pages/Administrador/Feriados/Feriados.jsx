@@ -2,6 +2,8 @@ import "./Feriados.css"
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import feriados from "./feriados";
 import { useState } from "react";
+import { MdCheckBox, MdClose } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 
 export default function Feriados() {
 
@@ -25,7 +27,7 @@ export default function Feriados() {
           
               <div className="horarios-linha">
                 <label className='form-label' >Feriado:</label>
-                <input onChange={preenchido} type="text" className='form-control' name="" placeholder='Nome do feriado...' id="" />
+                <input onChange={preenchido} type="text" className='form-control' name="" placeholder='nome do feriado...' id="" />
               </div>
 
               <div className="linha">
@@ -44,12 +46,9 @@ export default function Feriados() {
                   <input className='form-check-input check' type="checkbox" name="status" id="" />
                 </div>
               </div>
-                {botao === true ?  
                 <div className="horarios-linha">
-                  <button className='btn btn-success btn-f'>Criar Feriado</button>
+                  <button className={botao == true? "btn btn-success btn-f" : "btn btn-success btn-f escondido"}>Criar Feriado</button>
                 </div> 
-                : null
-                }
 
                 <div className="horarios-linha selecte">
                   <label htmlFor="" className="form-label">Ano:</label>
@@ -71,8 +70,8 @@ export default function Feriados() {
                           {dados.map(feriados=>(
                             <tr>
                               <td>{feriados.nome}</td>
-                              <td>{feriados.data}|{feriados.dataSec}</td>
-                              <td>{feriados.nacional == true ? 'sim' : 'não'}</td>
+                              <td>{feriados.data}{feriados.dataSec != null? " | "+feriados.dataSec : ''}</td>
+                              <td>{feriados.nacional == true ? <i className="perman"><FaCheck /> </i> : <i className="perman-close"><MdClose /> </i> }</td>
                             </tr>
                           ))}
                          
