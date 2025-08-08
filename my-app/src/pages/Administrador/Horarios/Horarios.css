@@ -15,6 +15,22 @@
     gap: 30px;
     
 }
+.botao-adicionar{
+   background-color: white;
+  color: #0057ff; /* Azul vibrante */
+  border: 2px solid #0057ff;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+
+.botao-adicionar:hover{
+    background-color: #0057ff;
+    color: white;
+}
 
 .sub{
     cursor: pointer;
@@ -52,7 +68,7 @@
 }
 
 .funcionarios{
-    background-color: #1551a5;
+    background-color: #0048b3a9;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -94,10 +110,37 @@
     margin-right: 10px;
     background-color: #00c853;  /* verde moderno */
     color: white;
-    padding: 6px 9px;
+    padding: 4px 7px;
     border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
     margin-left: auto;
+}
+
+.icone-pesquisa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    background-color: transparent;
+    height: 50px;
+    border-radius: 30px;
+    padding-left: 35px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.595);
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
 }
