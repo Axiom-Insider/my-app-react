@@ -18,9 +18,14 @@ import Feriados from './pages/Administrador/Feriados/Feriados.jsx'
 import HistoricoAdm from "./pages/Administrador/Historico/Historico.jsx";
 import Funcionarios from './pages/Administrador/Funcionarios/Funcionarios.jsx';
 import RegistroFuncionarios from "./pages/Administrador/Registro/Registro.jsx";
+import Ausencia from "./pages/Administrador/Ausencias/Ausencias.jsx";
 
 const router = createBrowserRouter([
-   {
+  {
+    path:'/administrador/funcionarios/ausencias/:id',
+    element:<Ausencia />
+  }, 
+  {
     path:'/administrador/registro',
     element:<RegistroFuncionarios />
   }, 
@@ -29,7 +34,7 @@ const router = createBrowserRouter([
     element:<Funcionarios />
   },
   {
-    path:'/administrador/funcionarios/:id',
+    path:'/administrador/funcionarios/historico/:id',
     element:<HistoricoAdm />
   },
   {

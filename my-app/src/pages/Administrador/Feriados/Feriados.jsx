@@ -47,9 +47,8 @@ export default function Feriados() {
                 </div>
               </div>
                 <div className="horarios-linha">
-                  <button className={botao == true? "btn btn-success btn-f" : "btn btn-success btn-f escondido"}>Criar Feriado</button>
+                  <button className={botao == true? "botao-adicionar mt-2" : "botao-adicionar escondido"}>Atualizar Registro</button>
                 </div> 
-
                 <div className="horarios-linha selecte">
                   <label htmlFor="" className="form-label">Ano:</label>
                    <select className="form-select" name="ano" id="">
