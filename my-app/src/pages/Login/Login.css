@@ -1,11 +1,13 @@
-
-
 .fundoPreto{
   position: absolute;
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6); /* fundo escuro com transparência */
   z-index: 0; /* atrás do conteúdo */
+}
+
+.alert{
+  position: relative;
 }
 
 .container-login{
@@ -56,6 +58,7 @@
   
   .input{
     width: 100%;
+    font-size: 15px;
     padding-left: 60px;
     padding: 6px;
     border-radius: 10px;
@@ -84,6 +87,7 @@
   }
 
   .botao {
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,6 +115,7 @@
     }
 
     .input {
+      
       margin-bottom: 5px;
     }
   }

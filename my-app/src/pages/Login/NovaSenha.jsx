@@ -8,7 +8,7 @@ export default function NovaSenha() {
     <div className="container-login">
       <div className="fundoPreto"></div>
       <div className="box">
-        <p className="titulo">Primeira Senha</p>
+        <p className="titulo">Primeiro Entrada</p>
         <form className='formulario' action="">
           <label className='text'>Nova Senha:</label>
           <input type="password" placeholder=" Digite sua nova senha..." className="input" />
