@@ -19,8 +19,13 @@ import HistoricoAdm from "./pages/Administrador/Historico/Historico.jsx";
 import Funcionarios from './pages/Administrador/Funcionarios/Funcionarios.jsx';
 import RegistroFuncionarios from "./pages/Administrador/Registro/Registro.jsx";
 import Ausencia from "./pages/Administrador/Ausencias/Ausencias.jsx";
+import NovaSenha from './pages/Login/NovaSenha.jsx';
 
 const router = createBrowserRouter([
+  {
+    path:'/primeira_entrada',
+    element:<NovaSenha />
+  },
   {
     path:'/administrador/funcionarios/ausencias/:id',
     element:<Ausencia />
