@@ -12,6 +12,9 @@ function Alerta({msg, tipo}) {
     case 'aviso':
         alerta = "aviso"      
       break;
+      default:
+        
+        break;
   }
   return (
     <div>
