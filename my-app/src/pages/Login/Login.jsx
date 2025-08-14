@@ -4,6 +4,7 @@ import NavbarOff from '../../components/Navbar/NavbarOff'
 import { login } from '../../services/login'
 import Alerta from "../../components/Alertas/Alerta"
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 
 export default function Login() {
@@ -12,8 +13,10 @@ export default function Login() {
   const [senha, setSenha] = useState("")
   const [erro, setErro] = useState("")
   const [loading, setLoading] = useState(false)
+  const {user} = useAuth()
 
-
+  console.log(user);
+  
     useEffect(() => {
       setErro("");
     }, [matricula, senha]);
@@ -29,10 +32,13 @@ export default function Login() {
     setLoading(true)
     try {
       const data = await login(matricula, senha);
+      console.log(data);
+      
       localStorage.setItem("token", data.token)
-      localStorage.setItem("tipoUser", data.tipoUser == 1 ? 'admin': 'user')
       localStorage.setItem("expiresin", data.expiresIn)
-      if(data.tipoUser){
+      localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
+      
+      if(data.funcionario.adm){
         return navigation("/administrador/home", {state:{mensagem:"Login realizado com sucesso"}})
       }else{
         return navigation("/funcionario/home", {state:{mensagem:"Login realizado com sucesso"}})

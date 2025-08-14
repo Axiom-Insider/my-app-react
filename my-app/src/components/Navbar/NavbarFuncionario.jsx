@@ -2,9 +2,11 @@ import { BsHouseDoor, BsPencil, BsCalendar3, BsBoxArrowRight } from 'react-icons
 import { RxHamburgerMenu } from "react-icons/rx";
 import "./Navbar.css"
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 function NavbarFuncionario() {
   const location = useLocation()
+  const {logout} = useAuth()
 
   const verificadoPagina = (navbar) => {
     return navbar === location.pathname.split('/')[2] ? " ativo" : " "
@@ -49,7 +51,7 @@ function NavbarFuncionario() {
             </a>
           </li>
           <li className="nav-item">
-            <a className={'nav-link' + verificadoPagina('sair')} href="/sair">
+            <a className={'nav-link' + verificadoPagina('sair')} onClick={()=>logout()}>
               <BsBoxArrowRight className="me-1" /> Sair
             </a>
           </li>

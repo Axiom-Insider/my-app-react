@@ -1,16 +1,17 @@
 import { RxHamburgerMenu } from 'react-icons/rx'
 import './Navbar.css'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import { BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs'
-import {ImClock } from 'react-icons/im'
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { LuTreePalm } from 'react-icons/lu'
 import { MdControlPoint } from 'react-icons/md'
 import { FaRegAddressCard } from 'react-icons/fa'
+import { useAuth } from '../../context/AuthContext';
 
 const NavbarAdm = ()=> {
 
   const location = useLocation()
+  const {logout} = useAuth()
 
   const verificadoPagina = (navbar) => {
     return navbar === location.pathname.split('/')[2] ? " ativo" : " "
@@ -68,7 +69,7 @@ const NavbarAdm = ()=> {
               </li>
 
               <li className="nav-item">
-                <a className={"sair nav-link " +  verificadoPagina('sair')} href="/sair">
+                <a className={"sair nav-link " +  verificadoPagina('sair')} onClick={()=>logout()}>
                   <BsBoxArrowRight className="me-1" />Sair
                 </a>
               </li>
