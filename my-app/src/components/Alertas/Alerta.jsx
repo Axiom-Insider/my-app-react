@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import "./alerta.css"
 
 function Alerta({msg, tipo}) {
+       
   var alerta
   switch (tipo) {
     case 'sucesso':
@@ -18,8 +20,8 @@ function Alerta({msg, tipo}) {
   }
   return (
     <div>
-     <div className={"alerta alerta-" + alerta}>
-            <strong>{msg}</strong>
+        <div className={"alerta alerta-" + alerta}>
+          <strong>{msg}</strong>
         </div>  
     </div>
   )

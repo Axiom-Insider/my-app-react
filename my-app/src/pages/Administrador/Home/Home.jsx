@@ -60,20 +60,20 @@ function App() {
             <div className="data">{data.toLocaleDateString("pt-BR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</div>
           </div>
           {dados.map(dados=>(
-            <div class="linha-funcionario">
-            <div class="icone">{iniciais(dados.nome)}</div>
-            <div class="info">
-              <div class="nome">{dados.nome}</div>
-              <div class="cargo">{dados.cargo}</div>
+            <div key={dados.nome} className="linha-funcionario">
+            <div className="icone">{iniciais(dados.nome)}</div>
+            <div className="info">
+              <div className="nome">{dados.nome}</div>
+              <div className="cargo">{dados.cargo}</div>
             </div>
-            <div class="botoes-horarios">
-              <div class="grupo-horario">
-                <span class="label"></span>
-                <span class={status(dados.entrada)}  >{dados.entrada == null ? "--:--" : dados.entrada}</span>
+            <div className="botoes-horarios">
+              <div className="grupo-horario">
+                <span className="label"></span>
+                <span className={status(dados.entrada)}  >{dados.entrada == null ? "--:--" : dados.entrada}</span>
               </div>
-              <div class="grupo-horario">
-                <span class="label"></span>
-                <span class={status(dados.saida)} >{dados.saida == null ? "--:--" : dados.saida}</span>
+              <div className="grupo-horario">
+                <span className="label"></span>
+                <span className={status(dados.saida)} >{dados.saida == null ? "--:--" : dados.saida}</span>
               </div> 
             </div>
           </div>
