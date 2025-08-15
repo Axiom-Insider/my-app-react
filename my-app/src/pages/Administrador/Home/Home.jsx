@@ -3,11 +3,19 @@ import NavbarAdm from "../../../components/Navbar/NavbarAdm"
 import "./Home.css"
 import { TfiMoreAlt } from "react-icons/tfi"
 import { useState } from "react"
+import { useLocation } from "react-router-dom"
+import { useEffect } from "react"
 
 
 function App() {
 
   const [data] = useState(new Date())
+  const location = useLocation()
+  const [sucesso, setSucesso] = useState(false)
+
+  useEffect(()=>{
+    if(location.state && location.state.mensagem)setSucesso(location.state.mensagem)
+  })
 
   const iniciais = (nome)=>{
     var dividido = nome.split(' ')
@@ -51,6 +59,7 @@ function App() {
   return (
     <div>
       <NavbarAdm />
+      {sucesso && ('FOI PORRRA SUCESSO')}
       <div className="container d-flex justify-content-center align-items-center">
         <div className="alertas">
           <div className="head-home">

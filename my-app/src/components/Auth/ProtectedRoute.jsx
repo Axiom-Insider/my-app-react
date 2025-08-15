@@ -12,13 +12,13 @@ export default function ProtectedRoute({children, admin}) {
               <p className='text-loading'>Carregando...</p>
           </div>)
     }
-
-    if(!user && !loading){
+    
+    if(!user){
+      console.log("volta pro login");
       return <Navigate to={"/login" } replace />
     }
 
     const adm = user.adm
-    console.log(user, !user.adm, admin);
     
     if(admin != user.adm){
       if(adm){
