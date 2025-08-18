@@ -9,6 +9,7 @@ export const AuthProvider = ({children})=>{
 
     useEffect(()=>{
         const storedFuncionario = localStorage.getItem("funcionario")
+        console.log(storedFuncionario);
         if(storedFuncionario){
             setUser(JSON.parse(storedFuncionario))
         }

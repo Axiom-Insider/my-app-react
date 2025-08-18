@@ -5,7 +5,9 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function ProtectedRoute({children, admin}) {
     const {user, loading} = useAuth()
-        
+    const token = localStorage.getItem("token")
+    const funcionario = JSON.parse(localStorage.getItem('funcionario'))
+    var adm
     if(loading){
       return (  <div id="loading" className="hidden">
             <div className="spinner"></div>
@@ -14,13 +16,14 @@ export default function ProtectedRoute({children, admin}) {
     }
     
     if(!user){
-      console.log("volta pro login");
-      return <Navigate to={"/login" } replace />
+      if(!token){
+        return <Navigate to={"/login" } replace />
+      }
     }
-
-    const adm = user.adm
     
-    if(admin != user.adm){
+    adm = funcionario.adm
+    
+    if(admin != adm){
       if(adm){
          return <Navigate to={"/administrador/home"} replace/> 
       }else{

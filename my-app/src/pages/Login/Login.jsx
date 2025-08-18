@@ -3,7 +3,7 @@ import "./Login.css"
 import NavbarOff from '../../components/Navbar/NavbarOff'
 import { login } from '../../services/login'
 import Alerta from "../../components/Alertas/Alerta"
-import { useNavigate } from 'react-router-dom'
+import { replace, useNavigate } from 'react-router-dom'
 
 
 export default function Login() {
@@ -28,9 +28,7 @@ export default function Login() {
 
     setLoading(true)
     try {
-      const data = await login(matricula, senha);
-      console.log(data);
-      
+      const data = await login(matricula, senha);     
       localStorage.setItem("token", data.token)
       localStorage.setItem("expiresin", data.expiresIn)
       localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
