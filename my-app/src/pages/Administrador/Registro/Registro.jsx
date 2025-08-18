@@ -33,7 +33,6 @@ export default function Registro() {
   }
 
   const digitando = (event) => {
-    setSelecionado(false)
     setFuncionarioPesquisar(event.target.value)
   }
 

@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 
 
 export default function ProtectedRoute({children, admin}) {
+    const location = useLocation()
     const {user, loading} = useAuth()
     const token = localStorage.getItem("token")
     const funcionario = JSON.parse(localStorage.getItem('funcionario'))
@@ -17,6 +18,9 @@ export default function ProtectedRoute({children, admin}) {
     
     if(!user){
       if(!token){
+        if(location.pathname === "/login"){
+          return children
+        }
         return <Navigate to={"/login" } replace />
       }
     }

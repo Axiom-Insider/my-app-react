@@ -27,7 +27,7 @@ export default function Feriados() {
           
               <div className="horarios-linha">
                 <label className='form-label' >Feriado:</label>
-                <input onChange={preenchido} type="text" className='form-control' name="" placeholder='nome do feriado...' id="" />
+                <input onChange={preenchido} type="text" className='form-control feriado' name="" placeholder='nome do feriado...' id="" />
               </div>
 
               <div className="linha">

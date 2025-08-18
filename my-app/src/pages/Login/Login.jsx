@@ -3,7 +3,7 @@ import "./Login.css"
 import NavbarOff from '../../components/Navbar/NavbarOff'
 import { login } from '../../services/login'
 import Alerta from "../../components/Alertas/Alerta"
-import { replace, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Login() {
@@ -34,9 +34,9 @@ export default function Login() {
       localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
       
       if(data.funcionario.adm){
-        return navigation("/administrador/home", {state:{mensagem:"Login realizado com sucesso"}})
+        return navigation("/administrador/home", {state:{mensagem:"Logado com sucesso"}, replace:true})
       }else{
-        return navigation("/funcionario/home", {state:{mensagem:"Login realizado com sucesso"}})
+        return navigation("/funcionario/home", {state:{mensagem:"Logado com sucesso"}, replace:true})
       }
     } catch (error) {
       setErro(error.message || "Falha no Login")

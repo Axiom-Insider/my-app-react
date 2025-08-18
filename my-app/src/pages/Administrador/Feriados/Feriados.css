@@ -1,3 +1,7 @@
+.feriado::placeholder{
+    font-size: 15px;
+}
+
 .hr-f{
    background-color: black;
    color: black;

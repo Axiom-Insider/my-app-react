@@ -90,7 +90,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element:<Login />
+    element:( <ProtectedRoute admin={false}><Login /></ProtectedRoute>)
   },
   {
     path: '/funcionario/home',

@@ -1,27 +1,20 @@
-import { useEffect, useState } from "react";
 import "./alerta.css"
+import { TbAlertSquareRoundedFilled } from "react-icons/tb"
+import { FaUserCheck } from "react-icons/fa"
+import { BiSolidError } from "react-icons/bi"
 
 function Alerta({msg, tipo}) {
-       
-  var alerta
-  switch (tipo) {
-    case 'sucesso':
-        alerta = "sucesso"      
-      break;
-    case 'erro':
-        alerta = "erro"
-      break;
-    case 'aviso':
-        alerta = "aviso"      
-      break;
-      default:
-        
-        break;
+  const alerta = ['erro', 'sucesso', 'aviso']     
+  const classe = alerta.includes(tipo) ? tipo : 'aviso'
+  const icone = {
+    erro:<BiSolidError />,
+    sucesso:<FaUserCheck />,
+    aviso:<TbAlertSquareRoundedFilled />
   }
   return (
     <div>
-        <div className={"alerta alerta-" + alerta}>
-          <strong>{msg}</strong>
+        <div className={"alerta alerta-" + classe}>
+          <strong><i className="icone-alerta">{icone[classe]}</i> {msg}</strong>
         </div>  
     </div>
   )
