@@ -115,8 +115,13 @@
   color: #007bff;
 }
 
+.icone-senha{
+  color: yellow;
+  font-size: 20px;
+}
+
 .senhaDiff{
-  padding: 5px;
+  padding: 6px 12px;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.679);
   font-size: 13px;

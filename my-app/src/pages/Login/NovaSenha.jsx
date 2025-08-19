@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { loginFirst } from '../../services/login'
 import Alerta from '../../components/Alertas/Alerta'
 import Loading from '../../components/Loading/Loading'
+import { BiSolidError } from 'react-icons/bi'
 
 export default function NovaSenha() {
 
@@ -11,29 +12,26 @@ export default function NovaSenha() {
   const [matricula, setMatricula] = useState("")
   const [senha, setSenha] = useState("")
   const [novaSenha, setNovaSenha] = useState("")
-  const [senhaDif, setSenhaDif] = useState(false)
-  const [erro, setErro] = useState("")
+  const [senhaDiferente, setSenhaDiferente] = useState(false)
+  const [erro, setErro] = useState(false)
   const [loading, setLoading] = useState(false)
   
+  useEffect(()=>{
+    setErro(false)
+  }, [senha, novaSenha])
 
   useEffect(()=>{
     setMatricula(location.state.matricula || null)
-  }, [location.state])
-
-    const digitandoSenha = (e)=>{
-      setSenha(e.target.value)
+    if(senha !== novaSenha){
+      setSenhaDiferente(true)
     }
-
-    const digitandoNovaSenha = (e)=>{
-      setNovaSenha(e.target.value)
-      console.log(novaSenha, senha);
-      
-      if(novaSenha !== senha){
-        setSenhaDif(true)
-      }else{
-        setSenhaDif(false)
-      }
+    if(senha === novaSenha || novaSenha == ""){
+      setSenhaDiferente(false)
     }
+    
+  }, [location.state, novaSenha])
+
+  
     const handleLogin = async (e)=>{
       e.preventDefault()
 
@@ -41,12 +39,16 @@ export default function NovaSenha() {
         return setErro("Preencha todos os campos")
       }
       
+      if(senhaDiferente){
+        return setErro("As senhas estão diferente!")
+      }
+
       setLoading(true)
       try {
-        const data = await loginFirst(matricula, senha, novaSenha)
+        const data = await loginFirst(matricula, "123", novaSenha)
         console.log(data);
       } catch (error) {
-        setErro(error.message || "Falha no Login")
+        setErro(error.message || "Falha ao registrar nova senha")
     } finally{
       setLoading(false)
     }
@@ -55,27 +57,26 @@ export default function NovaSenha() {
   return (
     <div>
        <NavbarOff />
-    <div className="container-login">
       {erro && (<Alerta msg={erro} tipo={"erro"}></Alerta>)}
-      {loading && <Loading></Loading>}
+    <div className="container-login">
       <div className="fundoPreto"></div>
+      {loading && <Loading></Loading>}
       <div className="box">
         <p className="titulo">Primeiro Entrada</p>
         <form className='formulario' id='formNovaSenha' onSubmit={handleLogin}>
-          <label className='text'>Nova Senha:</label>
-          <input onChange={digitandoSenha} type="password" placeholder=" Digite sua nova senha..." className="input" />
-          <label className='text'>Confirmar Senha:</label>
-          <input onChange={digitandoNovaSenha} type="password" placeholder=" Confirme a senha..." className="input" />
-          {senhaDif && ( 
-              <div className="senhaDiff">
-            <strong>As senhas não estão iguais!</strong><br />
-          </div>
-          )}
+          <label className='text'>Nova senha:</label>
+          <input required onChange={(e)=> setSenha(e.target.value)} type="password" placeholder=" Digite sua nova senha..." className="input" />
+          <label className='text'>Confirmar a nova senha:</label>
+          <input required onChange={(e)=> setNovaSenha(e.target.value)} type="password" placeholder=" Confirme a senha..." className="input" /> 
+          {senhaDiferente && (
+          <div className="senhaDiff">
+            <strong><i className="icone-senha"><BiSolidError /></i> As senhas não estão iguais!</strong><br />
+          </div>)}
         
         </form>
-         <div className="boxBotao">
-         <button form='formNovaSenha' className='botao'>➔</button>
-         </div>
+          <div className="boxBotao">
+            <button form='formNovaSenha' className='botao'>➔</button>
+          </div>
       </div>
     </div>
     </div>

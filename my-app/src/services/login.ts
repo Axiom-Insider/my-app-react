@@ -16,7 +16,7 @@ import api from "../api"
             const data = await api.post("/auth/login", {matricula:parseInt(matricula), senha, novaSenha})
             return data
         } catch (error) {
-            throw error.response?.data || {message: "Erro ao fazer login"}
+            throw error.response?.data || {message: "Erro ao registrar nova senha"}
         }
     }
 
