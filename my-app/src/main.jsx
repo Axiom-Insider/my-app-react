@@ -26,7 +26,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/primeira_entrada',
+    path: '/primeira-entrada',
     element: <NovaSenha />
   },
   {

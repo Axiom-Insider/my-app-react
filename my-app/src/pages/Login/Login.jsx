@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import "./Login.css"
 import NavbarOff from '../../components/Navbar/NavbarOff'
-import { login } from '../../services/login'
+import {loginDay}  from '../../services/login'
 import Alerta from "../../components/Alertas/Alerta"
 import { useNavigate } from 'react-router-dom'
+import Loading from '../../components/Loading/Loading'
 
 
 export default function Login() {
@@ -28,7 +29,12 @@ export default function Login() {
 
     setLoading(true)
     try {
-      const data = await login(matricula, senha);     
+      const data = await loginDay(matricula, senha);   
+      console.log(data);
+      
+      if(!data.primeiraEntrada){
+        return navigation("/primeira-entrada", {state:{matricula}, replace:true})
+      }
       localStorage.setItem("token", data.token)
       localStorage.setItem("expiresin", data.expiresIn)
       localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
@@ -52,10 +58,7 @@ export default function Login() {
     <div className="container-login">
       <div className="fundoPreto"></div>
         {loading ? 
-          <div id="loading" className="hidden">
-            <div className="spinner"></div>
-              <p className='text-loading'>Carregando...</p>
-          </div>
+          <Loading></Loading>
         :   
       <div className="box">
         <p className="titulo">LOGIN</p>

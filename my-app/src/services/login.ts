@@ -1,11 +1,25 @@
-import axios from "axios"
 import api from "../api"
 
-export  const login = async (matricula:string, senha:string)=>{
+  const loginDay = async (matricula:string, senha:string)=>{
     try {
         const {data} = await api.post("/auth/login", {matricula:parseInt(matricula), senha})
+        console.log(data);
+        
         return data
     } catch (error) {
         throw error.response?.data || {message: "Erro ao fazer login"}
     }
 }
+
+    const loginFirst = async (matricula:string, senha:string, novaSenha:string)=>{
+        try {
+            const data = await api.post("/auth/login", {matricula:parseInt(matricula), senha, novaSenha})
+            return data
+        } catch (error) {
+            throw error.response?.data || {message: "Erro ao fazer login"}
+        }
+    }
+
+
+
+export {loginDay, loginFirst}
