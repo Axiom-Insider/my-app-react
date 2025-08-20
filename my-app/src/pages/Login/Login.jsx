@@ -3,7 +3,7 @@ import "./Login.css"
 import NavbarOff from '../../components/Navbar/NavbarOff'
 import {loginDay}  from '../../services/login'
 import Alerta from "../../components/Alertas/Alerta"
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Loading from '../../components/Loading/Loading'
 
 
@@ -12,11 +12,21 @@ export default function Login() {
   const [matricula, setMatricula] = useState("")
   const [senha, setSenha] = useState("")
   const [erro, setErro] = useState("")
+  const [sucesso, setSucesso] = useState("");
   const [loading, setLoading] = useState(false)
+  const location = useLocation()
 
+
+  useEffect(()=>{
+    if(location.state){
+      setSucesso(location.state.sucesso)
+      setErro(location.state.erro)
+    }
+  }, [location])
 
   useEffect(() => {
     setErro("");
+    setSucesso("");
   }, [matricula, senha]);
 
   const handleLogin = async (e)=>{
@@ -30,15 +40,9 @@ export default function Login() {
     setLoading(true)
     try {
       const data = await loginDay(matricula, senha);   
-      console.log(data);
-      
-      if(!data.primeiraEntrada){
-        return navigation("/primeira-entrada", {state:{matricula}, replace:true})
-      }
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("expiresin", data.expiresIn)
-      localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
-      
+       if(!data.primeiraEntrada){
+            return navigation("/primeira-entrada", {state:{matricula}, replace:true})
+        }
       if(data.funcionario.adm){
         return navigation("/administrador/home", {state:{mensagem:"Logado com sucesso"}, replace:true})
       }else{
@@ -54,6 +58,7 @@ export default function Login() {
   return (
     <div>
       <NavbarOff></NavbarOff>
+      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
       {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
     <div className="container-login">
       <div className="fundoPreto"></div>

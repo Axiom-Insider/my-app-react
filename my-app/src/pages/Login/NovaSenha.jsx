@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NavbarOff from '../../components/Navbar/NavbarOff'
-import { useLocation } from 'react-router-dom'
-import { loginFirst } from '../../services/login'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { loginDay, loginFirst } from '../../services/login'
 import Alerta from '../../components/Alertas/Alerta'
 import Loading from '../../components/Loading/Loading'
 import { BiSolidError } from 'react-icons/bi'
@@ -15,13 +15,24 @@ export default function NovaSenha() {
   const [senhaDiferente, setSenhaDiferente] = useState(false)
   const [erro, setErro] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigation = useNavigate()
   
+
+  useEffect(()=>{
+    if(!location.state){
+      navigation("/login", {replace:true})
+    }else{
+      setMatricula(location.state.matricula)
+    }
+
+  }, [location, navigation])
+
+
   useEffect(()=>{
     setErro(false)
   }, [senha, novaSenha])
-
+  
   useEffect(()=>{
-    setMatricula(location.state.matricula || null)
     if(senha !== novaSenha){
       setSenhaDiferente(true)
     }
@@ -29,7 +40,7 @@ export default function NovaSenha() {
       setSenhaDiferente(false)
     }
     
-  }, [location.state, novaSenha])
+  }, [novaSenha])
 
   
     const handleLogin = async (e)=>{
@@ -46,9 +57,9 @@ export default function NovaSenha() {
       setLoading(true)
       try {
         const data = await loginFirst(matricula, "123", novaSenha)
-        console.log(data);
+        return navigation("/login", {state:{sucesso:data.message}, replace:true})
       } catch (error) {
-        setErro(error.message || "Falha ao registrar nova senha")
+        return navigation("/login", {state:{erro:data.message}, replace:true})        
     } finally{
       setLoading(false)
     }

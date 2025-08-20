@@ -4,6 +4,8 @@ import { useState } from "react"
 import { useLocation } from "react-router-dom"
 import { useEffect } from "react"
 import Alerta from "../../../components/Alertas/Alerta"
+import funcionario from "../../../services/funcionario"
+import { PiNumberSquareSix } from "react-icons/pi"
 
 
 function App() {
@@ -11,15 +13,40 @@ function App() {
   const [data] = useState(new Date())
   const location = useLocation()
   const [sucesso, setSucesso] = useState(false)
+  const [dados, setDados] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(()=>{
     if(location.state && location.state.mensagem)setSucesso(location.state.mensagem)
   }, [location.state])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await funcionario.getAll();
+        const result = data;
+        setDados(result);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+  if (loading) {
+    return <div>Carregando dados...</div>;
+  }
+
+  if (error) {
+    return <div>Ocorreu um erro: {error}</div>;
+  }
+
   const iniciais = (nome)=>{
     var dividido = nome.split(' ')
     var primeira = dividido[0].charAt(0).toUpperCase();
-    var segunda = dividido[1].charAt(0).toUpperCase();
+    var segunda = dividido[1] ? dividido[1].charAt(0).toUpperCase() : '';
     return `${primeira}${segunda}`
   }
 
@@ -29,12 +56,6 @@ function App() {
     }
     return "horario ausente"
   }
-
-  useEffect(()=>{
-    
-  })
-
-  
 
   return (
     <div>
