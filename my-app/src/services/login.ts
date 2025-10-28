@@ -1,10 +1,10 @@
 import api from "../api"
 
 
-  const loginDay = async (matricula:string, senha:string)=>{
+  const loginDay = async (cpf:string, senha:string)=>{
        
     try {
-        const {data} = await api.post("/auth/login", {matricula:parseInt(matricula), senha})
+        const {data} = await api.post("/auth/login", {cpf, senha})
         if(!data.primeiraEntrada){
             return data
         }
@@ -17,9 +17,9 @@ import api from "../api"
     }
 }
 
-    const loginFirst = async (matricula:string, senha:string, novaSenha:string)=>{
+    const loginFirst = async (cpf:string, senha:string, novaSenha:string)=>{
         try {
-            const {data} = await api.post("/auth/login", {matricula:parseInt(matricula), senha, novaSenha})
+            const {data} = await api.post("/auth/login", {cpf, senha, novaSenha})
             return data
         } catch (error) {
             throw error.response?.data || {message: "Erro ao registrar nova senha"}

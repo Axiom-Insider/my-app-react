@@ -9,7 +9,7 @@ import { BiSolidError } from 'react-icons/bi'
 export default function NovaSenha() {
 
   const location = useLocation()
-  const [matricula, setMatricula] = useState("")
+  const [cpf, setCpf] = useState("")
   const [senha, setSenha] = useState("")
   const [novaSenha, setNovaSenha] = useState("")
   const [senhaDiferente, setSenhaDiferente] = useState(false)
@@ -22,7 +22,7 @@ export default function NovaSenha() {
     if(!location.state){
       navigation("/login", {replace:true})
     }else{
-      setMatricula(location.state.matricula)
+      setCpf(location.state.cpf)
     }
 
   }, [location, navigation])
@@ -56,7 +56,7 @@ export default function NovaSenha() {
 
       setLoading(true)
       try {
-        const data = await loginFirst(matricula, "123", novaSenha)
+        const data = await loginFirst(cpf, "123", novaSenha)
         return navigation("/login", {state:{sucesso:data.message}, replace:true})
       } catch (error) {
         return navigation("/login", {state:{erro:data.message}, replace:true})        

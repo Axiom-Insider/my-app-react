@@ -1,31 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Horarios.css"
-import funcionarios from '../funcionarios'
+import funcionario from "../../../services/funcionario"
+import horarios from "../../../services/horarios"
 import { FaCheck, FaRegClock, FaSearch } from 'react-icons/fa'
 import { IoDocumentTextOutline } from 'react-icons/io5'
 import { MdPersonSearch } from 'react-icons/md'
+import Alerta from '../../../components/Alertas/Alerta'
 
 
 const Horarios = () => {
 
+  const [dataCriado, setDataCriado] = useState("")
+  const [hora, setHora] = useState("")
+  const [id, setId] = useState("")
   const [ativo, setAtivo] = useState('horarios')
+  const [erro, setErro] = useState(null);
+  const [sucesso, setSucesso] = useState(null)
   const [status, setStatus] = useState(null)
   const [statusTwo, setStatusTwo] = useState(null)
   const [selecionado, setSelecionado] = useState(null)
+  const [dados, setDados] = useState([])
 
-
-  const dados = funcionarios()
-
-  const [funcionarioPesquisar, setFuncionarioPesquisar] = useState();
+  const [funcionarioPesquisar, setFuncionarioPesquisar] = useState("");
 
   const [funcionarioFiltrado, setFuncionarioFiltrado] = useState([]);
 
-    useEffect(()=>{
+  useEffect(()=>{
+      const fetchData = async () => {
+           try {
+             const data = await funcionario.getAll();
+             console.log(data);
+             setDados(data);
+           } catch (err) {
+             setErro(err.message || "Erro ao buscar funcionários");
+           } 
+         };
+         fetchData();
+  }, [])
 
+    useEffect(()=>{
+      console.log(dados)
       const resultado = dados.filter(user => user.nome.toLowerCase().includes(funcionarioPesquisar))
       setFuncionarioFiltrado(resultado)
-    }, [funcionarioPesquisar])
+    }, [funcionarioPesquisar, dados])
 
 
   const iniciais = (nome)=>{
@@ -41,22 +59,40 @@ const Horarios = () => {
   }
 
   const funcionarioSelecionado = (id)=>{
-    
       if(selecionado == id){
         setSelecionado(null)
         setFuncionarioFiltrado(dados)
       }else{
+        setId(id)
         setSelecionado(id)
         const fun = funcionarioFiltrado.filter(user => user.id === id);
         setFuncionarioFiltrado(fun)
       } 
 
     }
+    const editarHorario = async (e)=>{
+      e.preventDefault()
+      try {
+        const data = await horarios.editarHorarios(dataCriado, hora, status, id)
+        console.log(data)
+        setSucesso(data.message)
+      } catch (error) {
+        setErro(error.message || "Erro ao Editar Horario")
+      }
+     
+    }
+
+    const criarHorario = async(e)=>{
+      e.preventDefault()
+    }
+  
 
   
   return (
     <div>
       <NavbarAdm />
+      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
+      {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-horarios">
           <div className="head">
@@ -65,30 +101,31 @@ const Horarios = () => {
           </div>
 
             {ativo ==  'horarios' ? 
+              <form onSubmit={editarHorario}>
               <div className="body-horarios">
               <div className="linha">
                  <div className="horarios-linha">
                    <label className="form-label">Data:</label>
-                  <input className='form-control formulario' type="date" name="" id="" />
+                  <input className='form-control formulario' type="date" name="dataCriado" onChange={(e)=> setDataCriado(e.target.value)} id="" required/>
                 </div>
                 <div className="horarios-linha">
                    <label className="form-label">Horário:</label>
-                  <input className='form-control formulario' type="time" name="" id="" />
+                  <input className='form-control formulario' type="time" name="hora" onChange={(e)=> setHora(e.target.value)} id="" required/>
                 </div>
                 <div className="horarios-linha">
                   <label className="form-label">Entrada:</label>
-                  <input className='form-check-input check' type="checkbox" checked={status == 'entrada' ? true : false} onClick={()=> setStatus('entrada')} name="status" id="" />
+                  <input className='form-check-input check' type="checkbox" checked={status === "entrada"}  onChange={()=> setStatus('entrada')} name="status" id="" />
                 </div>
                 <div className="horarios-linha">
                   <label className="form-label">Saída:</label>
-                  <input className='form-check-input check' type="checkbox" checked={status == 'saida' ? true : false} onClick={()=> setStatus('saida')} name="status" id="" />
+                  <input className='form-check-input check' type="checkbox" checked={status === "saida"} onChange={()=> setStatus('saida')} name="status" id="" />
                 </div>
               </div>
               
                 <div className="horarios-linha mt-2">
-                    <div class="search-container">
-                      <input onChange={digitando} type="text" class="form-control search-input" placeholder="Pesquisar..." />
-                      <i class="fas fa-search search-icon"><MdPersonSearch /> </i>
+                    <div className="search-container">
+                      <input onChange={digitando} type="text" className="form-control search-input" placeholder="Pesquisar..." />
+                      <i className="fas fa-search search-icon"><MdPersonSearch /> </i>
                     </div>
                 </div>
 
@@ -102,7 +139,9 @@ const Horarios = () => {
                 </div>
                   {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Atualizar Horário</button></div> : ''} 
             </div>
+            </form>
             : 
+            <form onSubmit={criarHorario}>
             <div className="body-ferias">
                 <div className="linha">
                   <div className="horarios-linha">
@@ -114,18 +153,19 @@ const Horarios = () => {
                   <input className='form-control formulario' type="date" name="data-saida" id="" />
                 </div>
                 <div className="horarios-linha">
-                  <label className="form-label">Férias:</label>
-                  <input className='form-check-input check' type="checkbox" checked={statusTwo == 'Férias' ? true : false} onClick={()=> setStatusTwo('Férias')} name="status" id="" />
-                </div>
-                <div className="horarios-linha">
-                  <label className="form-label">Atestado:</label>
-                  <input className='form-check-input check' type="checkbox" checked={statusTwo == 'Atestado' ? true : false} onClick={()=> setStatusTwo('Atestado')} name="status" id="" />
+                <label className="form-label">Tipo de Ausência:</label>
+                <select className='form-select' name="" id="">
+                  <option value="1">Ferias</option>
+                  <option value="2">Atestado</option>
+                  <option value="3">Lincença</option>
+                  <option value="4">Outro</option>
+                </select>
                 </div>
                 </div>
                 <div className="horarios-linha mt-2">
-                    <div class="search-container">
-                      <input onChange={digitando} type="text" class="form-control search-input" placeholder="Pesquisar..." />
-                      <i class="fas fa-search search-icon"><MdPersonSearch /> </i>
+                    <div className="search-container">
+                      <input onChange={digitando} type="text" className="form-control search-input" placeholder="Pesquisar..." />
+                      <i className="fas fa-search search-icon"><MdPersonSearch /> </i>
                     </div>
                 </div>
                 <div className="horarios-linha">
@@ -138,6 +178,7 @@ const Horarios = () => {
                 </div>
                   {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Adicionar {statusTwo} </button></div> : ''} 
             </div>
+            </form>
             }
           
         </div>
