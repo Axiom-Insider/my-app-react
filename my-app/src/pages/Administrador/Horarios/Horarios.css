@@ -7,12 +7,28 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
     background-color: #0052cc;
     width: 600px;
+    transition: background-color 0.2s ease;
 }
+
+.anime-bg{
+    background: linear-gradient(90deg, #0050b3, #007bff, #0050b3);
+    background-size: 200% 100%;
+    animation: move-bg 1s linear infinite;
+}
+
+@keyframes move-bg {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
 
 .head{
     font-size: 18px;
     border-bottom: 1px solid white;
-    gap: 30px;
+    gap: 20px;
     
 }
 .botao-adicionar{

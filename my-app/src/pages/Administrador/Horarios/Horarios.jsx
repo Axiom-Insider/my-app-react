@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Horarios.css"
 import funcionario from "../../../services/funcionario"
 import horarios from "../../../services/horarios"
+import ausencias from '../../../services/ausencias'
 import { FaCheck, FaRegClock, FaSearch } from 'react-icons/fa'
 import { IoDocumentTextOutline } from 'react-icons/io5'
 import { MdPersonSearch } from 'react-icons/md'
@@ -10,15 +11,22 @@ import Alerta from '../../../components/Alertas/Alerta'
 
 
 const Horarios = () => {
-
-  const [dataCriado, setDataCriado] = useState("")
-  const [hora, setHora] = useState("")
+  
   const [id, setId] = useState("")
+
+  //dados para editar horario
+  const [dataCriada, setDataCriada] = useState("")
+  const [hora, setHora] = useState("")
+  //dados para criar ausencia
+  const [dataInicio, setDataInicio] = useState(null)
+  const [dataFim, setDataFim] = useState('')
+  const [tipoAusencia, setTipoAusencia] = useState("Férias")
+
+  const [animeBg, setAnimeBg] = useState(false)
   const [ativo, setAtivo] = useState('horarios')
   const [erro, setErro] = useState(null);
   const [sucesso, setSucesso] = useState(null)
   const [status, setStatus] = useState(null)
-  const [statusTwo, setStatusTwo] = useState(null)
   const [selecionado, setSelecionado] = useState(null)
   const [dados, setDados] = useState([])
 
@@ -30,17 +38,17 @@ const Horarios = () => {
       const fetchData = async () => {
            try {
              const data = await funcionario.getAll();
-             console.log(data);
              setDados(data);
            } catch (err) {
              setErro(err.message || "Erro ao buscar funcionários");
            } 
          };
-         fetchData();
-  }, [])
+      if(!animeBg){
+        fetchData()
+      }
+  }, [animeBg])
 
     useEffect(()=>{
-      console.log(dados)
       const resultado = dados.filter(user => user.nome.toLowerCase().includes(funcionarioPesquisar))
       setFuncionarioFiltrado(resultado)
     }, [funcionarioPesquisar, dados])
@@ -73,8 +81,7 @@ const Horarios = () => {
     const editarHorario = async (e)=>{
       e.preventDefault()
       try {
-        const data = await horarios.editarHorarios(dataCriado, hora, status, id)
-        console.log(data)
+        const data = await horarios.editarHorarios(dataCriada, hora, status, id)
         setSucesso(data.message)
       } catch (error) {
         setErro(error.message || "Erro ao Editar Horario")
@@ -84,9 +91,23 @@ const Horarios = () => {
 
     const criarHorario = async(e)=>{
       e.preventDefault()
+      try {
+        console.log(dataInicio, dataFim, tipoAusencia, id);
+        const data = await ausencias.criarAusencia(dataInicio, dataFim, tipoAusencia, id)
+        setSucesso(data.message)
+      } catch (error) {
+        setErro(error.message || "Erro ao Criar Ausência")
+      }
     }
   
-
+    useEffect(()=>{
+      setAnimeBg(true)
+      setFuncionarioFiltrado([])
+      setSelecionado('')
+      setId('')
+      const timer = setTimeout(()=>setAnimeBg(false), 1000);
+      return ()=> clearTimeout(timer)
+    }, [ativo])
   
   return (
     <div>
@@ -94,7 +115,7 @@ const Horarios = () => {
       {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
       {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
       <div className="container d-flex justify-content-center align-items-center">
-        <div className="box-horarios">
+        <div className={`box-horarios ${animeBg ? "anime-bg" : ''}`} >
           <div className="head">
             <div className={ativo == 'horarios'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('horarios')}><FaRegClock /> Horarios</div>
             <div className={ativo == 'ausencia'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('ausencia') }><IoDocumentTextOutline /> Férias/Atestado</div>
@@ -106,7 +127,8 @@ const Horarios = () => {
               <div className="linha">
                  <div className="horarios-linha">
                    <label className="form-label">Data:</label>
-                  <input className='form-control formulario' type="date" name="dataCriado" onChange={(e)=> setDataCriado(e.target.value)} id="" required/>
+                  <input className='form-control formulario' type="date" name="dataCriada" onChange={(e)=> {setDataCriada(e.target.value)
+                     setDataInicio(e.target.value)}} id="data" required/>
                 </div>
                 <div className="horarios-linha">
                    <label className="form-label">Horário:</label>
@@ -131,13 +153,13 @@ const Horarios = () => {
 
                 <div className="horarios-linha">
                   {funcionarioFiltrado.map(dados =>(
-                    <div className={selecionado == dados.id ? 'funcionarios select' : 'funcionarios'} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
+                    <div className={`${selecionado == dados.id ? 'funcionarios select' : 'funcionarios'}`} onClick={()=> funcionarioSelecionado(dados.id)} key={dados.id}>
                       <div className="icone" >{iniciais(dados.nome)}</div> 
                       <div className="nome-horarios">{dados.nome}</div> 
                       {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
                   ))}
                 </div>
-                  {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Atualizar Horário</button></div> : ''} 
+                  {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Cadastrar Horário</button></div> : ''} 
             </div>
             </form>
             : 
@@ -145,20 +167,20 @@ const Horarios = () => {
             <div className="body-ferias">
                 <div className="linha">
                   <div className="horarios-linha">
-                    <label className="form-label">Data Entrada:</label>
-                    <input className='form-control formulario' type="date" name="data-entrada" id="" />
+                    <label className="form-label">Data de Início:</label>
+                    <input className='form-control formulario' onChange={(e)=>{setDataInicio(e.target.value)}} type="date" name="data-entrada" id="a" required/>
                   </div>
                   <div className="horarios-linha">
-                  <label className="form-label">Data Saída:</label>
-                  <input className='form-control formulario' type="date" name="data-saida" id="" />
+                  <label className="form-label">Data Final:</label>
+                  <input className='form-control formulario' onChange={(e)=>{setDataFim(e.target.value)}} type="date" name="data-saida" id="" />
                 </div>
                 <div className="horarios-linha">
                 <label className="form-label">Tipo de Ausência:</label>
-                <select className='form-select' name="" id="">
-                  <option value="1">Ferias</option>
-                  <option value="2">Atestado</option>
-                  <option value="3">Lincença</option>
-                  <option value="4">Outro</option>
+                <select className='form-select' name="" id="" onChange={(e)=>{setTipoAusencia(e.target.value)}}>
+                  <option  value="Férias">Férias</option>
+                  <option value="Atestado">Atestado</option>
+                  <option value="Licença">Licença</option>
+                  <option value="Outro">Outro</option>
                 </select>
                 </div>
                 </div>
@@ -176,7 +198,7 @@ const Horarios = () => {
                       {selecionado == dados.id ? <div className='func-selecionado'><FaCheck /></div> : ''}</div>
                   ))}
                 </div>
-                  {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Adicionar {statusTwo} </button></div> : ''} 
+                  {selecionado ? <div className="horarios-linha"><button className='botao-adicionar'>Cadastrar {tipoAusencia}</button></div> : ''} 
             </div>
             </form>
             }

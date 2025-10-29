@@ -1,14 +1,17 @@
 import "./Feriados.css"
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import feriados from "./feriados";
-import { useState } from "react";
-import { MdCheckBox, MdClose } from "react-icons/md";
-import { FaCheck } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { MdCheckBox, MdClose, MdFormatListBulletedAdd } from "react-icons/md";
+import { FaCheck, FaRegClock, FaTrash } from "react-icons/fa";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { CiBoxList } from "react-icons/ci";
 
 export default function Feriados() {
 
   const [botao, setBotao] = useState(false);
-  
+  const [ativo, setAtivo] = useState('Cadastrar')
+   const [animeBg, setAnimeBg] = useState(false)
   const dados = feriados();
   
   const preenchido = (e)=>{
@@ -19,17 +22,28 @@ export default function Feriados() {
     setBotao(true)
   }
 
+    useEffect(()=>{
+        setAnimeBg(true)
+        const timer = setTimeout(()=>setAnimeBg(false), 1000);
+        return ()=> clearTimeout(timer)
+      }, [ativo])
+
   return (
     <div>
        <NavbarAdm />
+       
        <div className="container d-flex justify-content-center align-items-center">
-          <div className="box-horarios">
-          
-              <div className="horarios-linha">
-                <label className='form-label' >Feriado:</label>
+          <div className={`box-horarios ${animeBg ? "anime-bg" : ''}`}>
+            <div className="head">
+                <div className={ativo == 'Cadastrar'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('Cadastrar')}><MdFormatListBulletedAdd /> Cadastrar</div>
+                <div className={ativo == 'Consultar'  ? "sub selecionado" : "sub"} onClick={()=> setAtivo('Consultar') }><CiBoxList /> Consultar</div>
+            </div>
+            {ativo === "Cadastrar" ?
+              <div>    
+              <div className="horarios-linha mt-4">
+                <label className='form-label' >Nome do Feriado:</label>
                 <input onChange={preenchido} type="text" className='form-control feriado' name="" placeholder='nome do feriado...' id="" />
               </div>
-
               <div className="linha">
                 <div className="horarios-linha">
                   <label className='form-label'>Data de início:</label>
@@ -49,6 +63,8 @@ export default function Feriados() {
                 <div className="horarios-linha">
                   <button className={botao == true? "botao-adicionar mt-2" : "botao-adicionar escondido"}>Criar Feriado</button>
                 </div> 
+              </div>
+            :
                 <div className="horarios-linha selecte">
                   <label htmlFor="" className="form-label">Ano:</label>
                    <select className="form-select" name="ano" id="">
@@ -56,27 +72,7 @@ export default function Feriados() {
                       <option value="">2025</option>
                     </select>
                 </div>
-                  <div className="horarios-linha tables">
-                      <table>
-                        <thead>
-                          <tr className="tr-f">
-                            <th className="th-f" scope="col">Nome</th>
-                            <th className="th-f" scope="col">Data</th>
-                            <th className="th-f" scope="col">Permanente</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {dados.map(feriados=>(
-                            <tr>
-                              <td>{feriados.nome}</td>
-                              <td>{feriados.data}{feriados.dataSec != null? " | "+feriados.dataSec : ''}</td>
-                              <td>{feriados.nacional == true ? <i className="perman"><FaCheck /> </i> : <i className="perman-close"><MdClose /> </i> }</td>
-                            </tr>
-                          ))}
-                         
-                        </tbody>
-                    </table>
-                </div>
+            }
           </div>
         </div>
     </div>

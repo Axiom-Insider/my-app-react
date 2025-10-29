@@ -35,3 +35,37 @@
 td{
     padding: 10px;
 }
+tr:hover{
+   background-color: #0047a0;
+}
+
+.trash-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .trash-btn:hover {
+    animation: shake 0.4s ease;
+  }
+  
+  .trash-icon {
+    font-size: 24px;
+    color: red;
+    transition: transform 0.3s ease;
+  }
+  
+  .trash-btn:active .trash-icon {
+    transform: scale(0.8);
+  }
+  
+  @keyframes shake {
+    0% { transform: rotate(0deg); }
+    20% { transform: rotate(-10deg); }
+    40% { transform: rotate(10deg); }
+    60% { transform: rotate(-10deg); }
+    80% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+  }
