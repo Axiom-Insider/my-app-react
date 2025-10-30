@@ -69,3 +69,91 @@ tr:hover{
     80% { transform: rotate(10deg); }
     100% { transform: rotate(0deg); }
   }
+
+
+
+
+  .tabela-feriados {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #0059d6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 0.95rem;
+  }
+  
+  .tabela-feriados thead {
+    background: #0043a7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .tabela-feriados th,
+  .tabela-feriados td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+  }
+  
+  .tabela-feriados tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.25s ease;
+  }
+  
+  .tabela-feriados tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  /* badges de tipo */
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .badge.nacional {
+    background: #2563eb;
+  }
+  
+  .badge.estadual {
+    background: #7c3aed;
+  }
+  
+  .badge.municipal {
+    background: #16a34a;
+  }
+  
+  .badge.institucional {
+    background: #6b7280;
+  }
+  
+  /* Permanente coluna */
+  .perm {
+    font-weight: 600;
+  }
+  
+  .perm.sim {
+    color: #22c55e; /* verde */
+  }
+  
+  .perm.nao {
+    color: #ef4444; /* vermelho */
+  }
+  
+  /* Responsivo */
+  @media (max-width: 700px) {
+    .tabela-feriados {
+      font-size: 0.85rem;
+    }
+  
+    .tabela-feriados th,
+    .tabela-feriados td {
+      padding: 0.6rem;
+    }
+  }
+  
