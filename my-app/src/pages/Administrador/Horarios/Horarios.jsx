@@ -176,12 +176,12 @@ const Horarios = () => {
                 </div>
                 <div className="horarios-linha">
                 <label className="form-label">Tipo de Ausência:</label>
-                <select className='form-select' name="" id="" onChange={(e)=>{setTipoAusencia(e.target.value)}}>
-                  <option  value="Férias">Férias</option>
-                  <option value="Atestado">Atestado</option>
-                  <option value="Licença">Licença</option>
-                  <option value="Outro">Outro</option>
-                </select>
+                  <select className='form-select' name="" id="" onChange={(e)=>{setTipoAusencia(e.target.value)}}>
+                    <option  value="Férias">Férias</option>
+                    <option value="Atestado">Atestado</option>
+                    <option value="Licença">Licença</option>
+                    <option value="Outro">Outro</option>
+                  </select>
                 </div>
                 </div>
                 <div className="horarios-linha mt-2">
