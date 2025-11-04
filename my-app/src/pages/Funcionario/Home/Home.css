@@ -25,6 +25,23 @@
   transition: 0.5s;
 }
 
+.checkHoras{
+  color: rgb(2, 195, 2);
+  font-size: 18px;
+}
+
+.wait{
+  color: rgb(247, 247, 2);
+  font-size: 15px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
 .box-home:hover{
   width: 510px;
   padding: 15px;
@@ -41,7 +58,7 @@
 .caixa{
   flex-direction: column;
   display: flex;
-
+  gap: 5px;
 }
 
 .body{

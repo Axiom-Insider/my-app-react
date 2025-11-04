@@ -18,7 +18,11 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
 
 const verificar = async ()=>{
     try {
-        const {data} = await api.get("/horarios/verificar")
+         const item = localStorage.getItem('funcionario');
+        if (!item) return null; 
+        const {id} = JSON.parse(item);
+
+        const {data} = await api.get("/horarios/verificar/"+ id)
 
         return data
     } catch (error) {
@@ -26,4 +30,33 @@ const verificar = async ()=>{
     }
 }
 
-export default  {editarHorarios, verificar}
+const entrada = async ()=>{
+    try {
+         const item = localStorage.getItem('funcionario');
+        if (!item) return null; 
+        const {id} = JSON.parse(item);
+        const body = {id_funcionario:id}
+        
+        const {data} = await api.post("/horarios/entrada/", body)
+
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao editar horario"}
+    }
+}
+
+const saida = async ()=>{
+    try {
+         const item = localStorage.getItem('funcionario');
+        if (!item) return null; 
+        const {id} = JSON.parse(item);
+        const body = {id_funcionario:id}
+        const {data} = await api.post("/horarios/saida/", body)
+
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao editar horario"}
+    }
+}
+
+export default  {editarHorarios, verificar, entrada, saida}

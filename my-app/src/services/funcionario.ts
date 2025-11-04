@@ -14,9 +14,9 @@ const getId = async ()=>{
     try {
         const item = localStorage.getItem('funcionario');
         if (!item) return null; 
-        const funcionario = JSON.parse(item);
+        const {id} = JSON.parse(item);
         
-        const {data} = await api.get("/funcionario/"+funcionario.id)
+        const {data} = await api.get("/funcionario/"+id)
 
         return data
     } catch (error) {
