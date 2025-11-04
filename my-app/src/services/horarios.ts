@@ -16,4 +16,14 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
     }
 }
 
-export default  {editarHorarios}
+const verificar = async ()=>{
+    try {
+        const {data} = await api.get("/horarios/verificar")
+
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao editar horario"}
+    }
+}
+
+export default  {editarHorarios, verificar}

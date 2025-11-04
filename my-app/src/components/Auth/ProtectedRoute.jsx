@@ -7,7 +7,6 @@ export default function ProtectedRoute({children, admin}) {
     const location = useLocation()
     const {user, loading} = useAuth()
     const token = localStorage.getItem("token")
-    const primeiraEntrada = localStorage.getItem("primeiraEntrada")
     const funcionario = JSON.parse(localStorage.getItem('funcionario'))
     var adm
     if(loading){

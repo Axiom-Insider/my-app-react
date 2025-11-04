@@ -37,6 +37,7 @@ td{
 }
 tr:hover{
    background-color: #0047a0;
+   transform: scale(1.01);
 }
 
 .trash-btn {

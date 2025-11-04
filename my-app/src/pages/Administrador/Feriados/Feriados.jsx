@@ -23,20 +23,49 @@ export default function Feriados() {
   const [ativo, setAtivo] = useState('Cadastrar')
   const [animeBg, setAnimeBg] = useState(false)
   const [dados, setDados] = useState([])
+  const [anos, setAnos] = useState([])
+  const [anosSelect, setAnosSelect] = useState(null)
+  const [tipoFeriadoSelect, setTipoFeriadoSelect] = useState(null)
 
   useEffect(()=>{
+    const feachAno = async ()=>{
+      try {
+        const data = await feriados.anosFeriados()
+        
+        setAnos(data.dados)
+        console.log(anos);
+      } catch (error) {
+        setAnos([])
+      }
+    }
+    feachAno()
+    
     const feachData = async ()=>{
       try {
-        const data = await feriados.lerFeriado()
+        const date = new Date()
+        const data = await feriados.findAnoTipo(date.getFullYear().toString(), 'Nacional')
         console.log(data);
         
         setDados(data.dados) 
       } catch (error) {
-        setErro(error || "Nenhum feriado foi encontrado")
+        setErro(error.message || "Nenhum feriado foi encontrado")
       }
     }
     feachData()
   },[ativo])
+
+  useEffect(()=>{
+    const feachDataSelect = async ()=>{
+      try {
+        const data = await feriados.findAnoTipo(anosSelect, tipoFeriadoSelect)
+
+        setDados(data.dados) 
+      } catch (error) {
+        setErro(error.message || "Nenhum feriado foi encontrado")
+      }
+    }
+    feachDataSelect()
+  },[anosSelect, tipoFeriadoSelect])
   
   const preenchido = (e)=>{
     
@@ -61,7 +90,7 @@ export default function Feriados() {
         
         setSucesso(data.message)
       } catch (error) {
-        setErro(error || "Não foi possível criar feriado")
+        setErro(error.message || "Não foi possível criar feriado")
       }
     }
 
@@ -124,7 +153,7 @@ export default function Feriados() {
                 <div className="linha">
                 <div className="horarios-linha mt-4">
                   <label htmlFor="" className="form-label">Tipo de Feriado:</label>
-                   <select className="form-select" name="ano" id="">
+                   <select className="form-select" name="ano" id="" onChange={(e)=>{setTipoFeriadoSelect(e.target.value)}}>
                       <option value="Nacional">Nacional</option>
                       <option value="Estadual">Estadual</option>
                       <option value="Municipal">Municipal</option>
@@ -135,9 +164,10 @@ export default function Feriados() {
 
                 <div className="horarios-linha mt-4">
                   <label htmlFor="" className="form-label">Ano:</label>
-                   <select className="form-select" name="ano" id="">
-                      <option value="">2024</option>
-                      <option value="">2025</option>
+                   <select  className="form-select" name="ano" id="" onChange={(e)=>{setAnosSelect(e.target.value)}}>
+                    {anos.map(dados=>( 
+                       <option value={dados.ano} key={dados.ano + 1}>{dados.ano}</option>
+                    ))}
                     </select>
                 </div>
                 </div>
@@ -156,9 +186,9 @@ export default function Feriados() {
                           {dados.map(feriados=>(
                             <tr key={feriados.id}>
                               <td>{feriados.nome}</td>
-                              <td>{feriados.dataInicio}{feriados.dataInicio === feriados.dataInicio ? '' : " | "+feriados.dataFim }</td>
+                              <td>{feriados.dataInicio}{feriados.dataFim === feriados.dataInicio ? '' : " | "+feriados.dataFim }</td>
                               <td>{feriados.tipoFeriado}</td>
-                              <td> <button className="trash-btn" onChange={()=> setIdFeriado(feriados.id)} ><i className="trash-icon"><FaTrash /></i></button> </td>
+                              <td> <button className="trash-btn" onChange={()=> setIdFeriado(feriados.id)}  ><i className="trash-icon"><FaTrash /></i></button> </td>
                             </tr>
                           ))}
                          

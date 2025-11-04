@@ -17,17 +17,29 @@ const lerFeriado = async ()=>{
     try {
         const {data} = await api.get("/feriados")
         return data    
-    } catch (erro){
-
+    } catch (error){
+        throw error.response?.data || {message: "Erro ao criar feriado"}
     } 
 }
 
-const findAnoTipo = async ()=>{
+const anosFeriados = async ()=>{
     try {
+        const {data} = await api.get("/feriados/anos")
+        console.log(data);
         
+        return data
     } catch (error) {
-        
+        throw error.response?.data || {message: "Erro ao listar anos"}
     }
 }
 
-export default  {criarFeriado, lerFeriado}
+const findAnoTipo = async (ano:string, tipoFeriado:string)=>{
+    try {
+        const {data} = await api.get(`/feriados/tipo/${ano}/${tipoFeriado}`)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao listar feriados"}
+    }
+}
+
+export default  {criarFeriado, lerFeriado, anosFeriados, findAnoTipo}
