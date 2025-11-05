@@ -16,6 +16,17 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
     }
 }
 
+const verificarAll = async ()=>{
+    try {
+       const {data} = await api.get("/horarios/verificarDia")
+        console.log(data);
+        
+       return data
+   } catch (error) {
+       throw error.response?.data || {message: "Erro ao editar horario"}
+   }
+}
+
 const verificar = async ()=>{
     try {
          const item = localStorage.getItem('funcionario');
@@ -59,4 +70,4 @@ const saida = async ()=>{
     }
 }
 
-export default  {editarHorarios, verificar, entrada, saida}
+export default  {editarHorarios, verificar, entrada, saida, verificarAll}

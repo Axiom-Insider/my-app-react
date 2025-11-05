@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import Alerta from "../../../components/Alertas/Alerta"
 import funcionario from "../../../services/funcionario"
 import { PiNumberSquareSix } from "react-icons/pi"
+import horarios from "../../../services/horarios"
 
 
 function App() {
@@ -24,9 +25,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await funcionario.getAll();
+        const data = await horarios.verificarAll();
         const result = data;
-        setDados(result);
+        setDados(result.funcionarios);
       } catch (err) {
         setError(err.message);
       } finally {
