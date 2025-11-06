@@ -3,11 +3,16 @@ import NavbarFuncionario from '../../../components/Navbar/NavbarFuncionario'
 import "./Historico.css"
 import horarios from "../../../services/horarios"
 import usuarios from './usuarios';
+import Alerta from '../../../components/Alertas/Alerta';
 
 export default function Historico() {
   const [erro, setErro] = useState('')
   const [sucesso, setSucesso] = useState('')
   const [historico, setHistorico] = useState([])
+  const [anoSelect, setAnoSelect] = useState('')
+  const [anos, setAnos] = useState([])
+  const [mesSelect, setMesSelect] = useState('')
+  
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -16,15 +21,40 @@ export default function Historico() {
   useEffect(()=>{
     const feachDate = async ()=>{
       try {
-        const dados = await horarios.historicoFuncionario("11", "2025")
+        const date = new Date()
+        const dadosAnos = await horarios.ano()
+        setAnos(dadosAnos.dados)
+        console.log(date.getMonth() + 1);
         
-        return setHistorico(dados.historico)
-      } catch (error) {
+        const dados = await horarios.historicoFuncionario(date.getMonth() + 1, date.getFullYear().toString())
+        console.log(dados.historico);
+        
+        setHistorico(dados.historico)
+        return
+        } catch (error) {
         setErro(error.message || "Falha ao verificar entrada")
       }
     }
     feachDate()
-  })
+  },[])
+
+  useEffect(()=>{
+    const feachDate = async ()=>{
+      try {
+        const date = new Date()
+
+        const dados = await horarios.historicoFuncionario(mesSelect || date.getMonth() + 1, anoSelect || date.getFullYear().toString())
+        
+        setHistorico(dados.historico)
+        return
+        } catch (error) {
+        setErro(error.message || "Falha ao verificar entrada")
+      }
+    }
+      feachDate()
+  },[mesSelect, anoSelect])
+
+
   const ausenciaFeriados = (ausencia, feriados)=>{
     if(ausencia && feriados){
       return `${feriados}/${ausencia}`
@@ -46,16 +76,17 @@ export default function Historico() {
   <div className="box-historico w-100">
     <div className="row g-3">
       <div className="col-6 col-md-3">
-        <select className="form-select" id="mes" aria-label="Selecionar mês">
+        <select className="form-select" onChange={(e)=>{setMesSelect(e.target.value)}} id="mes" aria-label="Selecionar mês"  >
           {mes.map((nome, index) => (
             <option key={index} value={index}>{nome}</option>
           ))}
         </select>
       </div>
       <div className="col-6 col-md-3">
-        <select className="form-select" id="ano" aria-label="Selecionar ano" defaultValue="2025">
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
+        <select className="form-select" onChange={(e)=>{setAnoSelect(e.target.value)}}  id="ano" aria-label="Selecionar ano" >
+          {anos.map(ano=>(
+            <option key={ano.ano} value={ano.ano}>{ano.ano}</option>
+          ))}
         </select>
       </div>
     </div>
@@ -71,12 +102,12 @@ export default function Historico() {
             </tr>
           </thead>
           <tbody>
-            {dados.map((item) => (
-              <tr key={item.id} className="dados trHover">
-                <td>{item.data}</td>
-                <td>{ausenciaFeriados(item.ausencia, item.feriados)}</td>
-                <td>{item.hora_entrada}</td>
-                <td>{item.hora_saida}</td>
+            {historico.map((item) => (
+              <tr key={item.dia} className="dados trHover">
+                <td className='data-historico'>{item.dia} - {item.diaNome}</td>
+                <td>{ausenciaFeriados(item.ausencias, item.feriados)}</td>
+                <td>{item.entrada}</td>
+                <td>{item.saida}</td>
               </tr>
             ))}
           </tbody>

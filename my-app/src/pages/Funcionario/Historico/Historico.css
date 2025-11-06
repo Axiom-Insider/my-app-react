@@ -5,6 +5,11 @@
   width: 100%;
 }
 
+.data-historico{
+  padding-left: 20px;
+  text-align: left;
+}
+
 /* Ajustes nos selects */
 #mes,
 #ano {

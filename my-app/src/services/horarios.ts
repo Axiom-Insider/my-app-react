@@ -75,7 +75,8 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
          const item = localStorage.getItem('funcionario');
         if (!item) return null; 
         const {id} = JSON.parse(item);
-
+        console.log(id, mes, ano);
+        
         const {data} = await api.get(`/horarios/historico/${id}/${mes}/${ano}`)
 
         return data;
@@ -84,4 +85,20 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
     }
 }
 
-export default  {editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario}
+const ano = async ()=>{
+    try {
+        const item = localStorage.getItem('funcionario');
+       if (!item) return null; 
+       const {id} = JSON.parse(item);
+       
+       const {data} = await api.get(`/horarios/ano/${id}`)
+
+       return data;
+   } catch (error) {
+       throw error.response?.data || {message: "Erro ao editar horario"}
+   }
+}
+
+
+
+export default  {editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano}
