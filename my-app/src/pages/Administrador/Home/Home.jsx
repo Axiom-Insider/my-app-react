@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useLocation } from "react-router-dom"
 import { useEffect } from "react"
 import Alerta from "../../../components/Alertas/Alerta"
-import funcionario from "../../../services/funcionario"
 import { PiNumberSquareSix } from "react-icons/pi"
 import horarios from "../../../services/horarios"
 

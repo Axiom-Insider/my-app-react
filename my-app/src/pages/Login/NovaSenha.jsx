@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NavbarOff from '../../components/Navbar/NavbarOff'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { loginDay, loginFirst } from '../../services/login'
+import { loginFirst } from '../../services/login'
 import Alerta from '../../components/Alertas/Alerta'
 import Loading from '../../components/Loading/Loading'
 import { BiSolidError } from 'react-icons/bi'

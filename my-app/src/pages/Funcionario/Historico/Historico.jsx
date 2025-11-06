@@ -1,13 +1,30 @@
+import { useEffect, useState } from 'react';
 import NavbarFuncionario from '../../../components/Navbar/NavbarFuncionario'
 import "./Historico.css"
+import horarios from "../../../services/horarios"
 import usuarios from './usuarios';
 
 export default function Historico() {
+  const [erro, setErro] = useState('')
+  const [sucesso, setSucesso] = useState('')
+  const [historico, setHistorico] = useState([])
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
+  useEffect(()=>{
+    const feachDate = async ()=>{
+      try {
+        const dados = await horarios.historicoFuncionario("11", "2025")
+        
+        return setHistorico(dados.historico)
+      } catch (error) {
+        setErro(error.message || "Falha ao verificar entrada")
+      }
+    }
+    feachDate()
+  })
   const ausenciaFeriados = (ausencia, feriados)=>{
     if(ausencia && feriados){
       return `${feriados}/${ausencia}`
@@ -18,10 +35,12 @@ export default function Historico() {
     return feriados
   }
 
-  const dados = usuarios();
+
 
   return (
     <div>
+      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />)}
+      {erro && (<Alerta msg={erro} tipo={'erro'} />)}
       <NavbarFuncionario />
       <div className="container d-flex justify-content-center align-items-center">
   <div className="box-historico w-100">
