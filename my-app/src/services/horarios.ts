@@ -76,8 +76,9 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
         if (!item) return null; 
         const {id} = JSON.parse(item);
         console.log(id, mes, ano);
-        
-        const {data} = await api.get(`/horarios/historico/${id}/${mes}/${ano}`)
+        const mesNumber = +mes;
+
+        const {data} = await api.get(`/horarios/historico/${id}/${mesNumber + 1}/${ano}`)
 
         return data;
     } catch (error) {

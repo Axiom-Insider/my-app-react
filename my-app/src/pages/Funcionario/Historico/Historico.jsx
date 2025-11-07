@@ -24,7 +24,7 @@ export default function Historico() {
         const date = new Date()
         const dadosAnos = await horarios.ano()
         setAnos(dadosAnos.dados)
-        console.log(date.getMonth() + 1);
+        setMesSelect(date.getMonth())
         
         const dados = await horarios.historicoFuncionario(date.getMonth() + 1, date.getFullYear().toString())
         console.log(dados.historico);
@@ -76,7 +76,7 @@ export default function Historico() {
   <div className="box-historico w-100">
     <div className="row g-3">
       <div className="col-6 col-md-3">
-        <select className="form-select" onChange={(e)=>{setMesSelect(e.target.value)}} id="mes" aria-label="Selecionar mês"  >
+        <select className="form-select" value={mesSelect} onChange={(e)=>{setMesSelect(e.target.value)}} id="mes" aria-label="Selecionar mês"  >
           {mes.map((nome, index) => (
             <option key={index} value={index}>{nome}</option>
           ))}
@@ -104,10 +104,10 @@ export default function Historico() {
           <tbody>
             {historico.map((item) => (
               <tr key={item.dia} className="dados trHover">
-                <td className='data-historico'>{item.dia} - {item.diaNome}</td>
+                <td className='data-historico'>{item.dia} - {item.diaNome === 'Sábado' || item.diaNome === 'Domingo' ? <strong>{item.diaNome}</strong> : <>{item.diaNome}</> }</td>
                 <td>{ausenciaFeriados(item.ausencias, item.feriados)}</td>
-                <td>{item.entrada}</td>
-                <td>{item.saida}</td>
+                <td>{item.diaNome == 'Domingo' ? '--------' : <>{item.entrada}</>}</td>
+                <td>{item.diaNome == 'Domingo' ? '--------' : <>{item.saida}</>}</td>
               </tr>
             ))}
           </tbody>
