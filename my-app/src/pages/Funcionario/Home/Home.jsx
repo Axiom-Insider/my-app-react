@@ -44,17 +44,17 @@ export default function HomeFuncionario() {
                 <span className="nome">{nome}</span>
               </div>
               <div className="body">
-                <div className='caixa' ><div className="matricula"><strong>Matrícula: </strong>{matricula}</div> 
-                <div className="cargoHome"><strong>Cargo: </strong>{cargo}</div></div>
+                <div className='caixa' ><div className="matricula"><strong>Matrícula: </strong> <br/>{matricula}</div> 
+                <div className="cargoHome"><strong>Cargo: </strong> <br />{cargo}</div></div>
                 <div className="caixa">
                   {entrada ? 
-                      <div className='entrada'><strong>Entrada:</strong> {entrada}H <i className='checkHoras'> <FaCheckSquare /></i>
+                      <div className='entrada'><strong>Entrada:</strong> <br/>{entrada}H <i className='checkHoras'> <FaCheckSquare /></i>
                       </div>
                     : 
                       <div className='entrada'><strong>Entrada:</strong> <i className='wait'> <FaHourglassHalf /></i></div> 
                     }
                     {saida ? 
-                      <div className='saida'><strong>Saída:</strong> {saida}H <i className='checkHoras'> <FaCheckSquare /> </i>
+                      <div className='saida'><strong>Saída:</strong> <br/>{saida}H <i className='checkHoras'> <FaCheckSquare /> </i>
                       </div>
                     : 
                       <div className='saida'><strong>Saída:</strong> <i className='wait'> <FaHourglassHalf /></i></div> 

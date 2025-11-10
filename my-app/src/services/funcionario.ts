@@ -24,4 +24,16 @@ const getId = async ()=>{
     }
 }
 
-export default  {getAll, getId}
+
+const resetarSenha = async (id:number)=>{
+    try {
+        const body = {primeiraEntrada:false, senha:'123'}
+        const {data} = await api.patch("/funcionario/"+id, body)
+
+        return data
+    } catch (error) {
+            throw error.response?.data || {message: "Erro ao listar funcionarios"}
+    }
+}
+
+export default  {getAll, getId, resetarSenha}
