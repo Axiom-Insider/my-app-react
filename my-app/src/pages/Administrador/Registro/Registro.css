@@ -1,3 +1,14 @@
+.box-registro-funcionario{
+    margin-top: 5%;
+    color: var(--text-cor);
+    border-radius: 10px;
+    z-index: 1;
+    padding: 10px 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+    background-color: #0052cc;
+    width: 600px;
+    transition: background-color 0.2s ease;
+}
 
 .icone-pesquisa{
     display: flex;

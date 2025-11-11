@@ -61,7 +61,7 @@ export default function Registro() {
     <div>
       <NavbarAdm />
       <div className="d-flex justify-content-center align-items-center">
-        <div className="box-horarios">
+        <div className="box-registro-funcionario">
           <div className="head">
             <div className={ativo == 'registrar' ? "sub selecionado" : "sub"} onClick={() => setAtivo('registrar')}><FaUserPlus /> Registrar</div>
             <div className={ativo == 'editar' ? "sub selecionado" : "sub"} onClick={() => setAtivo('editar')}><FaUserEdit /> Editar</div>
@@ -124,8 +124,8 @@ export default function Registro() {
               <label htmlFor="" className='form-label'>Empresa:</label>
               <div className="horarios-linha">
                 <select className='form-select' name="" id="">
-                  <option value="1">Nenhum</option>
-                  <option value="2">Confiança</option>
+                  <option value="PoloUAB">Nenhum</option>
+                  <option value="Confianca">Confiança</option>
                 </select>
               </div>
               <div className="horarios-linha mt-2"><button className='botao-adicionar'>Registrar Funcionário</button></div>
