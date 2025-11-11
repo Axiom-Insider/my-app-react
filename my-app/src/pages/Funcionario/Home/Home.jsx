@@ -4,7 +4,7 @@ import "./Home.css"
 import { IoPersonCircleSharp } from "react-icons/io5";
 import funcionario from '../../../services/funcionario';
 import horario from '../../../services/horarios';
-import { FaCheck, FaCheckSquare, FaHourglassHalf, FaRegCheckSquare } from 'react-icons/fa';
+import { FaCheckSquare, FaHourglassHalf } from 'react-icons/fa';
 
 export default function HomeFuncionario() {
 

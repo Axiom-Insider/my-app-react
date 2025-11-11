@@ -25,17 +25,19 @@ export default function Feriados() {
   const [dados, setDados] = useState([])
   const [anos, setAnos] = useState([])
   const [anosSelect, setAnosSelect] = useState(null)
-  const [tipoFeriadoSelect, setTipoFeriadoSelect] = useState(null)
+  const [tipoFeriadoSelect, setTipoFeriadoSelect] = useState('Nacional')
 
   useEffect(()=>{
+    const date = new Date()
+    setAnosSelect(date.getFullYear().toString())
     const feachAno = async ()=>{
       try {
         const data = await feriados.anosFeriados()
         
         setAnos(data.dados)
-        console.log(anos);
       } catch (error) {
         setAnos([])
+        setErro(error.message || "Nenhum feriado foi encontrado")
       }
     }
     feachAno()
@@ -44,7 +46,6 @@ export default function Feriados() {
       try {
         const date = new Date()
         const data = await feriados.findAnoTipo(date.getFullYear().toString(), 'Nacional')
-        console.log(data);
         
         setDados(data.dados) 
       } catch (error) {
@@ -58,7 +59,8 @@ export default function Feriados() {
     const feachDataSelect = async ()=>{
       try {
         const data = await feriados.findAnoTipo(anosSelect, tipoFeriadoSelect)
-
+        console.log(data);
+        
         setDados(data.dados) 
       } catch (error) {
         setErro(error.message || "Nenhum feriado foi encontrado")
@@ -67,26 +69,30 @@ export default function Feriados() {
     feachDataSelect()
   },[anosSelect, tipoFeriadoSelect])
   
-  const preenchido = (e)=>{
-    
-    if(e.target.value.length < 1){
-      return setBotao(false);
-    }
-    setBotao(true)
-  }
-
     useEffect(()=>{
         setAnimeBg(true)
         const timer = setTimeout(()=>setAnimeBg(false), 1000);
         return ()=> clearTimeout(timer)
       }, [ativo])
+ 
+      const excluirFeriado = async()=>{
+        try {
+          const date = new Date();
+          const dados = await feriados.excluirFeriado(idFeriado)
 
+          setSucesso(dados.message)
+          setAnosSelect(date.getFullYear().toString())
+          setTipoFeriadoSelect("Nacional")
+        } catch (error) {
+          setErro(error.message || "Nenhum feriado foi encontrado")
+        }
+      }
+      useEffect(()=>{if(idFeriado)excluirFeriado()},[idFeriado])
  
     const createFeriado = async (e)=>{
       e.preventDefault()
       try {
         const data = await feriados.criarFeriado(nomeFeriado, dataInicio, dataFim, tipoFeriado, nacional)
-        console.log(data);
         
         setSucesso(data.message)
       } catch (error) {
@@ -153,7 +159,7 @@ export default function Feriados() {
                 <div className="linha">
                 <div className="horarios-linha mt-4">
                   <label htmlFor="" className="form-label">Tipo de Feriado:</label>
-                   <select className="form-select" name="ano" id="" onChange={(e)=>{setTipoFeriadoSelect(e.target.value)}}>
+                   <select className="form-select" name="ano" value={tipoFeriadoSelect} onChange={(e)=>{setTipoFeriadoSelect(e.target.value)}}>
                       <option value="Nacional">Nacional</option>
                       <option value="Estadual">Estadual</option>
                       <option value="Municipal">Municipal</option>
@@ -164,7 +170,7 @@ export default function Feriados() {
 
                 <div className="horarios-linha mt-4">
                   <label htmlFor="" className="form-label">Ano:</label>
-                   <select  className="form-select" name="ano" id="" onChange={(e)=>{setAnosSelect(e.target.value)}}>
+                   <select  className="form-select" name="ano" value={anosSelect} onChange={(e)=>{setAnosSelect(e.target.value)}}>
                     {anos.map(dados=>( 
                        <option value={dados.ano} key={dados.ano + 1}>{dados.ano}</option>
                     ))}
@@ -188,7 +194,7 @@ export default function Feriados() {
                               <td>{feriados.nome}</td>
                               <td>{feriados.dataInicio}{feriados.dataFim === feriados.dataInicio ? '' : " | "+feriados.dataFim }</td>
                               <td>{feriados.tipoFeriado}</td>
-                              <td> <button className="trash-btn" onChange={()=> setIdFeriado(feriados.id)}  ><i className="trash-icon"><FaTrash /></i></button> </td>
+                              <td> <button className="trash-btn" onClick={()=> setIdFeriado(feriados.id)}  ><i className="trash-icon"><FaTrash /></i></button> </td>
                             </tr>
                           ))}
                          

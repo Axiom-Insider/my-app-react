@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import NavbarFuncionario from '../../../components/Navbar/NavbarFuncionario'
 import "./Historico.css"
 import horarios from "../../../services/horarios"
-import usuarios from './usuarios';
 import Alerta from '../../../components/Alertas/Alerta';
 
 export default function Historico() {
   const [erro, setErro] = useState('')
-  const [sucesso, setSucesso] = useState('')
   const [historico, setHistorico] = useState([])
   const [anoSelect, setAnoSelect] = useState('')
   const [anos, setAnos] = useState([])
@@ -69,7 +67,6 @@ export default function Historico() {
 
   return (
     <div>
-      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />)}
       {erro && (<Alerta msg={erro} tipo={'erro'} />)}
       <NavbarFuncionario />
       <div className="container d-flex justify-content-center align-items-center">

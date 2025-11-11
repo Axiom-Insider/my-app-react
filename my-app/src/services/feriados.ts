@@ -42,4 +42,13 @@ const findAnoTipo = async (ano:string, tipoFeriado:string)=>{
     }
 }
 
-export default  {criarFeriado, lerFeriado, anosFeriados, findAnoTipo}
+const excluirFeriado = async(id:number)=>{
+    try {
+        const {data} = await api.delete("/feriados/"+id)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao apagar feriados"}
+    }
+}
+
+export default  {criarFeriado, lerFeriado, anosFeriados, findAnoTipo, excluirFeriado}
