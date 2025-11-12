@@ -24,7 +24,6 @@ const getId = async ()=>{
     }
 }
 
-
 const resetarSenha = async (id:number)=>{
     try {
         const body = {primeiraEntrada:false, senha:'123'}
@@ -32,8 +31,17 @@ const resetarSenha = async (id:number)=>{
 
         return data
     } catch (error) {
-            throw error.response?.data || {message: "Erro ao listar funcionarios"}
+        throw error.response?.data || {message: "Erro ao listar funcionarios"}
     }
 }
 
-export default  {getAll, getId, resetarSenha}
+const buscar = async (nome:string)=>{
+    try {
+        const {data} = await api.get("/funcionario/buscar/" + nome)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao listar funcionarios"}
+    }
+}
+
+export default  {getAll, getId, resetarSenha, buscar}
