@@ -134,7 +134,7 @@ const Horarios = () => {
                    <label className="form-label">Horário:</label>
                   <input className='form-control formulario' type="time" name="hora" onChange={(e)=> setHora(e.target.value)} id="" required/>
                 </div>
-                <div className="horarios-linha">
+                <div className="horarios-linha horario-metade">
                   <label className="form-label">Entrada:</label>
                   <input className='form-check-input check' type="checkbox" checked={status === "entrada"}  onChange={()=> setStatus('entrada')} name="status" id="" />
                 </div>

@@ -115,12 +115,12 @@ export default function Feriados() {
               <div> 
                 <form onSubmit={createFeriado}>
               <div className="linha">   
-                <div className="horarios-linha mt-4">
+                <div className="registro-linha mt-4">
                   <label className='form-label' >Nome do Feriado:</label>
                   <input type="text" className='form-control feriado' onChange={(e)=> setNomeFeriado(e.target.value)} placeholder='nome do feriado...' id="" required/>
                 </div>
                
-                <div className="horarios-linha mt-4">
+                <div className="registro-linha mt-4">
                 <label className="form-label">Tipo de Feriado:</label>
                 <select className='form-select' name="" id="" onChange={(e)=>{setTipoFeriado(e.target.value)}}>
                       <option value="Nacional">Nacional</option>
@@ -133,12 +133,12 @@ export default function Feriados() {
 
               </div>
               <div className="linha">
-                <div className="horarios-linha">
+                <div className="registro-linha">
                   <label className='form-label'>Data de início:</label>
                   <input className='form-control' onChange={(e)=> setDataInicio(e.target.value)} type="date" required />
                 </div>
                 
-                <div className="horarios-linha">
+                <div className="registro-linha">
                 <label className='form-label'>Data de fim:</label>
                   <input className='form-control' onChange={(e)=> setDataFim(e.target.value)} type="date" name="" id="" />
                 </div>
@@ -149,7 +149,7 @@ export default function Feriados() {
                 </div>
 
               </div>
-                <div className="horarios-linha">
+                <div className="registro-linha">
                   <button className={"botao-adicionar mt-2"}>Criar Feriado</button>
                 </div> 
               </form>
@@ -157,7 +157,7 @@ export default function Feriados() {
             :
             <div>
                 <div className="linha">
-                <div className="horarios-linha mt-4">
+                <div className="registro-linha mt-4">
                   <label htmlFor="" className="form-label">Tipo de Feriado:</label>
                    <select className="form-select" name="ano" value={tipoFeriadoSelect} onChange={(e)=>{setTipoFeriadoSelect(e.target.value)}}>
                       <option value="Nacional">Nacional</option>
@@ -168,7 +168,7 @@ export default function Feriados() {
                     </select>
                 </div>
 
-                <div className="horarios-linha mt-4">
+                <div className="registro-linha mt-4">
                   <label htmlFor="" className="form-label">Ano:</label>
                    <select  className="form-select" name="ano" value={anosSelect} onChange={(e)=>{setAnosSelect(e.target.value)}}>
                     {anos.map(dados=>( 
@@ -178,7 +178,7 @@ export default function Feriados() {
                 </div>
                 </div>
   
-                <div className="horarios-linha tables">
+                <div className="registro-linha tables">
                       <table>
                         <thead>
                           <tr className="tr-f">

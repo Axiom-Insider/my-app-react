@@ -9,16 +9,18 @@ import Alerta from '../../../components/Alertas/Alerta'
 
 export default function Registro() {
 
-  const [nome, setNome] = useState('');
-  const [matricula, setMatricula] = useState('');
-  const [cargo, setCargo] = useState('');
-  const [empresa, setEmpresa] = useState('');
+  //dados do funcionario
+  const [nome, setNome] = useState("")
+  const [matricula, setMatricula] = useState('')
+  const [cargo, setCargo] = useState('')
+  const [empresa, setEmpresa] = useState('Polouab')
+  const [turno, setTurno] = useState('Vespertino')
+  const [cpf, setCpf] = useState('')
+
   const [selecionado, setSelecionado] = useState(false);
   const [ativo, setAtivo] = useState('registrar');
-  const [dados, setDados] = useState([])
   const [erro, setErro] = useState(null);
   const [sucesso, setSucesso] = useState(null)
-  const [funcionarioPesquisar, setFuncionarioPesquisar] = useState();
   const [funcionarioFiltrado, setFuncionarioFiltrado] = useState([]);
 
 
@@ -32,7 +34,6 @@ export default function Registro() {
   const digitando = async (event) => {
     if(event.target.value != ''){
       try {
-            setFuncionarioPesquisar(event.target.value)
             const dados = await funcionario.buscar(event.target.value)
             console.log(dados);
             
@@ -50,14 +51,18 @@ export default function Registro() {
       setNome('')
       setMatricula('')
       setCargo('')
-      setEmpresa('')
+      setEmpresa('Confianca')
+      setTurno('vespertino')
+      setCpf('')
     } else {
       setSelecionado(id)
       const fun = funcionarioFiltrado.filter(user => user.id === id);
       setNome(fun[0].nome)
-      setMatricula(fun[0].id)
+      setMatricula(fun[0].matricula)
       setCargo(fun[0].cargo)
-      setEmpresa(3)
+      setEmpresa(fun[0].empresa)
+      setTurno(fun[0].turno)
+      setCpf(fun[0].cpf)
       setFuncionarioFiltrado(fun)
     }
 
@@ -76,29 +81,45 @@ export default function Registro() {
           </div>
           {ativo === "editar" ?
             <div className="body-horarios">
-              <div className="horarios-linha">
-                <input className='form-control'  onChange={(e) => setNome(e.target.value)} value={nome} type="text" name="nome" id="" />
+              <div className="registro-linha">
+                <label htmlFor="" className='form-label'>Nome:</label>
+                <input className='form-control'  value={nome} onChange={(e) => setNome(e.target.value)} type="text" name="nome" />
               </div>
               <div className="linha-registro">
-                <div className="horarios-linha editar">
-                  <input className='form-control' onChange={(e) => setNome(e.target.value)} type="number" value={matricula} name="matricula" id="" />
+                <div className="registro-linha editar">
+                  <label htmlFor="" className='form-label'>Matricula:</label>
+                  <input className='form-control' onChange={(e) => setMatricula(e.target.value)} type="text" value={matricula} name="matricula" />
                 </div>
-                <div className="horarios-linha editar">
-                  <input className='form-control' onChange={(e) => setNome(e.target.value)} type="text" value={cargo} name="cargo" id="" />
+                 <div className="registro-linha editar">
+                  <label htmlFor="" className='form-label'>CPF:</label>
+                  <input className='form-control' onChange={(e) => setCpf(e.target.value)} type="text" value={cpf} name="CPF" />
+                </div>
+                <div className="registro-linha editar">
+                  <label htmlFor="" className='form-label'>Cargo:</label>
+                  <input className='form-control' onChange={(e) => setCargo(e.target.value)} type="text" value={cargo} name="cargo" />
                 </div>
               </div>
-              <div className="horarios-linha">
-                <select className='form-select' value={2} name="" id="">
-                  <option value="1" >Nenhum</option>
-                  <option value="2" >Confiança</option>
-                  <option value="3" >PoloUAB</option>
+              <div className="linha-registro">
+              <div className="registro-linha">
+                <label className='form-label'>Empresa:</label>
+                <select className='form-select' value={empresa} onChange={(e) => setEmpresa(e.target.value)} name="" id="">
+                  <option value="Confianca" >Confiança</option>
+                  <option value="Polouab" >PoloUAB</option>
                 </select>
               </div>
+               <div className="registro-linha">
+                <label htmlFor="" className='form-label'>Turno:</label>
+                <select className='form-select' value={turno} onChange={(e) => setTurno(e.target.value)} name="" id="">
+                  <option value="Vespertino" >Vespertino</option>
+                  <option value="Matutino" >Matutino</option>
+                </select>
+              </div>
+              </div>
               {selecionado != false ?
-                <div className="horarios-linha">
-                  <div className="horarios-linha"><button className='botao-adicionar'>Atualizar Registro</button></div>
+                <div className="registro-linha">
+                  <div className="registro-linha"><button className='botao-adicionar'>Atualizar Registro</button></div>
                 </div> : ''}
-              <div className="horarios-linha mt-4">
+              <div className="registro-linha mt-4">
                 <div className="search-container">
                   <input type="text" onChange={digitando} className="form-control search-input" placeholder="Pesquisar..." />
                   <i className="fas fa-search search-icon"><MdPersonSearch /> </i>
@@ -115,42 +136,44 @@ export default function Registro() {
             </div>
             :
             <div className='body-horarios'>
-                <div className="horarios-linha">
+                <div className="registro-linha">
                   <label htmlFor="" className='form-label'>Nome:</label>
                   <input className='form-control' type="text" name="nome" id="" />
                 </div>
               <div className="linha-registro">
-                <div className="horarios-linha editar">
+                <div className="registro-linha editar">
                   <label htmlFor="" className='form-label'>Matrícula:</label>
                   <input className='form-control' type="number" name="matricula" id="" />
                 </div>
-                 <div className="horarios-linha">
+                 <div className="registro-linha">
                   <label htmlFor="" className='form-label'>CPF:</label>
                   <input className='form-control' type="text" name="cpf" id="" />
                 </div>
-                <div className="horarios-linha editar">
+                <div className="registro-linha editar">
                   <label htmlFor="" className='form-label'>Cargo:</label>
                   <input className='form-control' type="text" name="matricula" id="" />
                 </div>
               </div>
+
               <div className="linha-registro">
-              <label htmlFor="" className='form-label'>Empresa:</label>
-              <div className="horarios-linha">
-                <select className='form-select' name="" id="">
-                  <option value="PoloUAB">Nenhum</option>
-                  <option value="Confianca">Confiança</option>
-                </select>
-              </div>
-                <label htmlFor="" className='form-label'>Empresa:</label>
-              <div className="horarios-linha">
-                <select className='form-select' name="" id="">
-                  <option value="PoloUAB">Nenhum</option>
-                  <option value="Confianca">Confiança</option>
-                </select>
+                <div className="registro-linha">
+                  <label htmlFor="" className='form-label'>Empresa:</label>
+                    <select className='form-select select-registro' name="" id="">
+                      <option value="PoloUAB">Nenhum</option>
+                      <option value="Confianca">Confiança</option>
+                       <option value="Confianca">PoloUAB</option>
+                    </select>
+                </div>
+                <div className="registro-linha">
+                  <label htmlFor="" className='form-label'>Turno:</label>
+                    <select className='form-select select-registro' name="" id="">
+                      <option value="PoloUAB">Matutino</option>
+                      <option value="Confianca">Vespertino</option>
+                    </select>
+                </div>
               </div>
 
-              </div>
-              <div className="horarios-linha mt-2"><button className='botao-adicionar'>Registrar Funcionário</button></div>
+              <div className="registro-linha mt-2"><button className='botao-adicionar'>Registrar Funcionário</button></div>
             </div>
           }
         </div>
