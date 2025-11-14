@@ -10,7 +10,7 @@ import Alerta from '../../../components/Alertas/Alerta'
 export default function Registro() {
 
   //dados do funcionario
-  const [nome, setNome] = useState("")
+  const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
   const [cargo, setCargo] = useState('')
   const [empresa, setEmpresa] = useState('Polouab')
@@ -35,8 +35,6 @@ export default function Registro() {
     if(event.target.value != ''){
       try {
             const dados = await funcionario.buscar(event.target.value)
-            console.log(dados);
-            
             setFuncionarioFiltrado(dados)
           } catch (error) {
             setErro(error.message || "Erro ao buscar funcionários");
@@ -44,10 +42,22 @@ export default function Registro() {
     }
   }
 
+  const registrarFuncionario = async (e)=>{
+     e.preventDefault()
+     try {
+      const body = {nome, matricula, cpf, empresa, turno, cargo}
+      const dados = await funcionario.create(body)
+      console.log(dados);
+      
+      setSucesso(dados.message)
+     } catch (error) {
+      setErro(error.message || "Erro ao buscar funcionários");
+     }
+  } 
+
   const funcionarioSelecionado = (id) => {
     if (selecionado == id) {
       setSelecionado(false)
-      setFuncionarioFiltrado(dados)
       setNome('')
       setMatricula('')
       setCargo('')
@@ -135,29 +145,30 @@ export default function Registro() {
               </div>
             </div>
             :
+            <form onSubmit={registrarFuncionario}>
             <div className='body-horarios'>
                 <div className="registro-linha">
                   <label htmlFor="" className='form-label'>Nome:</label>
-                  <input className='form-control' type="text" name="nome" id="" />
+                  <input className='form-control' onChange={(e)=>setNome(e.target.value)} type="text" name="nome" id="" required/>
                 </div>
               <div className="linha-registro">
                 <div className="registro-linha editar">
                   <label htmlFor="" className='form-label'>Matrícula:</label>
-                  <input className='form-control' type="number" name="matricula" id="" />
+                  <input className='form-control' onChange={(e)=>setMatricula(e.target.value)} type="number" name="matricula" id="" required/>
                 </div>
                  <div className="registro-linha">
                   <label htmlFor="" className='form-label'>CPF:</label>
-                  <input className='form-control' type="text" name="cpf" id="" />
+                  <input className='form-control' onChange={(e)=>setCpf(e.target.value)} type="text" name="cpf" id="" required/>
                 </div>
                 <div className="registro-linha editar">
                   <label htmlFor="" className='form-label'>Cargo:</label>
-                  <input className='form-control' type="text" name="matricula" id="" />
+                  <input className='form-control' onChange={(e)=>setCargo(e.target.value)} type="text" name="matricula" id="" required/>
                 </div>
               </div>
 
               <div className="linha-registro">
                 <div className="registro-linha">
-                  <label htmlFor="" className='form-label'>Empresa:</label>
+                  <label htmlFor="" onChange={(e)=>setEmpresa(e.target.value)} className='form-label'>Empresa:</label>
                     <select className='form-select select-registro' name="" id="">
                       <option value="PoloUAB">Nenhum</option>
                       <option value="Confianca">Confiança</option>
@@ -165,16 +176,16 @@ export default function Registro() {
                     </select>
                 </div>
                 <div className="registro-linha">
-                  <label htmlFor="" className='form-label'>Turno:</label>
+                  <label htmlFor="" onChange={(e)=>setTurno(e.target.value)} className='form-label'>Turno:</label>
                     <select className='form-select select-registro' name="" id="">
                       <option value="PoloUAB">Matutino</option>
                       <option value="Confianca">Vespertino</option>
                     </select>
                 </div>
               </div>
-
               <div className="registro-linha mt-2"><button className='botao-adicionar'>Registrar Funcionário</button></div>
             </div>
+            </form>
           }
         </div>
       </div>

@@ -35,6 +35,19 @@ const resetarSenha = async (id:number)=>{
     }
 }
 
+const create = async (body:{
+    nome:string, matricula:string,
+    cpf:string, cargo:string, 
+    empresa:string, turno:string 
+})=>{
+    try {
+        
+    const {data} = await api.post("/funcionario", body)        
+    } catch (error) {
+    throw error.response?.data || {message: "Erro ao listar funcionarios"}
+    }
+}
+
 const buscar = async (nome:string)=>{
     try {
         const {data} = await api.get("/funcionario/buscar/" + nome)
@@ -44,4 +57,4 @@ const buscar = async (nome:string)=>{
     }
 }
 
-export default  {getAll, getId, resetarSenha, buscar}
+export default  {getAll, getId, resetarSenha, buscar, create}
