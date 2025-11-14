@@ -18,8 +18,9 @@ export default function Feriados() {
   const [nacional, setNacional] = useState(false)
   const [idFeriado, setIdFeriado] = useState('')
 
-  const [erro, setErro] = useState(null);
-  const [sucesso, setSucesso] = useState(null)
+  const [alerta, setAlerta] = useState('')
+  const [tipoAlerta, setTipoAlerta] = useState('')
+
   const [ativo, setAtivo] = useState('Cadastrar')
   const [animeBg, setAnimeBg] = useState(false)
   const [dados, setDados] = useState([])
@@ -71,20 +72,32 @@ export default function Feriados() {
   
     useEffect(()=>{
         setAnimeBg(true)
-        const timer = setTimeout(()=>setAnimeBg(false), 1000);
+        setTipoFeriadoSelect('Nacional')
+        const timer = setTimeout(()=>setAnimeBg(false), 500);
         return ()=> clearTimeout(timer)
       }, [ativo])
+
+
+    useEffect(()=>{
+        const timer = setTimeout(()=>{setTipoAlerta('sair')
+          setAlerta(' ')
+        }, 2000);
+        return ()=> clearTimeout(timer)
+      }, [alerta])
  
       const excluirFeriado = async()=>{
         try {
           const date = new Date();
           const dados = await feriados.excluirFeriado(idFeriado)
 
-          setSucesso(dados.message)
+          setTipoAlerta('sucesso')
+          setAlerta(dados.message)
+          setAtivo("Consultar")
           setAnosSelect(date.getFullYear().toString())
           setTipoFeriadoSelect("Nacional")
         } catch (error) {
-          setErro(error.message || "Nenhum feriado foi encontrado")
+          setTipoAlerta('erro')
+          setAlerta(error.message || "Não foi possível criar feriado")
         }
       }
       useEffect(()=>{if(idFeriado)excluirFeriado()},[idFeriado])
@@ -94,17 +107,18 @@ export default function Feriados() {
       try {
         const data = await feriados.criarFeriado(nomeFeriado, dataInicio, dataFim, tipoFeriado, nacional)
         
-        setSucesso(data.message)
+        setTipoAlerta('sucesso')
+        setAlerta(data.message)
       } catch (error) {
-        setErro(error.message || "Não foi possível criar feriado")
+        setTipoAlerta('erro')
+        setAlerta(error.message || "Não foi possível criar feriado")
       }
     }
 
   return (
     <div>
        <NavbarAdm />
-       {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
-       {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} />) }
        <div className="container d-flex justify-content-center align-items-center">
           <div className={`box-horarios ${animeBg ? "anime-bg" : ''}`}>
             <div className="head">
