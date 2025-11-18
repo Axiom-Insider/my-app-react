@@ -42,7 +42,8 @@ const create = async (body:{
 })=>{
     try {
         
-    const {data} = await api.post("/funcionario", body)        
+    const {data} = await api.post("/funcionario", body)   
+    return data     
     } catch (error) {
     throw error.response?.data || {message: "Erro ao listar funcionarios"}
     }
@@ -57,4 +58,17 @@ const buscar = async (nome:string)=>{
     }
 }
 
-export default  {getAll, getId, resetarSenha, buscar, create}
+const editar = async (body:{
+    nome:string, matricula:string,
+    cpf:string, cargo:string, 
+    empresa:string, turno:string 
+}, id:number)=>{
+    try {
+        const {data} = await api.patch('/funcionario/'+id, body)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao listar funcionarios"}
+    }
+}
+
+export default  {getAll, getId, resetarSenha, buscar, create, editar}

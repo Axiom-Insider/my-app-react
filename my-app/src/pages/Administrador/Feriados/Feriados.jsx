@@ -18,8 +18,9 @@ export default function Feriados() {
   const [nacional, setNacional] = useState(false)
   const [idFeriado, setIdFeriado] = useState('')
 
-  const [alerta, setAlerta] = useState('')
+  const [alerta, setAlerta] = useState(false)
   const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
 
   const [ativo, setAtivo] = useState('Cadastrar')
   const [animeBg, setAnimeBg] = useState(false)
@@ -56,7 +57,9 @@ export default function Feriados() {
     feachData()
   },[ativo])
 
+
   useEffect(()=>{
+    console.log('teste');
     const feachDataSelect = async ()=>{
       try {
         const data = await feriados.findAnoTipo(anosSelect, tipoFeriadoSelect)
@@ -69,7 +72,8 @@ export default function Feriados() {
     }
     feachDataSelect()
   },[anosSelect, tipoFeriadoSelect])
-  
+    
+    //background
     useEffect(()=>{
         setAnimeBg(true)
         setTipoFeriadoSelect('Nacional')
@@ -77,24 +81,39 @@ export default function Feriados() {
         return ()=> clearTimeout(timer)
       }, [ativo])
 
+      //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
 
-    useEffect(()=>{
-        const timer = setTimeout(()=>{setTipoAlerta('sair')
-          setAlerta(' ')
-        }, 2000);
-        return ()=> clearTimeout(timer)
-      }, [alerta])
- 
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
+    
       const excluirFeriado = async()=>{
         try {
           const date = new Date();
-          const dados = await feriados.excluirFeriado(idFeriado)
+          const data = await feriados.excluirFeriado(idFeriado)
 
           setTipoAlerta('sucesso')
-          setAlerta(dados.message)
+          setAlerta(data.message)
           setAtivo("Consultar")
           setAnosSelect(date.getFullYear().toString())
           setTipoFeriadoSelect("Nacional")
+          var novosFeriados = dados
+          novosFeriados = novosFeriados.filter(f => f.id != idFeriado)
+          console.log(novosFeriados);
+          setDados(novosFeriados)
         } catch (error) {
           setTipoAlerta('erro')
           setAlerta(error.message || "Não foi possível criar feriado")
@@ -118,7 +137,7 @@ export default function Feriados() {
   return (
     <div>
        <NavbarAdm />
-       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} />) }
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
        <div className="container d-flex justify-content-center align-items-center">
           <div className={`box-horarios ${animeBg ? "anime-bg" : ''}`}>
             <div className="head">

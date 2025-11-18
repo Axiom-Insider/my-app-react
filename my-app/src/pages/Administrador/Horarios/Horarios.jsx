@@ -17,6 +17,7 @@ const Horarios = () => {
   //dados para editar horario
   const [dataCriada, setDataCriada] = useState("")
   const [hora, setHora] = useState("")
+
   //dados para criar ausencia
   const [dataInicio, setDataInicio] = useState(null)
   const [dataFim, setDataFim] = useState('')
@@ -24,8 +25,12 @@ const Horarios = () => {
 
   const [animeBg, setAnimeBg] = useState(false)
   const [ativo, setAtivo] = useState('horarios')
-  const [erro, setErro] = useState(null);
-  const [sucesso, setSucesso] = useState(null)
+
+  //Alerta
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
+
   const [status, setStatus] = useState(null)
   const [selecionado, setSelecionado] = useState(null)
   const [dados, setDados] = useState([])
@@ -40,8 +45,9 @@ const Horarios = () => {
              const data = await funcionario.getAll();
              setDados(data);
            } catch (err) {
-             setErro(err.message || "Erro ao buscar funcionários");
-           } 
+            setAlerta(err.message || "Erro ao buscar funcionários");
+            setTipoAlerta('erro')
+            } 
          };
       if(!animeBg){
         fetchData()
@@ -58,6 +64,9 @@ const Horarios = () => {
       var dividido = nome.split(' ')
       var primeira = dividido[0].charAt(0).toUpperCase();
       var segunda = dividido[1].charAt(0).toUpperCase();
+      if(dividido[1].toLowerCase() === 'do' || dividido[1].toLowerCase() === 'de'){
+        segunda = dividido[2].charAt(0).toUpperCase()
+      }
       return `${primeira}${segunda}`
     }
 
@@ -81,10 +90,14 @@ const Horarios = () => {
     const editarHorario = async (e)=>{
       e.preventDefault()
       try {
+        console.log(status);
+        
         const data = await horarios.editarHorarios(dataCriada, hora, status, id)
-        setSucesso(data.message)
+        setAlerta(data.message)
+        setTipoAlerta('sucesso')
       } catch (error) {
-        setErro(error.message || "Erro ao Editar Horario")
+        setAlerta(error.message || "Erro ao Editar Horario")
+        setTipoAlerta('erro')
       }
      
     }
@@ -94,26 +107,45 @@ const Horarios = () => {
       try {
         console.log(dataInicio, dataFim, tipoAusencia, id);
         const data = await ausencias.criarAusencia(dataInicio, dataFim, tipoAusencia, id)
-        setSucesso(data.message)
+        setAlerta(data.message)
+        setTipoAlerta('sucesso')
       } catch (error) {
-        setErro(error.message || "Erro ao Criar Ausência")
+        setAlerta(error.message || "Erro ao Criar Ausência")
+        setTipoAlerta('erro')
       }
     }
+       //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
+
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
   
     useEffect(()=>{
       setAnimeBg(true)
       setFuncionarioFiltrado([])
       setSelecionado('')
       setId('')
-      const timer = setTimeout(()=>setAnimeBg(false), 1000);
+      const timer = setTimeout(()=>setAnimeBg(false), 500);
       return ()=> clearTimeout(timer)
     }, [ativo])
   
   return (
     <div>
       <NavbarAdm />
-      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
-      {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <div className="container d-flex justify-content-center align-items-center">
         <div className={`box-horarios ${animeBg ? "anime-bg" : ''}`} >
           <div className="head">

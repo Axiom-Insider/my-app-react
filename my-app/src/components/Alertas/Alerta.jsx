@@ -3,7 +3,7 @@ import { TbAlertSquareRoundedFilled } from "react-icons/tb"
 import { FaUserCheck } from "react-icons/fa"
 import { BiSolidError } from "react-icons/bi"
 
-function Alerta({msg, tipo}) {
+function Alerta({msg, tipo, close}) {
   const alerta = ['erro', 'sucesso', 'aviso', 'sair']     
   const classe = alerta.includes(tipo) ? tipo : 'aviso'
   const icone = {
@@ -13,7 +13,7 @@ function Alerta({msg, tipo}) {
   }
   return (
     <div>
-        <div className={"alerta alerta-" + classe }>
+        <div className={close ? 'alerta alerta-'+classe + ' sair' : "alerta alerta-" + classe }>
           <strong><i className="icone-alerta">{icone[classe]}</i> {msg}</strong>
         </div>  
     </div>

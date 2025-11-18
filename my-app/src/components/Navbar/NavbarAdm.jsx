@@ -69,7 +69,7 @@ const NavbarAdm = ()=> {
               </li>
 
               <li className="nav-item">
-                <a className={"sair nav-link " +  verificadoPagina('sair')} onClick={()=>logout()}>
+                <a className={"close nav-link " +  verificadoPagina('sair')} onClick={()=>logout()}>
                   <BsBoxArrowRight className="me-1" />Sair
                 </a>
               </li>

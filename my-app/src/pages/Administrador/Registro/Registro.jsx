@@ -19,9 +19,12 @@ export default function Registro() {
 
   const [selecionado, setSelecionado] = useState(false);
   const [ativo, setAtivo] = useState('registrar');
-  const [erro, setErro] = useState(null);
-  const [sucesso, setSucesso] = useState(null)
   const [funcionarioFiltrado, setFuncionarioFiltrado] = useState([]);
+
+   //Alerta
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
 
 
   const iniciais = (nome) => {
@@ -37,8 +40,22 @@ export default function Registro() {
             const dados = await funcionario.buscar(event.target.value)
             setFuncionarioFiltrado(dados)
           } catch (error) {
-            setErro(error.message || "Erro ao buscar funcionários");
+            setAlerta(error.message || "Erro ao buscar funcionários");
+            setTipoAlerta('erro')
           }
+    }
+  }
+  const editarFuncionario = async (e)=>{
+    e.preventDefault()
+    try {
+      const body = {nome, matricula, cpf, empresa, turno, cargo}
+      const dados = await funcionario.editar(body, selecionado)
+      funcionarioSelecionado(selecionado)
+      setAlerta(dados.message)
+      setTipoAlerta('sucesso')
+    } catch (error) {
+      setAlerta(error.message || "Erro ao buscar funcionários");
+      setTipoAlerta('erro')
     }
   }
 
@@ -49,10 +66,12 @@ export default function Registro() {
       const dados = await funcionario.create(body)
       console.log(dados);
       
-      setSucesso(dados.message)
-     } catch (error) {
-      setErro(error.message || "Erro ao buscar funcionários");
-     }
+      setAlerta(dados.message)
+      setTipoAlerta('sucesso')
+    } catch (error) {
+      setAlerta(error.message || "Erro ao buscar funcionários");
+      setTipoAlerta('erro')
+    }
   } 
 
   const funcionarioSelecionado = (id) => {
@@ -78,11 +97,29 @@ export default function Registro() {
 
   }
 
+    //alerta
+        useEffect(() => {
+        if (alerta) {
+          const t1 = setTimeout(() => {
+            setClose(true); 
+          }, 1500);
+  
+          const t2 = setTimeout(() => {
+            setAlerta(false)
+            setClose(false)
+          }, 2000)
+  
+          return () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+          };
+        }
+      }, [alerta]);
+
   return (
     <div>
       <NavbarAdm />
-       {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
-      {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <div className="d-flex justify-content-center align-items-center">
         <div className="box-registro-funcionario">
           <div className="head">
@@ -90,6 +127,7 @@ export default function Registro() {
             <div className={ativo == 'editar' ? "sub selecionado" : "sub"} onClick={() => setAtivo('editar')}><FaUserEdit /> Editar</div>
           </div>
           {ativo === "editar" ?
+            <form onSubmit={editarFuncionario} autoComplete="off">
             <div className="body-horarios">
               <div className="registro-linha">
                 <label htmlFor="" className='form-label'>Nome:</label>
@@ -144,8 +182,9 @@ export default function Registro() {
                 ))}
               </div>
             </div>
+            </form>
             :
-            <form onSubmit={registrarFuncionario}>
+            <form onSubmit={registrarFuncionario} autoComplete="off">
             <div className='body-horarios'>
                 <div className="registro-linha">
                   <label htmlFor="" className='form-label'>Nome:</label>
@@ -170,9 +209,8 @@ export default function Registro() {
                 <div className="registro-linha">
                   <label htmlFor="" onChange={(e)=>setEmpresa(e.target.value)} className='form-label'>Empresa:</label>
                     <select className='form-select select-registro' name="" id="">
-                      <option value="PoloUAB">Nenhum</option>
-                      <option value="Confianca">Confiança</option>
-                       <option value="Confianca">PoloUAB</option>
+                      <option value="Confiança">Confiança</option>
+                       <option value="PoloUAB">PoloUAB</option>
                     </select>
                 </div>
                 <div className="registro-linha">

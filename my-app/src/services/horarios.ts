@@ -4,7 +4,7 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
     try {
         let body = {dataCriada, id_funcionario}
         if(tipo === "entrada"){
-            Object.assign(body, {entrada:null})
+            Object.assign(body, {entrada:hora})
         }else if (tipo === "saida"){
             Object.assign(body, {saida:hora})
         }

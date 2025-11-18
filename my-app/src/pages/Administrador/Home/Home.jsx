@@ -12,13 +12,18 @@ function App() {
 
   const [data] = useState(new Date())
   const location = useLocation()
-  const [sucesso, setSucesso] = useState(false)
   const [dados, setDados] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
 
   useEffect(()=>{
-    if(location.state && location.state.mensagem)setSucesso(location.state.mensagem)
+    if(location.state && location.state.mensagem){
+      setAlerta(location.state.mensagem)
+      setTipoAlerta('sucesso')
+    }
   }, [location.state])
 
   useEffect(() => {
@@ -28,18 +33,39 @@ function App() {
         const result = data;
         setDados(result.funcionarios);
       } catch (err) {
-        setError(err.message);
+        setAlerta(err.message);
+        setTipoAlerta('erro')
       } finally {
         setLoading(false);
       }
     };
     fetchData();
   }, []);
+
+   //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
+
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
+
   if (loading) {
     return <div>Carregando dados...</div>;
   }
 
-  if (error) {
+  if (tipoAlerta === 'erro') {
     return <div>Ocorreu um erro: {error}</div>;
   }
 
@@ -47,6 +73,10 @@ function App() {
     var dividido = nome.split(' ')
     var primeira = dividido[0].charAt(0).toUpperCase();
     var segunda = dividido[1] ? dividido[1].charAt(0).toUpperCase() : '';
+    
+    if(dividido[1].toLowerCase() === 'do' || dividido[1].toLowerCase() === 'de'){
+      segunda = dividido[2].charAt(0).toUpperCase()
+    }
     return `${primeira}${segunda}`
   }
 
@@ -60,7 +90,7 @@ function App() {
   return (
     <div>
       <NavbarAdm />
-      {sucesso && (<Alerta msg={sucesso} tipo={"sucesso"}></Alerta>)}
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <div className="container d-flex justify-content-center align-items-center">
         <div className="alertas">
           <div className="head-home">

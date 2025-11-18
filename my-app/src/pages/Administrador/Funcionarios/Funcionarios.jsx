@@ -58,7 +58,7 @@ export default function Funcionarios() {
           
           {dados.map(funcionarios=>(
             <div className="row tabela-body align-items-center" key={funcionarios.id}>
-              <div className="col">#{funcionarios.id}</div>
+              <div className="col">{funcionarios.matricula}</div>
               <div className="col col-nome">{funcionarios.nome}</div>
               <div className="col text-center">
                 <div className="btn-group" role='group' >
