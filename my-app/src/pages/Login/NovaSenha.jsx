@@ -13,9 +13,12 @@ export default function NovaSenha() {
   const [senha, setSenha] = useState("")
   const [novaSenha, setNovaSenha] = useState("")
   const [senhaDiferente, setSenhaDiferente] = useState(false)
-  const [erro, setErro] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigation = useNavigate()
+
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
   
 
   useEffect(()=>{
@@ -27,11 +30,6 @@ export default function NovaSenha() {
 
   }, [location, navigation])
 
-
-  useEffect(()=>{
-    setErro(false)
-  }, [senha, novaSenha])
-  
   useEffect(()=>{
     if(senha !== novaSenha){
       setSenhaDiferente(true)
@@ -42,16 +40,38 @@ export default function NovaSenha() {
     
   }, [novaSenha])
 
+     //alerta
+        useEffect(() => {
+        if (alerta) {
+          const t1 = setTimeout(() => {
+            setClose(true); 
+          }, 1500);
+  
+          const t2 = setTimeout(() => {
+            setAlerta(false)
+            setClose(false)
+          }, 2000)
+  
+          return () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+          };
+        }
+      }, [alerta]);
   
     const handleLogin = async (e)=>{
       e.preventDefault()
 
       if(!senha || !novaSenha){
-        return setErro("Preencha todos os campos")
+        setAlerta("Preencha todos os campos")
+        setTipoAlerta("erro")
+        return
       }
       
       if(senhaDiferente){
-        return setErro("As senhas estão diferente!")
+        setAlerta("As senhas estão diferente!")
+        setTipoAlerta("erro")
+        return
       }
 
       setLoading(true)
@@ -68,7 +88,7 @@ export default function NovaSenha() {
   return (
     <div>
        <NavbarOff />
-      {erro && (<Alerta msg={erro} tipo={"erro"}></Alerta>)}
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
     <div className="container-login">
       <div className="fundoPreto"></div>
       {loading && <Loading></Loading>}

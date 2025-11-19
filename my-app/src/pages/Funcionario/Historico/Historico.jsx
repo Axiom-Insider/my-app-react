@@ -5,16 +5,21 @@ import horarios from "../../../services/horarios"
 import Alerta from '../../../components/Alertas/Alerta';
 
 export default function Historico() {
-  const [erro, setErro] = useState('')
+
   const [historico, setHistorico] = useState([])
   const [anoSelect, setAnoSelect] = useState('')
   const [anos, setAnos] = useState([])
   const [mesSelect, setMesSelect] = useState('')
+
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
   
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
+
 
   useEffect(()=>{
     const feachDate = async ()=>{
@@ -30,7 +35,8 @@ export default function Historico() {
         setHistorico(dados.historico)
         return
         } catch (error) {
-        setErro(error.message || "Falha ao verificar entrada")
+        setAlerta(error.message || "Falha ao trazer dados")
+        setTipoAlerta("erro")
       }
     }
     feachDate()
@@ -46,7 +52,8 @@ export default function Historico() {
         setHistorico(dados.historico)
         return
         } catch (error) {
-        setErro(error.message || "Falha ao verificar entrada")
+        setAlerta(error.message || "Falha ao trazer dados")
+        setTipoAlerta("erro")
       }
     }
       feachDate()
@@ -63,11 +70,28 @@ export default function Historico() {
     return feriados
   }
 
+  //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
 
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
 
   return (
     <div>
-      {erro && (<Alerta msg={erro} tipo={'erro'} />)}
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <NavbarFuncionario />
       <div className="container d-flex justify-content-center align-items-center">
   <div className="box-historico w-100">

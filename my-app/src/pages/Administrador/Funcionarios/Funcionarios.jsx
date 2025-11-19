@@ -1,7 +1,6 @@
 import { MdWorkHistory } from 'react-icons/md';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Funcionarios.css";
-import fun from "./funcionarios";
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { PiCertificateFill } from 'react-icons/pi';
 import { useEffect, useState } from 'react';
@@ -12,47 +11,79 @@ import Alerta from '../../../components/Alertas/Alerta';
 export default function Funcionarios() {
   const [dados, setDados] = useState([])
   const [idFuncionario, setIdFuncionario] = useState('')
-  const [erro, setErro] = useState(null);
-  const [sucesso, setSucesso] = useState(null)
+  const [abrirModal, setAbrirModal] = useState(false)
+
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
 
 
   useEffect(()=>{
     const feachDate = async ()=>{
       const dados = await funcionario.getAll()
-      console.log(dados);
       setDados(dados)
     }
     feachDate()
     
   },[])
+
+   //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 2000);
+
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2500)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
+
   const resetarSenha = async ()=>{
       try {
         const dados = await funcionario.resetarSenha(idFuncionario)
-
-        return setSucesso(dados.message)
+        setAbrirModal(false)
+        setAlerta(dados.message)
+        setTipoAlerta('sucesso')
       } catch (error) {
-        setErro(error.message || "Não foi possível atualizar dados de funcionário")
+        setAlerta(error.message || "Não foi possível atualizar dados de funcionário")
+        setTipoAlerta('erro')
       }
     }
-
-  useEffect(()=>{
-  if(idFuncionario){
-    resetarSenha()
-  }
-  },[idFuncionario])
-
-  
   
   return (
     <div>
       <NavbarAdm />
-        {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
-             {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
+        {abrirModal && (
+        <div className="modal-overlay">
+          <div className="modal-caixa">
+            <h3>Redefinir senha</h3>
+            <p>Tem certeza que deseja redefinir a senha de funcionário</p>
+            <div className="botoes">
+              <button className="btn confirmar" onClick={resetarSenha}>
+                Sim
+              </button>
+              <button className="btn cancelar" onClick={() => setAbrirModal(false)}>
+                Não
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="container d-flex justify-content-center align-items-center">
         <div className="tabela-funcionarios">
           <div className="row tabela-titulo ">
             <div className="col">Matricula</div>
             <div className="col">Nome</div>
+          
             <div className="col text-center">Opções</div>
           </div>
           
@@ -60,11 +91,15 @@ export default function Funcionarios() {
             <div className="row tabela-body align-items-center" key={funcionarios.id}>
               <div className="col">{funcionarios.matricula}</div>
               <div className="col col-nome">{funcionarios.nome}</div>
+               
               <div className="col text-center">
                 <div className="btn-group" role='group' >
                 <a href={"/administrador/funcionarios/historico/"+funcionarios.id} className='btn btn-primary icon'><MdWorkHistory /></a> 
-                <a href={'/administrador/funcionarios/ausencias/'+funcionarios.id} className='btn btn-primary icon'><PiCertificateFill /></a>
-                <button className='btn btn-danger icon' onClick={()=>{setIdFuncionario(funcionarios.id)}}><RiLockPasswordFill /></button>
+                <a href={'/administrador/funcionarios/ausencias/'+funcionarios.id} className='btn btn-secondary icon'> <PiCertificateFill /></a>
+                <button className='btn btn-danger icon' onClick={()=>{
+                setAbrirModal(true);
+                setIdFuncionario(funcionarios.id);
+                }}><RiLockPasswordFill /></button>
                 </div>
               </div>
           </div>

@@ -11,47 +11,71 @@ export default function Login() {
   const navigation = useNavigate()
   const [cpf, setCpf] = useState("")
   const [senha, setSenha] = useState("")
-  const [erro, setErro] = useState("")
-  const [sucesso, setSucesso] = useState("");
   const [loading, setLoading] = useState(false)
   const location = useLocation()
 
-  useEffect(() => {
-    setErro("");
-    setSucesso("");
-  }, [cpf, senha]);
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
+
 
   useEffect(()=>{
     if(location.state){
-      setSucesso(location.state.sucesso)
-      setErro(location.state.erro)
+      if(location.state.sucesso){
+        setAlerta(location.state.sucesso)
+        setTipoAlerta('sucesso')
+      }
+
+      if(location.state.erro){
+        setAlerta(location.state.erro)
+        setTipoAlerta('erro')
+      }
     }
   }, [location.state])
 
+   //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
+
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
 
   const handleLogin = async (e)=>{
     e.preventDefault()
 
     if(!cpf || !senha){
-      setErro("Preencha todos os campos")
+      setAlerta("Preencha todos os campos")
+      setTipoAlerta('info')
       return
     }
 
     setLoading(true)
     try {
-      console.log(cpf);
       
       const data = await loginDay(cpf, senha);   
        if(!data.primeiraEntrada){
-            return navigation("/primeira-entrada", {state:{cpf}, replace:true})
+          return navigation("/primeira-entrada", {state:{cpf}, replace:true})
         }
       if(data.funcionario.adm){
-        return navigation("/administrador/home", {state:{mensagem:"Logado com sucesso"}, replace:true})
+        return navigation("/administrador/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
       }else{
-        return navigation("/funcionario/home", {state:{mensagem:"Logado com sucesso"}, replace:true})
+        return navigation("/funcionario/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
       }
     } catch (error) {
-      setErro(error.message || "Falha no Login")
+      setAlerta(error.message || "Falha no Login")
+      setTipoAlerta('erro')
     } finally{
       setLoading(false)
     }
@@ -60,8 +84,7 @@ export default function Login() {
   return (
     <div>
       <NavbarOff></NavbarOff>
-      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />) }
-      {erro &&  (<Alerta msg={erro} tipo={'erro'} />) }
+       {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
     <div className="container-login">
       <div className="fundoPreto"></div>
         {loading ? 

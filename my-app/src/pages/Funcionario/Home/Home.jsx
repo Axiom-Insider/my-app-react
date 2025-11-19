@@ -5,35 +5,76 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import funcionario from '../../../services/funcionario';
 import horario from '../../../services/horarios';
 import { FaCheckSquare, FaHourglassHalf } from 'react-icons/fa';
+import Alerta from '../../../components/Alertas/Alerta';
+import { useLocation } from 'react-router-dom';
 
 export default function HomeFuncionario() {
 
   const [data] = useState(new Date())
+  const location = useLocation()
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState("")
   const [cargo, setCargo] = useState("")
   const [entrada, setEntrada] = useState('')
   const [saida, setSaida] = useState('')
 
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
+
+    useEffect(()=>{
+    if(location.state && location.state.mensagem){
+      setAlerta(location.state.mensagem)
+      setTipoAlerta('sucesso')
+    }
+  }, [location.state])
+
   useEffect(() => {
     const feachData = async () => {
-      const dadosFuncionario = await funcionario.getId()
-      const { nome, matricula, cargo } = dadosFuncionario
-      const dadosHora = await horario.verificar()
-      const {entrada, saida} = dadosHora
+      try {
+        const dadosFuncionario = await funcionario.getId()
+        const { nome, matricula, cargo } = dadosFuncionario
+        const dadosHora = await horario.verificar()
+        const {entrada, saida} = dadosHora
 
-      setNome(nome)
-      setMatricula(matricula)
-      setCargo(cargo)
-      setEntrada(entrada)
-      setSaida(saida)
+        setNome(nome)
+        setMatricula(matricula)
+        setCargo(cargo)
+        setEntrada(entrada)
+        setSaida(saida)
+      } catch (error) {
+        setAlerta(error.message || "Falha ao verificar dados")
+        setTipoAlerta('erro')
+      }
+     
     }
     feachData()
   }, [])
 
+
+  //alerta
+        useEffect(() => {
+        if (alerta) {
+          const t1 = setTimeout(() => {
+            setClose(true); 
+          }, 1500);
+  
+          const t2 = setTimeout(() => {
+            setAlerta(false)
+            setClose(false)
+          }, 2000)
+  
+          return () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+          };
+        }
+      }, [alerta]);
+
   return (
     <div>
       <NavbarFuncionario />
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <div className="d-flex justify-content-center align-items-center">
         <div className="row">
           <div className="col">

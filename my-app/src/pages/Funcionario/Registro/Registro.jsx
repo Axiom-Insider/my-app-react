@@ -10,22 +10,27 @@ export default function Registro() {
   const [hora, setHora] = useState(new Date())
   const [entrada, setEntrada] = useState('')
   const [saida, setSaida] = useState('')
-  const [erro, setErro] = useState('')
-  const [sucesso, setSucesso] = useState('')
   const [abrirModal, setAbrirModal] = useState(false);
+
+  const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
 
   const baterPonto = async () => {
     try {
       setAbrirModal(false);
       if(!entrada){
         const dados = await horarios.entrada()
-        return setSucesso(dados.message)
+        setAlerta(dados.message)
+        return setTipoAlerta('sucesso')
       }else{
         const dados = await horarios.saida()
-        return setSucesso(dados.message)
+        setAlerta(dados.message)
+        return setTipoAlerta('sucesso')
       }
     } catch (error) {
-      setErro(error.message || "Falha ao verificar entrada")
+      setAlerta(error.message || "Falha ao verificar entrada")
+      setTipoAlerta('erro')
     }
   };
 
@@ -37,7 +42,8 @@ export default function Registro() {
         setSaida(saida ? true : false)
         setEntrada(entrada ? true : false)
       } catch (error) {
-        setErro(error.message || "Falha ao verificar entrada")
+        setAlerta(error.message || "Falha ao verificar entrada")
+        setTipoAlerta('erro')
       }
     }
     verificarEntrada()
@@ -46,14 +52,31 @@ export default function Registro() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [sucesso, erro])
+  }, [alerta])
 
+  //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
+
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
+
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
   
   return (
     <div>
       <NavbarFuncionario />
-      {sucesso && (<Alerta msg={sucesso} tipo={'sucesso'} />)}
-      {erro && (<Alerta msg={erro} tipo={'erro'} />)}
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       {abrirModal && (
         <div className="modal-overlay">
           <div className="modal-caixa">
