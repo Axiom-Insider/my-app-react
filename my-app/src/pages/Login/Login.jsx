@@ -38,12 +38,12 @@ export default function Login() {
       if (alerta) {
         const t1 = setTimeout(() => {
           setClose(true); 
-        }, 1500);
+        }, 2000);
 
         const t2 = setTimeout(() => {
           setAlerta(false)
           setClose(false)
-        }, 2000)
+        }, 2500)
 
         return () => {
           clearTimeout(t1);

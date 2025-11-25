@@ -86,6 +86,30 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
     }
 }
 
+const historicoFuncionarioAdm = async (id:number, mes:string, ano:string)=>{
+      try {
+        const mesNumber = +mes;
+
+        const {data} = await api.get(`/horarios/historico/${id}/${mesNumber}/${ano}`)
+        console.log(data);
+        
+        return data;
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao editar horario"}
+    }
+}
+
+const anoAdm = async (id:number)=>{
+    try {
+       const {data} = await api.get(`/horarios/ano/${id}`)
+
+       return data;
+   } catch (error) {
+       throw error.response?.data || {message: "Erro ao editar horario"}
+   }
+}
+
+
 const ano = async ()=>{
     try {
         const item = localStorage.getItem('funcionario');
@@ -102,4 +126,4 @@ const ano = async ()=>{
 
 
 
-export default  {editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano}
+export default  {anoAdm, editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano, historicoFuncionarioAdm}

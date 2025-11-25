@@ -125,10 +125,10 @@ export default function Historico() {
           <tbody>
             {historico.map((item) => (
               <tr key={item.dia} className="dados trHover">
-                <td className='data-historico'>{item.dia} - {item.diaNome === 'Sábado' || item.diaNome === 'Domingo' ? <strong>{item.diaNome}</strong> : <>{item.diaNome}</> }</td>
+                <td className='data-historico'>{item.dia} - {item.nomeDia === 'Sábado' || item.nomeDia === 'Domingo' ? <strong>{item.nomeDia}</strong> : <>{item.nomeDia}</> }</td>
                 <td>{ausenciaFeriados(item.ausencias, item.feriados)}</td>
-                <td>{item.diaNome == 'Domingo' ? '--------' : <>{item.entrada}</>}</td>
-                <td>{item.diaNome == 'Domingo' ? '--------' : <>{item.saida}</>}</td>
+                <td>{item.nomeDia == 'Domingo' ? '--------' : <>{item.entrada}</>}</td>
+                <td>{item.nomeDia == 'Domingo' ? '--------' : <>{item.saida}</>}</td>
               </tr>
             ))}
           </tbody>

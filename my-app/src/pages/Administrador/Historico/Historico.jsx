@@ -1,35 +1,84 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm';
 import "./Historico.css"
-import usuarios from './usuarios';
-import { FaFilePdf } from 'react-icons/fa';
+import horarios from '../../../services/horarios'
 import { GrDocumentPdf } from 'react-icons/gr';
+import { useParams } from 'react-router-dom';
+import Alerta from '../../../components/Alertas/Alerta';
 
 export default function Historico() {
 
-  const [num, setNum] = useState(1);
+  const [dados, setDados] = useState([])
+  const[mesSelect, setMesSelect] = useState('')
+  const [anoSelect, setAnoSelect] = useState('')
+  const [anos, setAnos] = useState([])
+  const {id} = useParams()
+
+    const [alerta, setAlerta] = useState(false)
+  const [tipoAlerta, setTipoAlerta] = useState('')
+  const [close, setClose] = useState(false)
+
+  useEffect(()=>{
+    const feachtDate = async ()=>{
+      try {
+        const dadosAnos = await horarios.anoAdm(id)
+        setAnos(dadosAnos.dados)
+        const date = new Date()
+        setMesSelect(date.getMonth())
+        setAnoSelect(date.getFullYear().toString())
+      } catch (error) {
+        setAlerta(error.message || "Falha ao trazer dados")
+        setTipoAlerta("erro")
+      }
+    }
+    feachtDate()
+  }, [])
+
+   useEffect(()=>{
+    const feachtDate = async ()=>{
+      try {
+        console.log(id, mesSelect, anoSelect);
+        
+        const dados = await horarios.historicoFuncionarioAdm(id, mesSelect + 1, anoSelect)
+        setDados(dados.historico)
+      } catch (error) {
+         setAlerta(error.message || "Falha ao trazer dados")
+        setTipoAlerta("erro")
+      }
+    }
+    if(mesSelect && anoSelect){
+      feachtDate()
+    }
+  }, [mesSelect, anoSelect])
 
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
-  const semana = ['segunda-feira', 'terça-feira', 'quarta-feira'];
+  //alerta
+      useEffect(() => {
+      if (alerta) {
+        const t1 = setTimeout(() => {
+          setClose(true); 
+        }, 1500);
 
-  const ausenciaFeriados = (ausencia, feriados) => {
-    if (ausencia && feriados) {
-      return `${feriados}/${ausencia}`
-    } if (ausencia) {
-      return ausencia
-    }
+        const t2 = setTimeout(() => {
+          setAlerta(false)
+          setClose(false)
+        }, 2000)
 
-    return feriados
-  }
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+        };
+      }
+    }, [alerta]);
 
-  const dados = usuarios();
 
   return (
     <div>
+        {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <NavbarAdm />
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-historico w-100">
@@ -41,7 +90,7 @@ export default function Historico() {
           <div className="row g-3 mt-4">
             <div className="col-2 ">
               <label className='form-label' htmlFor="ano">Mes:</label>
-              <select className="form-select" id="mes" aria-label="Selecionar mês">
+              <select className="form-select" id="mes" value={mesSelect} onChange={(e)=>{setMesSelect(e.target.value)}} aria-label="Selecionar mês">
                 {mes.map((nome, index) => (
                   <option key={index} value={index}>{nome}</option>
                 ))}
@@ -49,9 +98,10 @@ export default function Historico() {
             </div>
             <div className="col-2 ">
               <label className='form-label' htmlFor="ano">Ano:</label>
-              <select className="form-select" id="ano" aria-label="Selecionar ano" defaultValue="2025">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
+              <select className="form-select" id="ano" onChange={(e)=>{setAnoSelect(e.target.value)}} aria-label="Selecionar ano" >
+                {anos.map(ano=>(
+                  <option key={ano.ano} value={ano.ano}>{ano.ano}</option>
+                ))}
               </select>
             </div>
             <div className="col-3 col-pdf">
@@ -82,11 +132,11 @@ export default function Historico() {
                 <tbody>
                   {dados.map((item) => (
                     <tr key={item.id} className="dados trHover">
-                      <td>{semana[0]} {() => setNum(num + 1)} {num}</td>
-                      <td>{ausenciaFeriados(item.ausencia, item.feriados)}</td>
-                      <td>Natal</td>
-                      <td>{item.hora_entrada}</td>
-                      <td>{item.hora_saida}</td>
+                      <td className='data-historico'>{item.dia} - {item.nomeDia}</td>
+                      <td>{item.ausencia}</td>
+                      <td>{item.feriado}</td>
+                      <td>{item.entrada}</td>
+                      <td>{item.saida}</td>
                     </tr>
                   ))}
                 </tbody>
