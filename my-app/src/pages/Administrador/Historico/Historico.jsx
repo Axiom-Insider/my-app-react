@@ -31,7 +31,7 @@ export default function Historico() {
   };
 
   fetchAnos();
-}, []);
+},[]);
 
 
   const feachtDate = async ()=>{

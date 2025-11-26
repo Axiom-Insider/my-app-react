@@ -73,7 +73,9 @@ function App() {
     var dividido = nome.split(' ')
     var primeira = dividido[0].charAt(0).toUpperCase();
     var segunda = dividido[1] ? dividido[1].charAt(0).toUpperCase() : '';
-    
+    if(!segunda){
+      return primeira
+    }
     if(dividido[1].toLowerCase() === 'do' || dividido[1].toLowerCase() === 'de'){
       segunda = dividido[2].charAt(0).toUpperCase()
     }

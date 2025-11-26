@@ -1,7 +1,19 @@
+import { useParams } from 'react-router-dom';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import "./Ausencias.css";
 
 export default function Ausencias() {
+    const {id} = useParams()
+
+    const buscarDadosFuncionario = async ()=>{
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+
     return (
         <div>
             <NavbarAdm />
@@ -16,8 +28,8 @@ export default function Ausencias() {
                     </div>
                     <div className="row tabela-titulo ">
                         <div className="col">Tipo</div>
-                        <div className="col">Data Entrada</div>
-                        <div className="col">Data Saída</div>
+                        <div className="col">Data Início</div>
+                        <div className="col">Data Fim</div>
                         <div className="col text-center">Opções</div>
                     </div>
                     <div className="row tabela-body align-items-center">
