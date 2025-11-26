@@ -9,47 +9,47 @@ import Alerta from '../../../components/Alertas/Alerta';
 export default function Historico() {
 
   const [dados, setDados] = useState([])
-  const[mesSelect, setMesSelect] = useState('')
-  const [anoSelect, setAnoSelect] = useState('')
+  const[mesSelect, setMesSelect] = useState(new Date().getMonth())
+  const [anoSelect, setAnoSelect] = useState(new Date().getFullYear())
   const [anos, setAnos] = useState([])
   const {id} = useParams()
 
-    const [alerta, setAlerta] = useState(false)
+  const [alerta, setAlerta] = useState(false)
   const [tipoAlerta, setTipoAlerta] = useState('')
   const [close, setClose] = useState(false)
 
-  useEffect(()=>{
-    const feachtDate = async ()=>{
+
+  useEffect(() => {
+  const fetchAnos = async () => {
+    try {
+      const {dados} = await horarios.anoAdm(id);
+      
+      setAnos(dados)
+    } catch (error) {
+      console.error("Erro ao buscar anos:", error);
+    }
+  };
+
+  fetchAnos();
+}, []);
+
+
+  const feachtDate = async ()=>{
       try {
-        const dadosAnos = await horarios.anoAdm(id)
-        setAnos(dadosAnos.dados)
-        const date = new Date()
-        setMesSelect(date.getMonth())
-        setAnoSelect(date.getFullYear().toString())
+        console.log(id, mesSelect, anoSelect);
+        
+        const dados = await horarios.historicoFuncionarioAdm(id, mesSelect, anoSelect)
+        setDados(dados.historico)
       } catch (error) {
         setAlerta(error.message || "Falha ao trazer dados")
         setTipoAlerta("erro")
       }
     }
-    feachtDate()
-  }, [])
 
    useEffect(()=>{
-    const feachtDate = async ()=>{
-      try {
-        console.log(id, mesSelect, anoSelect);
-        
-        const dados = await horarios.historicoFuncionarioAdm(id, mesSelect + 1, anoSelect)
-        setDados(dados.historico)
-      } catch (error) {
-         setAlerta(error.message || "Falha ao trazer dados")
-        setTipoAlerta("erro")
-      }
-    }
-    if(mesSelect && anoSelect){
       feachtDate()
-    }
-  }, [mesSelect, anoSelect])
+    
+  }, [id, mesSelect, anoSelect])
 
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
