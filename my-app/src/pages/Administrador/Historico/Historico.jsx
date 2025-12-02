@@ -14,6 +14,9 @@ export default function Historico() {
   const [anos, setAnos] = useState([])
   const {id} = useParams()
 
+  const [faltas, setFaltas] = useState('')
+  const [tempoTrabalhado, setTempoTrabalhado] = useState('')
+
   const [alerta, setAlerta] = useState(false)
   const [tipoAlerta, setTipoAlerta] = useState('')
   const [close, setClose] = useState(false)
@@ -36,7 +39,6 @@ export default function Historico() {
 
   const feachtDate = async ()=>{
       try {
-        console.log(id, mesSelect, anoSelect);
         
         const dados = await horarios.historicoFuncionarioAdm(id, mesSelect, anoSelect)
         setDados(dados.historico)
@@ -46,9 +48,21 @@ export default function Historico() {
       }
     }
 
+    const estastisticas = async ()=>{
+    try {
+      const dados = await horarios.estatisticas(id, mesSelect, anoSelect)
+      
+      setFaltas(dados.faltas)
+      setTempoTrabalhado(dados.totalHorasTrabalhada)
+    } catch (error) {
+      setAlerta(error.message || "Falha ao trazer dados")
+      setTipoAlerta("erro")
+    }
+  }
+
    useEffect(()=>{
       feachtDate()
-    
+      estastisticas()
   }, [id, mesSelect, anoSelect])
 
   const mes = [
@@ -83,9 +97,8 @@ export default function Historico() {
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-historico w-100">
           <div className="summary-cards d-flex align-items-center gap-3 mb-3">
-            <div className="card-hour" title="Total de horas trabalhadas no mês">Total: 30h</div>
-            <div className="card-extra" title="Total de horas trabalhadas extras">Extras: 2h</div>
-            <div className="card-extra">Faltas ou Ausências: 3</div>
+            <div className="card-hour" title="Total de horas trabalhadas no mês">Horas Trabalhadas: {tempoTrabalhado}H</div>
+            <div className="card-extra" title="Total">Faltas ou Ausências: {faltas}</div>
           </div>
           <div className="row g-3 mt-4">
             <div className="col-2 ">

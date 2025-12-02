@@ -89,7 +89,6 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
 const historicoFuncionarioAdm = async (id:number, mes:string, ano:string)=>{
       try {
         const mesNumber = +mes;
-        console.log(id, mes, ano);
         
         const {data} = await api.get(`/horarios/historico/${id}/${mesNumber + 1}/${ano}`)
         console.log(data);
@@ -110,6 +109,14 @@ const anoAdm = async (id:number)=>{
    }
 }
 
+const estatisticas = async (id_funcionario:number, mes:string, ano:string)=>{
+    try {
+        const {data} = await api.get(`/horarios/estatisticas/${id_funcionario}/${+mes + 1}/${ano}`)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao trazer estatísticas"}
+    }
+}
 
 const ano = async ()=>{
     try {
@@ -127,4 +134,4 @@ const ano = async ()=>{
 
 
 
-export default  {anoAdm, editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano, historicoFuncionarioAdm}
+export default  {estatisticas, anoAdm, editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano, historicoFuncionarioAdm}
