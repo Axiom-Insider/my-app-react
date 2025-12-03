@@ -28,4 +28,4 @@ import api from "../api"
 
 
 
-export {loginDay, loginFirst}
+export  {loginDay, loginFirst}

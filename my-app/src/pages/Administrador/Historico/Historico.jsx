@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import NavbarAdm from '../../../components/Navbar/NavbarAdm';
 import "./Historico.css"
 import horarios from '../../../services/horarios'
+import documentos from '../../../services/documentos'
 import { GrDocumentPdf } from 'react-icons/gr';
 import { useParams } from 'react-router-dom';
 import Alerta from '../../../components/Alertas/Alerta';
@@ -65,6 +66,16 @@ export default function Historico() {
       estastisticas()
   }, [id, mesSelect, anoSelect])
 
+  const downloadPoloUAB = async ()=>{
+    try {
+       await documentos.downloadPoloUAB(id, mesSelect, anoSelect)
+      console.log('teste');
+    } catch (error) {
+      setAlerta(error.message || "Falha ao trazer dados")
+      setTipoAlerta("erro")
+    }
+  }
+
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -119,7 +130,7 @@ export default function Historico() {
             </div>
             <div className="col-3 col-pdf">
               <label className='form-label' htmlFor="ano"></label>
-              <button className='btn btn-info pdf'>
+              <button className='btn btn-info pdf' onClick={downloadPoloUAB}>
                 <i className='icon-h'><GrDocumentPdf /> </i> Ponto PoloUAB
               </button>
             </div>
