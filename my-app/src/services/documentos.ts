@@ -5,7 +5,7 @@ import api from "../api"
 const downloadPoloUAB = async (id_funcionario: number, mes: string, ano: string) => {
     try {
         const response = await api.get(
-            `/documento/polouab/${id_funcionario}/${mes}/${ano}`,
+            `/documento/polouab/${id_funcionario}/${+mes + 1}/${ano}`,
             { responseType: "blob" }
         );
 
