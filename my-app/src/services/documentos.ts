@@ -1,13 +1,48 @@
 import api from "../api"
 
+ const nomeMes = (num: number)=> {
+    const date = new Date();
+    date.setMonth(num - 1);
 
+    return date.toLocaleString('default', { month: 'long' });
+  }
 
 const downloadPoloUAB = async (id_funcionario: number, mes: string, ano: string) => {
     try {
+        const mesNome = nomeMes(+mes + 1).toUpperCase()
         const response = await api.get(
             `/documento/polouab/${id_funcionario}/${+mes + 1}/${ano}`,
             { responseType: "blob" }
         );
+        const {data} = await api.get(`/funcionario/${id_funcionario}`)
+        const {nome} = data
+        const nomeArquivo = nome.replace(/\s/g, '-');
+        const blob = new Blob([response.data], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        });
+
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${mesNome}-${nomeArquivo}-PoloUAB.docx`; // nome do arquivo
+        a.click();
+        window.URL.revokeObjectURL(url);
+        return 'foi?'
+    } catch (error) {
+        throw error.response?.data || { message: "Erro ao fazer download de documento" }
+    }
+}
+
+const downloadConfianca = async (id_funcionario: number, mes: string, ano: string) => {
+    try {
+        const mesNome = nomeMes(+mes + 1)
+        const response = await api.get(
+            `/documento/confianca/${id_funcionario}/${+mes + 1}/${ano}`,
+            { responseType: "blob" }
+        );
+        const {data} = await api.get(`/funcionario/${id_funcionario}`)
+        var {nome} = data.dados
+        var nomeArquivo = nome.replace(/\s/g, '-');
 
         const blob = new Blob([response.data], {
             type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -16,7 +51,7 @@ const downloadPoloUAB = async (id_funcionario: number, mes: string, ano: string)
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "relatorio.docx"; // nome do arquivo
+        a.download = `${mesNome}-${nomeArquivo}-Confianca.docx`; // nome do arquivo
         a.click();
         window.URL.revokeObjectURL(url);
         return 'foi?'
@@ -27,4 +62,4 @@ const downloadPoloUAB = async (id_funcionario: number, mes: string, ano: string)
 
 
 
-export default { downloadPoloUAB }
+export default { downloadPoloUAB, downloadConfianca }

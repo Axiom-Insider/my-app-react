@@ -10,10 +10,10 @@ import Alerta from '../../../components/Alertas/Alerta';
 export default function Historico() {
 
   const [dados, setDados] = useState([])
-  const[mesSelect, setMesSelect] = useState(new Date().getMonth())
+  const [mesSelect, setMesSelect] = useState(new Date().getMonth())
   const [anoSelect, setAnoSelect] = useState(new Date().getFullYear())
   const [anos, setAnos] = useState([])
-  const {id} = useParams()
+  const { id } = useParams()
 
   const [faltas, setFaltas] = useState('')
   const [tempoTrabalhado, setTempoTrabalhado] = useState('')
@@ -24,35 +24,34 @@ export default function Historico() {
 
 
   useEffect(() => {
-  const fetchAnos = async () => {
-    try {
-      const {dados} = await horarios.anoAdm(id);
-      
-      setAnos(dados)
-    } catch (error) {
-      console.error("Erro ao buscar anos:", error);
-    }
-  };
-
-  fetchAnos();
-},[]);
-
-
-  const feachtDate = async ()=>{
+    const fetchAnos = async () => {
       try {
-        
-        const dados = await horarios.historicoFuncionarioAdm(id, mesSelect, anoSelect)
-        setDados(dados.historico)
-      } catch (error) {
-        setAlerta(error.message || "Falha ao trazer dados")
-        setTipoAlerta("erro")
-      }
-    }
+        const { dados } = await horarios.anoAdm(id);
 
-    const estastisticas = async ()=>{
+        setAnos(dados)
+      } catch (error) {
+        console.error("Erro ao buscar anos:", error);
+      }
+    };
+
+    fetchAnos();
+  }, []);
+
+
+  const feachtDate = async () => {
+    try {
+      const dados = await horarios.historicoFuncionarioAdm(id, mesSelect, anoSelect)
+      setDados(dados.historico)
+    } catch (error) {
+      setAlerta(error.message || "Falha ao trazer dados")
+      setTipoAlerta("erro")
+    }
+  }
+
+  const estastisticas = async () => {
     try {
       const dados = await horarios.estatisticas(id, mesSelect, anoSelect)
-      
+
       setFaltas(dados.faltas)
       setTempoTrabalhado(dados.totalHorasTrabalhada)
     } catch (error) {
@@ -61,20 +60,31 @@ export default function Historico() {
     }
   }
 
-   useEffect(()=>{
-      feachtDate()
-      estastisticas()
+  useEffect(() => {
+    feachtDate()
+    estastisticas()
   }, [id, mesSelect, anoSelect])
 
-  const downloadPoloUAB = async ()=>{
+  const downloadPoloUAB = async () => {
     try {
-       await documentos.downloadPoloUAB(id, mesSelect, anoSelect)
+      await documentos.downloadPoloUAB(id, mesSelect, anoSelect)
       console.log('teste');
     } catch (error) {
-      setAlerta(error.message || "Falha ao trazer dados")
+      setAlerta(error.message || "Falha ao fazer download do documento")
       setTipoAlerta("erro")
     }
   }
+
+  const downloadConfianca = async () => {
+    try {
+      await documentos.downloadConfianca(id, mesSelect, anoSelect)
+      console.log('teste');
+    } catch (error) {
+      setAlerta(error.message || "Falha ao fazer download do documento")
+      setTipoAlerta("erro")
+    }
+  }
+
 
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -82,29 +92,29 @@ export default function Historico() {
   ];
 
   //alerta
-      useEffect(() => {
-      if (alerta) {
-        const t1 = setTimeout(() => {
-          setClose(true); 
-        }, 1500);
+  useEffect(() => {
+    if (alerta) {
+      const t1 = setTimeout(() => {
+        setClose(true);
+      }, 1500);
 
-        const t2 = setTimeout(() => {
-          setAlerta(false)
-          setClose(false)
-        }, 2000)
+      const t2 = setTimeout(() => {
+        setAlerta(false)
+        setClose(false)
+      }, 2000)
 
-        return () => {
-          clearTimeout(t1);
-          clearTimeout(t2);
-        };
-      }
-    }, [alerta]);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+  }, [alerta]);
 
 
   return (
     <div>
-        {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />) }
       <NavbarAdm />
+      {alerta && (<Alerta msg={alerta} tipo={tipoAlerta} close={close} />)}
       <div className="container d-flex justify-content-center align-items-center">
         <div className="box-historico w-100">
           <div className="summary-cards d-flex align-items-center gap-3 mb-3">
@@ -114,7 +124,7 @@ export default function Historico() {
           <div className="row g-3 mt-4">
             <div className="col-2 ">
               <label className='form-label' htmlFor="ano">Mes:</label>
-              <select className="form-select" id="mes" value={mesSelect} onChange={(e)=>{setMesSelect(e.target.value)}} aria-label="Selecionar mês">
+              <select className="form-select" id="mes" value={mesSelect} onChange={(e) => { setMesSelect(e.target.value) }} aria-label="Selecionar mês">
                 {mes.map((nome, index) => (
                   <option key={index} value={index}>{nome}</option>
                 ))}
@@ -122,8 +132,8 @@ export default function Historico() {
             </div>
             <div className="col-2 ">
               <label className='form-label' htmlFor="ano">Ano:</label>
-              <select className="form-select" id="ano" onChange={(e)=>{setAnoSelect(e.target.value)}} aria-label="Selecionar ano" >
-                {anos.map(ano=>(
+              <select className="form-select" id="ano" onChange={(e) => { setAnoSelect(e.target.value) }} aria-label="Selecionar ano" >
+                {anos.map(ano => (
                   <option key={ano.ano} value={ano.ano}>{ano.ano}</option>
                 ))}
               </select>
@@ -136,7 +146,7 @@ export default function Historico() {
             </div>
             <div className="col-3">
               <label className='form-label' htmlFor="ano"></label>
-              <button className='btn btn-info pdf'>
+              <button className='btn btn-info pdf' onClick={downloadConfianca}>
                 <i className='icon-h'><GrDocumentPdf /> </i> Ponto Confiança
               </button>
             </div>
@@ -155,7 +165,7 @@ export default function Historico() {
                 </thead>
                 <tbody>
                   {dados.map((item) => (
-                    <tr key={item.id} className="dados trHover">
+                    <tr key={item.dia} className="dados trHover">
                       <td className='data-historico'>{item.dia} - {item.nomeDia}</td>
                       <td>{item.ausencia}</td>
                       <td>{item.feriado}</td>

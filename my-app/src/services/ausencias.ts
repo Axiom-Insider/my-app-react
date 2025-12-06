@@ -10,7 +10,7 @@ const criarAusencia = async (dataInicio:string, dataFim:string, tipoAusencia:str
         const {data} = await api.post("/ausencia", body)
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao listar funcionarios"}
+        throw error.response?.data || {message: "Erro ao Criar "+formatarTipo(tipoAusencia)}
     }
 }
 
@@ -30,4 +30,31 @@ const formatarTipo = (e:string)=>{
     }
 }
 
-export default  {criarAusencia}
+const ano = async (id_funcionario:number)=>{
+      try {
+        const {data} = await api.get(`/ausencia/ano/${id_funcionario}`)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao Listar Ausências"}
+    }
+}
+
+const listarAusencia = async (id_funcionario:number, mes:string, ano:string)=>{
+    try {
+        const {data} = await api.get(`/ausencia/${id_funcionario}/${+mes + 1}/${ano}`)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao Criar Ausências"}
+    }
+}
+
+const excluir = async (id)=>{
+    try {
+        api.delete("/ausencia/"+id)
+        return "Ausência deletada com sucesso"
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao Excluir Ausências"}
+    }
+}
+
+export default  {criarAusencia, listarAusencia, ano, excluir}

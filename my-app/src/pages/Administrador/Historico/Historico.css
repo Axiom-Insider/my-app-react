@@ -11,6 +11,11 @@
   flex-grow: 1;
 }
 
+.carregar-dados-funcionarios{
+  font-size: 20px;
+  color: white;
+}
+
 .pdf{
   display: flex;
   font-size: 18px;
