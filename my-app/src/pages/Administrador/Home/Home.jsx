@@ -6,13 +6,14 @@ import { useEffect } from "react"
 import Alerta from "../../../components/Alertas/Alerta"
 import { PiNumberSquareSix } from "react-icons/pi"
 import horarios from "../../../services/horarios"
+import Loading from "../../../components/Loading/Loading"
 
 
 function App() {
 
   const [data] = useState(new Date())
   const location = useLocation()
-  const [dados, setDados] = useState(null)
+  const [dados, setDados] = useState([])
   const [loading, setLoading] = useState(true)
 
   const [alerta, setAlerta] = useState(false)
@@ -62,11 +63,7 @@ function App() {
     }, [alerta]);
 
   if (loading) {
-    return <div>Carregando dados...</div>;
-  }
-
-  if (tipoAlerta === 'erro') {
-    return <div>Ocorreu um erro: {error}</div>;
+    return <Loading />
   }
 
   const iniciais = (nome)=>{

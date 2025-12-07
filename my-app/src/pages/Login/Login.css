@@ -109,11 +109,6 @@
     background-color: #004c9c;
   }
 
-.text-loading{
-  font-size: 20px;
-  font-weight: bolder;
-  color: #007bff;
-}
 
 .icone-senha{
   color: yellow;
@@ -128,22 +123,6 @@
   color: rgb(255, 0, 0);
 }
 
-.spinner {
-  z-index: 1;
-  margin-top: 5%;
-  width: 100px;
-  height: 100px;
-  border: 7px solid #ccc;
-  border-top: 7px solid #0066ff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
   
   @media (max-width: 500px) {
     .box{
