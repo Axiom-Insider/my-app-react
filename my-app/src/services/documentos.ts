@@ -40,8 +40,10 @@ const downloadConfianca = async (id_funcionario: number, mes: string, ano: strin
             `/documento/confianca/${id_funcionario}/${+mes + 1}/${ano}`,
             { responseType: "blob" }
         );
+        
         const {data} = await api.get(`/funcionario/${id_funcionario}`)
-        var {nome} = data.dados
+       
+        var {nome} = data
         var nomeArquivo = nome.replace(/\s/g, '-');
 
         const blob = new Blob([response.data], {
@@ -56,7 +58,7 @@ const downloadConfianca = async (id_funcionario: number, mes: string, ano: strin
         window.URL.revokeObjectURL(url);
         return 'foi?'
     } catch (error) {
-        throw error.response?.data || { message: "Erro ao registrar nova senha" }
+        throw error.response?.data || { message: "Erro ao baixar arquivo" }
     }
 }
 
