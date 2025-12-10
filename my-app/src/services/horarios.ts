@@ -19,7 +19,6 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
 const verificarAll = async ()=>{
     try {
        const {data} = await api.get("/horarios/verificarDia")
-        console.log(data);
         
        return data
    } catch (error) {
@@ -132,6 +131,15 @@ const ano = async ()=>{
    }
 }
 
+const apagarHorarios = async (id:number)=>{
+    try {
+        const {data} = await api.delete(`/horarios/${id}`)
+        return data
+    } catch (error) {
+        throw error.response?.data || {message: "Erro ao apagar Horario"}
+    }
+}
 
 
-export default  {estatisticas, anoAdm, editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano, historicoFuncionarioAdm}
+
+export default  {apagarHorarios, estatisticas, anoAdm, editarHorarios, verificar, entrada, saida, verificarAll, historicoFuncionario, ano, historicoFuncionarioAdm}

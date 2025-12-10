@@ -32,6 +32,7 @@ function App() {
       try {
         const data = await horarios.verificarAll();
         const result = data;
+        
         setDados(result.funcionarios);
       } catch (err) {
         setAlerta(err.message);

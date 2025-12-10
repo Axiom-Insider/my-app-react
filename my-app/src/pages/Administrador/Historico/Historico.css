@@ -2,6 +2,11 @@
   width: 100px;
   background-color: beige;
 }
+
+.botao-excluir{
+  font-size: 12px;
+}
+
 .summary-cards > div {
   background-color: #1d4e89;
   color: white;

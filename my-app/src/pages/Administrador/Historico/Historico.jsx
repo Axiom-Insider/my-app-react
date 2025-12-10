@@ -85,6 +85,19 @@ export default function Historico() {
     }
   }
 
+  const apagarHorario = async (id) => {
+    try {
+      const dados = await horarios.apagarHorarios(id)
+      setAlerta(dados.message)
+      setTipoAlerta("sucesso")
+      feachtDate()
+    estastisticas()
+    } catch (error) {
+      setAlerta(error.message || "Falha ao fazer download do documento")
+      setTipoAlerta("erro")
+    }
+  }
+
 
   const mes = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -161,6 +174,7 @@ export default function Historico() {
                     <th className='th-h'>Feriados</th>
                     <th className='th-h'>Horário de Entrada</th>
                     <th className='th-h'>Horário de Saída</th>
+                    <th className="th-h">Opção</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -171,6 +185,7 @@ export default function Historico() {
                       <td>{item.feriado}</td>
                       <td>{item.entrada}</td>
                       <td>{item.saida}</td>
+                      {item.entrada != ':' ? <td><button className="btn btn-danger botao-excluir" onClick={()=>apagarHorario(item.id)}>Excluir</button></td> : <div></div>}
                     </tr>
                   ))}
                 </tbody>
