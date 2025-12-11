@@ -5,6 +5,7 @@ import "./Ausencias.css";
 import { useEffect, useState } from 'react';
 import ausencias from '../../../services/ausencias';
 import Alerta from '../../../components/Alertas/Alerta';
+import { FaTrash } from 'react-icons/fa';
 
 export default function Ausencias() {
     const { id } = useParams()
@@ -26,7 +27,8 @@ export default function Ausencias() {
         const fetchAnos = async () => {
             try {
                 const { dados } = await ausencias.ano(id);
-
+                console.log(dados);
+                
                 setAnos(dados)
             } catch (error) {
                 console.error("Erro ao buscar anos:", error);
@@ -121,7 +123,7 @@ export default function Ausencias() {
                         <div className="col">Tipo</div>
                         <div className="col">Data Início</div>
                         <div className="col">Data Fim</div>
-                        <div className="col text-center">Opções</div>
+                        <div className="col text-center">Excluir</div>
                     </div>
                     {dados.map((item) => (
                         <div className="row tabela-body align-items-center" key={item.id}>
@@ -129,7 +131,7 @@ export default function Ausencias() {
                             <div className="col">{item.dataInicio}</div>
                             <div className="col">{item.dataFim}</div>
                             <div className="col text-center">
-                                <button className='btn btn-danger' onClick={() => excluir(item.id)}>Excluir</button>
+                                <button className="btn trash-btn" onClick={()=> excluir(item.id)}  ><i className="trash-icon"><FaTrash /></i></button>
                             </div>
                         </div>
                     ))}

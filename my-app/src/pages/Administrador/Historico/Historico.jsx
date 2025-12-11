@@ -6,6 +6,7 @@ import documentos from '../../../services/documentos'
 import { GrDocumentPdf } from 'react-icons/gr';
 import { useParams } from 'react-router-dom';
 import Alerta from '../../../components/Alertas/Alerta';
+import { FaTrash } from 'react-icons/fa';
 
 export default function Historico() {
 
@@ -174,7 +175,7 @@ export default function Historico() {
                     <th className='th-h'>Feriados</th>
                     <th className='th-h'>Horário de Entrada</th>
                     <th className='th-h'>Horário de Saída</th>
-                    <th className="th-h">Opção</th>
+                    <th className="th-h">Excluir</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -185,7 +186,7 @@ export default function Historico() {
                       <td>{item.feriado}</td>
                       <td>{item.entrada}</td>
                       <td>{item.saida}</td>
-                      {item.entrada != ':' ? <td><button className="btn btn-danger botao-excluir" onClick={()=>apagarHorario(item.id)}>Excluir</button></td> : <div></div>}
+                      {item.entrada != ':' ? <td><button className="trash-btn" onClick={()=> apagarHorario(item.id)}  ><i className="trash-icon"><FaTrash /></i></button></td> : <td></td> }
                     </tr>
                   ))}
                 </tbody>

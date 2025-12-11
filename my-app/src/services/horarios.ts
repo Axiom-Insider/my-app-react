@@ -12,7 +12,7 @@ const editarHorarios = async (dataCriada:string, hora:string, tipo:string, id_fu
         const {data} = await api.patch("/horarios/editar", body)
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar funcionários"}
     }
 }
 
@@ -22,7 +22,7 @@ const verificarAll = async ()=>{
         
        return data
    } catch (error) {
-       throw error.response?.data || {message: "Erro ao editar horario"}
+       throw error.response?.data || {message: "Erro ao listar funcionários"}
    }
 }
 
@@ -36,7 +36,7 @@ const verificar = async ()=>{
 
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar funcionários"}
     }
 }
 
@@ -51,7 +51,7 @@ const entrada = async ()=>{
 
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar horarios"}
     }
 }
 
@@ -65,7 +65,7 @@ const saida = async ()=>{
 
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar saída"}
     }
 }
 
@@ -81,7 +81,7 @@ const historicoFuncionario = async (mes:string, ano:string)=>{
 
         return data;
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar histórico de funcionário"}
     }
 }
 
@@ -94,7 +94,7 @@ const historicoFuncionarioAdm = async (id:number, mes:string, ano:string)=>{
         
         return data;
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao editar horario"}
+        throw error.response?.data || {message: "Erro ao listar histórico"}
     }
 }
 
@@ -104,7 +104,7 @@ const anoAdm = async (id:number)=>{
 
        return data;
    } catch (error) {
-       throw error.response?.data || {message: "Erro ao editar horario"}
+       throw error.response?.data || {message: "Erro ao listar anos"}
    }
 }
 
@@ -127,7 +127,7 @@ const ano = async ()=>{
 
        return data;
    } catch (error) {
-       throw error.response?.data || {message: "Erro ao editar horario"}
+       throw error.response?.data || {message: "Erro ao listar ano"}
    }
 }
 

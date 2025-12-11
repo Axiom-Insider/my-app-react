@@ -48,7 +48,7 @@ const listarAusencia = async (id_funcionario:number, mes:string, ano:string)=>{
     }
 }
 
-const excluir = async (id)=>{
+const excluir = async (id:number)=>{
     try {
         api.delete("/ausencia/"+id)
         return "Ausência deletada com sucesso"
