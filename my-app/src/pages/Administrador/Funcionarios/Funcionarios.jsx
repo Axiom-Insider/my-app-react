@@ -6,6 +6,7 @@ import { PiCertificateFill } from 'react-icons/pi';
 import { useEffect, useState } from 'react';
 import funcionario from '../../../services/funcionario';
 import Alerta from '../../../components/Alertas/Alerta';
+import Loading from '../../../components/Loading/Loading';
 
 
 export default function Funcionarios() {
@@ -17,11 +18,20 @@ export default function Funcionarios() {
   const [tipoAlerta, setTipoAlerta] = useState('')
   const [close, setClose] = useState(false)
 
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(()=>{
     const feachDate = async ()=>{
-      const dados = await funcionario.getAll()
-      setDados(dados)
+      try {
+        const dados = await funcionario.getAll()
+        setDados(dados)
+      } catch (error) {
+        setTipoAlerta('erro')
+        setAlerta(error.message || "Não foi possível listar Funcionários")
+      }finally{
+        setLoading(false)
+      }
     }
     feachDate()
     
@@ -56,6 +66,9 @@ export default function Funcionarios() {
         setAlerta(error.message || "Não foi possível atualizar dados de funcionário")
         setTipoAlerta('erro')
       }
+    }
+     if(loading){
+      return <Loading />
     }
   
   return (

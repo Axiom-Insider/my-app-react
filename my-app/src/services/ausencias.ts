@@ -44,7 +44,7 @@ const listarAusencia = async (id_funcionario:number, mes:string, ano:string)=>{
         const {data} = await api.get(`/ausencia/${id_funcionario}/${+mes + 1}/${ano}`)
         return data
     } catch (error) {
-        throw error.response?.data || {message: "Erro ao Criar Ausências"}
+        throw error.response?.data || {message: "Erro ao Listar Ausências"}
     }
 }
 

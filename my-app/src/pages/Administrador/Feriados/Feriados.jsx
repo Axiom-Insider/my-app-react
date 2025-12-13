@@ -6,6 +6,7 @@ import { MdCheckBox, MdClose, MdFormatListBulletedAdd } from "react-icons/md";
 import { FaCheck, FaRegClock, FaTrash } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import Alerta from "../../../components/Alertas/Alerta";
+import Loading from "../../../components/Loading/Loading";
 
 export default function Feriados() {
 
@@ -28,6 +29,8 @@ export default function Feriados() {
   const [anos, setAnos] = useState([])
   const [anosSelect, setAnosSelect] = useState(null)
   const [tipoFeriadoSelect, setTipoFeriadoSelect] = useState('Nacional')
+
+  const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
     const date = new Date()
@@ -52,24 +55,28 @@ export default function Feriados() {
         setDados(data.dados) 
       } catch (error) {
         setErro(error.message || "Nenhum feriado foi encontrado")
+      }finally{
+        setLoading(false)
       }
     }
     feachData()
   },[ativo])
 
 
-  useEffect(()=>{
-    console.log('teste');
-    const feachDataSelect = async ()=>{
-      try {
-        const data = await feriados.findAnoTipo(anosSelect, tipoFeriadoSelect)
-        console.log(data);
-        
-        setDados(data.dados) 
-      } catch (error) {
-        setErro(error.message || "Nenhum feriado foi encontrado")
-      }
+  const feachDataSelect = async ()=>{
+    try {
+      setLoading(true)
+      const data = await feriados.findAnoTipo(anosSelect, tipoFeriadoSelect)
+      
+      setDados(data.dados) 
+    } catch (error) {
+      setErro(error.message || "Nenhum feriado foi encontrado")
+    }finally{
+      setLoading(false)
     }
+  }
+
+  useEffect(()=>{
     feachDataSelect()
   },[anosSelect, tipoFeriadoSelect])
     
@@ -112,7 +119,6 @@ export default function Feriados() {
           setTipoFeriadoSelect("Nacional")
           var novosFeriados = dados
           novosFeriados = novosFeriados.filter(f => f.id != idFeriado)
-          console.log(novosFeriados);
           setDados(novosFeriados)
         } catch (error) {
           setTipoAlerta('erro')
@@ -124,6 +130,7 @@ export default function Feriados() {
     const createFeriado = async (e)=>{
       e.preventDefault()
       try {
+        setLoading(true)
         const data = await feriados.criarFeriado(nomeFeriado, dataInicio, dataFim, tipoFeriado, nacional)
         
         setTipoAlerta('sucesso')
@@ -131,7 +138,13 @@ export default function Feriados() {
       } catch (error) {
         setTipoAlerta('erro')
         setAlerta(error.message || "Não foi possível criar feriado")
+      }finally{
+        setLoading(false)
       }
+    }
+
+    if(loading){
+      return <Loading />
     }
 
   return (

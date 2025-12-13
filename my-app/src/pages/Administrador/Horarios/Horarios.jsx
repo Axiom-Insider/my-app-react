@@ -8,6 +8,7 @@ import { FaCheck, FaRegClock, FaSearch } from 'react-icons/fa'
 import { IoDocumentTextOutline } from 'react-icons/io5'
 import { MdPersonSearch } from 'react-icons/md'
 import Alerta from '../../../components/Alertas/Alerta'
+import Loading from '../../../components/Loading/Loading'
 
 
 const Horarios = () => {
@@ -36,8 +37,9 @@ const Horarios = () => {
   const [dados, setDados] = useState([])
 
   const [funcionarioPesquisar, setFuncionarioPesquisar] = useState("");
-
   const [funcionarioFiltrado, setFuncionarioFiltrado] = useState([]);
+
+  const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
       const fetchData = async () => {
@@ -47,7 +49,9 @@ const Horarios = () => {
            } catch (err) {
             setAlerta(err.message || "Erro ao buscar funcionários");
             setTipoAlerta('erro')
-            } 
+            }finally{
+              setLoading(false)
+            }
          };
       if(!animeBg){
         fetchData()
@@ -89,9 +93,7 @@ const Horarios = () => {
     }
     const editarHorario = async (e)=>{
       e.preventDefault()
-      try {
-        console.log(status);
-        
+      try {        
         const data = await horarios.editarHorarios(dataCriada, hora, status, id)
         setAlerta(data.message)
         setTipoAlerta('sucesso')
@@ -105,7 +107,6 @@ const Horarios = () => {
     const criarHorario = async(e)=>{
       e.preventDefault()
       try {
-        console.log(dataInicio, dataFim, tipoAusencia, id);
         const data = await ausencias.criarAusencia(dataInicio, dataFim, tipoAusencia, id)
         setAlerta(data.message)
         setTipoAlerta('sucesso')
@@ -141,6 +142,10 @@ const Horarios = () => {
       const timer = setTimeout(()=>setAnimeBg(false), 500);
       return ()=> clearTimeout(timer)
     }, [ativo])
+
+    if(loading){
+      return <Loading/>
+    }
   
   return (
     <div>

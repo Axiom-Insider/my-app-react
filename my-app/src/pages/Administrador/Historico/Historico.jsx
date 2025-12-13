@@ -7,6 +7,7 @@ import { GrDocumentPdf } from 'react-icons/gr';
 import { useParams } from 'react-router-dom';
 import Alerta from '../../../components/Alertas/Alerta';
 import { FaTrash } from 'react-icons/fa';
+import Loading from '../../../components/Loading/Loading';
 
 export default function Historico() {
 
@@ -23,6 +24,8 @@ export default function Historico() {
   const [tipoAlerta, setTipoAlerta] = useState('')
   const [close, setClose] = useState(false)
 
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
     const fetchAnos = async () => {
@@ -31,7 +34,10 @@ export default function Historico() {
 
         setAnos(dados)
       } catch (error) {
-        console.error("Erro ao buscar anos:", error);
+        setAlerta(error.message || "Falha ao trazer dados")
+      setTipoAlerta("erro")
+      }finally{
+        setLoading(false)
       }
     };
 
@@ -41,16 +47,20 @@ export default function Historico() {
 
   const feachtDate = async () => {
     try {
+      setLoading(true)
       const dados = await horarios.historicoFuncionarioAdm(id, mesSelect, anoSelect)
       setDados(dados.historico)
     } catch (error) {
       setAlerta(error.message || "Falha ao trazer dados")
       setTipoAlerta("erro")
+    }finally{
+      setLoading(false)
     }
   }
 
   const estastisticas = async () => {
     try {
+      setLoading(true)
       const dados = await horarios.estatisticas(id, mesSelect, anoSelect)
 
       setFaltas(dados.faltas)
@@ -58,6 +68,8 @@ export default function Historico() {
     } catch (error) {
       setAlerta(error.message || "Falha ao trazer dados")
       setTipoAlerta("erro")
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -69,7 +81,6 @@ export default function Historico() {
   const downloadPoloUAB = async () => {
     try {
       await documentos.downloadPoloUAB(id, mesSelect, anoSelect)
-      console.log('teste');
     } catch (error) {
       setAlerta(error.message || "Falha ao fazer download do documento")
       setTipoAlerta("erro")
@@ -79,7 +90,6 @@ export default function Historico() {
   const downloadConfianca = async () => {
     try {
       await documentos.downloadConfianca(id, mesSelect, anoSelect)
-      console.log('teste');
     } catch (error) {
       setAlerta(error.message || "Falha ao fazer download do documento")
       setTipoAlerta("erro")
@@ -94,7 +104,7 @@ export default function Historico() {
       feachtDate()
     estastisticas()
     } catch (error) {
-      setAlerta(error.message || "Falha ao fazer download do documento")
+      setAlerta(error.message || "Falha ao apagar horario")
       setTipoAlerta("erro")
     }
   }
@@ -124,6 +134,9 @@ export default function Historico() {
     }
   }, [alerta]);
 
+  if(loading){
+    return <Loading />
+  }
 
   return (
     <div>

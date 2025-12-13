@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import ausencias from '../../../services/ausencias';
 import Alerta from '../../../components/Alertas/Alerta';
 import { FaTrash } from 'react-icons/fa';
+import Loading from '../../../components/Loading/Loading';
 
 export default function Ausencias() {
     const { id } = useParams()
@@ -13,6 +14,8 @@ export default function Ausencias() {
     const [mesSelect, setMesSelect] = useState(new Date().getMonth())
     const [anoSelect, setAnoSelect] = useState(new Date().getFullYear())
     const [dados, setDados] = useState([])
+
+    const [loading, setLoading] = useState(true)
 
     const [alerta, setAlerta] = useState(false)
     const [tipoAlerta, setTipoAlerta] = useState('')
@@ -27,11 +30,12 @@ export default function Ausencias() {
         const fetchAnos = async () => {
             try {
                 const { dados } = await ausencias.ano(id);
-                console.log(dados);
-                
                 setAnos(dados)
             } catch (error) {
-                console.error("Erro ao buscar anos:", error);
+                setAlerta(error.message || "Falha ao listar a tabela Ausência")
+                setTipoAlerta("erro")
+            }finally{
+                setLoading(false)
             }
         };
 
@@ -54,12 +58,15 @@ export default function Ausencias() {
 
     const buscarDados = async () => {
         try {
+            setLoading(true)
             const dados = await ausencias.listarAusencia(id, mesSelect, anoSelect)
 
             setDados(dados)
         } catch (error) {
             setAlerta(error.message || "Falha ao listar ausências")
             setTipoAlerta("erro")
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -87,6 +94,9 @@ export default function Ausencias() {
         }
     }, [alerta]);
 
+    if(loading){
+        return <Loading/>
+    }
 
     return (
         <div>
@@ -119,7 +129,7 @@ export default function Ausencias() {
                             </select>
                         </div>
                     </div>
-                    <div className="row tabela-titulo ">
+                    <div className="row tabela-titulo mt-2">
                         <div className="col">Tipo</div>
                         <div className="col">Data Início</div>
                         <div className="col">Data Fim</div>
