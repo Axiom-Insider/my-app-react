@@ -13,7 +13,7 @@ function App() {
   const [data] = useState(new Date())
   const location = useLocation()
   const [dados, setDados] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const [alerta, setAlerta] = useState(false)
   const [tipoAlerta, setTipoAlerta] = useState('')
@@ -29,6 +29,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         const data = await horarios.verificarAll();
         const result = data;
         
