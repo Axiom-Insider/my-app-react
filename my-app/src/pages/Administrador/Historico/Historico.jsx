@@ -159,7 +159,7 @@ export default function Historico() {
             </div>
             <div className="col-2 ">
               <label className='form-label' htmlFor="ano">Ano:</label>
-              <select className="form-select" id="ano" onChange={(e) => { setAnoSelect(e.target.value) }} aria-label="Selecionar ano" >
+              <select className="form-select" id="ano" value={anoSelect} onChange={(e) => { setAnoSelect(e.target.value) }} aria-label="Selecionar ano" >
                 {anos.map(ano => (
                   <option key={ano.ano} value={ano.ano}>{ano.ano}</option>
                 ))}

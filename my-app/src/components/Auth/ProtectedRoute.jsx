@@ -1,33 +1,30 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import ToCheck from "./TokenExn";
 
-export default function ProtectedRoute({ children, admin }) {
+export default function ProtectedRoute({ admin }) {
   const location = useLocation()
-  const { user } = useAuth()
-  const token = localStorage.getItem("token")
-  const funcionario = JSON.parse(localStorage.getItem('funcionario'))
+  const { user} = useAuth()
+  const {temp} = useAuth()
+  const {adm} = user
   
-  
-  if (!user || !funcionario) {
-    if (!token) {
+  console.log(user, temp);
+  if (user.length === 0) {
       if (location.pathname === "/login") {
-        return children
+        return <Outlet />
       }
       return <Navigate to={"/login"} replace />
     }
-  }
   
-  ToCheck(token) 
+    ToCheck(temp) 
   
-  const adm = funcionario.adm
   if (admin != adm) {
     if (adm) {
-      return <Navigate to={"/administrador/home"} replace />
+      return <Navigate to={"/monitoramento"} replace />
     } else {
-      return <Navigate to={"/funcionario/home"} replace />
+      return <Navigate to={"/home"} replace />
     }
   }
 
-  return children
+  return <Outlet />
 }

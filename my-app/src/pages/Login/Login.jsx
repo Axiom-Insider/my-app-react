@@ -60,19 +60,29 @@ export default function Login() {
       setTipoAlerta('info')
       return
     }
-
-    setLoading(true)
-    try {
+    
+    // if(user){
+    //   console.log('oi');
       
+    //    if(user.adm){
+    //     return navigation("/monitoramento", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
+    //   }else{
+    //     return navigation("/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
+    //   }
+    // }
+    setLoading(true)
+
+    try {
       const data = await loginDay(cpf, senha);   
        if(!data.primeiraEntrada){
           return navigation("/primeira-entrada", {state:{cpf}, replace:true})
         }
-      if(data.funcionario.adm){
-        return navigation("/administrador/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-      }else{
-        return navigation("/funcionario/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-      }
+      // if(user.adm){
+      //   return navigation("/monitoramento", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
+      // }else{
+      //   return navigation("/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
+      // }
+      // return navigation("/login", {replace:true})
     } catch (error) {
       setAlerta(error.message || "Falha no Login")
       setTipoAlerta('erro')

@@ -46,7 +46,7 @@ td {
 
  .trHover:hover {
   background-color: #01439a;
-  transform: scale(1.03);
+  transform: scale(1.01);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 10;

@@ -1,6 +1,6 @@
 import { RxHamburgerMenu } from 'react-icons/rx'
 import './Navbar.css'
-import {useLocation} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import { BsBoxArrowRight, BsHouseDoor } from 'react-icons/bs'
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { LuTreePalm } from 'react-icons/lu'
@@ -14,7 +14,7 @@ const NavbarAdm = ()=> {
   const {logout} = useAuth()
 
   const verificadoPagina = (navbar) => {
-    return navbar === location.pathname.split('/')[2] ? " ativo" : " "
+    return navbar === location.pathname.split('/')[1] ? " ativo" : " "
   }
 
   return (
@@ -43,35 +43,29 @@ const NavbarAdm = ()=> {
             }
             <ul className="navbar-nav ms-3">
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('home')} href='/administrador/home' >
+                <Link to={"/monitoramento"}  className={'nav-link' + verificadoPagina('monitoramento')} >
                   <BsHouseDoor className="me-1" />Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('horarios')} href='/administrador/horarios' >
+               <Link to={"/horarios"} className={'nav-link' + verificadoPagina('horarios')} >
                   <MdControlPoint className="me-1" />Controle de Ponto
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('feriados')} href='/administrador/feriados' >
-                <LuTreePalm className="me-1" />Feriados
-                </a>
+                <Link to={"/feriados"} className={'nav-link' + verificadoPagina('feriados')} ><LuTreePalm className="me-1" />Feriados</Link>
               </li>
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('funcionarios')} href='/administrador/funcionarios' >
-                <HiOutlineUserGroup className="me-1" />Funcionários
-                </a>
+                <Link to={"/funcionarios"} className={'nav-link' + verificadoPagina('funcionarios')} ><HiOutlineUserGroup className="me-1" />Funcionários</Link>
               </li>
               <li className="nav-item">
-                <a className={'nav-link' + verificadoPagina('registro')} href='/administrador/registro' >
-                <FaRegAddressCard className="me-1" />Registro de Funcionários
-                </a>
+                <Link to={"/cadastro"} className={'nav-link' + verificadoPagina('cadastro')} ><FaRegAddressCard className="me-1" />Registro de Funcionários </Link>
               </li>
 
               <li className="nav-item">
                 <a className={"close nav-link " +  verificadoPagina('sair')} onClick={()=>logout()}>
                   <BsBoxArrowRight className="me-1" />Sair
-                </a>
+                  </a>
               </li>
             </ul>
           </div>

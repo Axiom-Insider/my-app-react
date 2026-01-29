@@ -10,7 +10,6 @@ const loginDay = async (cpf: string, senha: string) => {
         }
         localStorage.setItem("token", data.token)
         localStorage.setItem("expiresin", data.expiresIn)
-        localStorage.setItem("funcionario", JSON.stringify(data.funcionario))
         return data
     } catch (error) {
         throw error.response?.data || { message: "Erro ao fazer login" }

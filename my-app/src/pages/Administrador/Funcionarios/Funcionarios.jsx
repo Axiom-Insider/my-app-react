@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import funcionario from '../../../services/funcionario';
 import Alerta from '../../../components/Alertas/Alerta';
 import Loading from '../../../components/Loading/Loading';
+import { Link } from 'react-router-dom';
 
 
 export default function Funcionarios() {
@@ -107,8 +108,8 @@ export default function Funcionarios() {
                
               <div className="col text-center">
                 <div className="btn-group" role='group' >
-                <a href={"/administrador/funcionarios/historico/"+funcionarios.id} className='btn btn-primary icon'><MdWorkHistory /></a> 
-                <a href={'/administrador/funcionarios/ausencias/'+funcionarios.id} className='btn btn-secondary icon'> <PiCertificateFill /></a>
+                <Link to={"/historico/"+funcionarios.id} className='btn btn-primary icon' > <MdWorkHistory /> </Link>
+                <Link to={'/ausencias/'+funcionarios.id} className='btn btn-secondary icon'> <PiCertificateFill /></Link>
                 <button className='btn btn-danger icon' onClick={()=>{
                 setAbrirModal(true);
                 setIdFuncionario(funcionarios.id);

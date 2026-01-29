@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import "./Feriados.css"
 import NavbarAdm from '../../../components/Navbar/NavbarAdm'
 import feriados from '../../../services/feriados'
 import { useEffect, useState } from "react";
-import { MdCheckBox, MdClose, MdFormatListBulletedAdd } from "react-icons/md";
-import { FaCheck, FaRegClock, FaTrash } from "react-icons/fa";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import Alerta from "../../../components/Alertas/Alerta";
 import Loading from "../../../components/Loading/Loading";
@@ -236,7 +237,7 @@ export default function Feriados() {
                         </thead>
                         <tbody>
                           {dados.map(feriados=>(
-                            <tr key={feriados.id}>
+                            <tr key={feriados.id} className="tr-feriados">
                               <td>{feriados.nome}</td>
                               <td>{feriados.dataInicio}{feriados.dataFim === feriados.dataInicio ? '' : " | "+feriados.dataFim }</td>
                               <td>{feriados.tipoFeriado}</td>

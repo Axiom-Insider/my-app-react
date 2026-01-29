@@ -23,102 +23,73 @@ import Ausencia from "./pages/Administrador/Ausencias/Ausencias.jsx";
 import NovaSenha from './pages/Login/NovaSenha.jsx';
 import ProtectedRoute from './components/Auth/ProtectedRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import Pagina404 from './pages/Erro/Erro.jsx';
 
 const router = createBrowserRouter([
+   {
+        path:"*",
+        element: <Pagina404></Pagina404>
+      },
+  {
+    element: <ProtectedRoute admin={true}/>,
+    children: [
+     {
+    path: '/monitoramento',
+    element:<Home />
+  },
+   {
+    path: '/ausencias/:id',
+    element:<Ausencia/>
+  },
+  {
+    path: '/cadastro',
+    element: <RegistroFuncionarios/>
+  },
+  {
+    path: '/funcionarios',
+    element:<Funcionarios />
+  },
+  {
+    path: '/historico/:id',
+    element:<HistoricoAdm/>
+  },
+  {
+    path: '/feriados',
+    element: <Feriados/>
+  },
+  {
+    path: '/horarios',
+    element:<Horarios/>
+  },
+     
+    ],
+  },
+  {
+    element: <ProtectedRoute admin={false}/>,
+    children: [
+     {
+    path: '/home',
+    element:<HomeFuncionario />
+   },
+    {
+    path: '/login',
+    element:<Login />
+  },
+  {
+    path: '/registro',
+    element: <Registro></Registro>
+  },
+  {
+    path: '/historico',
+    element: <Historico></Historico>
+  },
   {
     path: '/primeira-entrada',
     element: <NovaSenha />
   },
-  {
-    path: '/administrador/funcionarios/ausencias/:id',
-    element: (
-      <ProtectedRoute admin={true}>
-        <Ausencia />
-      </ProtectedRoute>
-    )
+      
+    ],
   },
-  {
-    path: '/administrador/registro',
-    element: (
-      <ProtectedRoute admin={true}>
-        <RegistroFuncionarios />
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/administrador/funcionarios',
-    element:(
-      <ProtectedRoute admin={true}>
-        <Funcionarios />
-      </ProtectedRoute>
-    ) 
-  },
-  {
-    path: '/administrador/funcionarios/historico/:id',
-    element:
-      (
-      <ProtectedRoute admin={true}>
-        <HistoricoAdm />
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/administrador/feriados',
-    element: 
-    (
-      <ProtectedRoute admin={true}>
-        <Feriados />
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/administrador/horarios',
-    element: 
-    (
-      <ProtectedRoute admin={true}>
-        <Horarios />
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/administrador/home',
-    element:(
-      <ProtectedRoute admin={true}>
-        <Home />
-      </ProtectedRoute>
-    ) 
-  },
-  {
-    path: '/login',
-    element:( <ProtectedRoute admin={false}><Login /></ProtectedRoute>)
-  },
-  {
-    path: '/funcionario/home',
-    element:
-    (
-      <ProtectedRoute admin={false}>
-        <HomeFuncionario />
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/funcionario/registro',
-    element: 
-    (
-      <ProtectedRoute admin={false}>
-        <Registro />,
-      </ProtectedRoute>
-    )
-  },
-  {
-    path: '/funcionario/historico',
-    element: 
-    (
-      <ProtectedRoute admin={false}>
-        <Historico />,
-      </ProtectedRoute>
-    )
-  }
 ])
 
 createRoot(document.getElementById('root')).render(

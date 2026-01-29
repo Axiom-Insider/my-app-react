@@ -1,7 +1,7 @@
 import { BsHouseDoor, BsPencil, BsCalendar3, BsBoxArrowRight } from 'react-icons/bs';
 import { RxHamburgerMenu } from "react-icons/rx";
 import "./Navbar.css"
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 function NavbarFuncionario() {
@@ -9,7 +9,7 @@ function NavbarFuncionario() {
   const {logout} = useAuth()
 
   const verificadoPagina = (navbar) => {
-    return navbar === location.pathname.split('/')[2] ? " ativo" : " "
+    return navbar === location.pathname.split("/")[1] ? " ativo" : " "
   }
 
   return (
@@ -36,19 +36,13 @@ function NavbarFuncionario() {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ms-3">
           <li className="nav-item">
-            <a className={'nav-link' + verificadoPagina('home')} href='/funcionario/home' >
-              <BsHouseDoor className="me-1" /> Home
-            </a>
+            <Link to={"/home"} className={'nav-link' + verificadoPagina('home')} ><BsHouseDoor className="me-1" /> Home</Link>
           </li>
           <li className="nav-item">
-            <a className={'nav-link' + verificadoPagina('registro')} href='/funcionario/registro'>
-              <BsPencil className="me-1" /> Registrar Horário
-            </a>
+            <Link to={"/registro"} className={'nav-link' + verificadoPagina('registro')}><BsPencil className="me-1" /> Registrar Horário</Link>
           </li>
           <li className="nav-item">
-            <a className={'nav-link' + verificadoPagina('historico')} href='/funcionario/historico'>
-              <BsCalendar3 className="me-1" /> Histórico
-            </a>
+            <Link to={"/historico"} className={'nav-link' + verificadoPagina('historico')}><BsCalendar3 className="me-1" /> Histórico</Link>
           </li>
           <li className="nav-item">
             <a className={'nav-link' + verificadoPagina('sair')} onClick={()=>logout()}>
