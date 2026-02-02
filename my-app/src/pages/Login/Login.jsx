@@ -14,6 +14,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
 
+
   const [alerta, setAlerta] = useState(false)
   const [tipoAlerta, setTipoAlerta] = useState('')
   const [close, setClose] = useState(false)
@@ -61,28 +62,22 @@ export default function Login() {
       return
     }
     
-    // if(user){
-    //   console.log('oi');
-      
-    //    if(user.adm){
-    //     return navigation("/monitoramento", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-    //   }else{
-    //     return navigation("/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-    //   }
-    // }
     setLoading(true)
 
     try {
       const data = await loginDay(cpf, senha);   
-       if(!data.primeiraEntrada){
+      console.log(data);
+       
+      if(!data.primeiraEntrada){
           return navigation("/primeira-entrada", {state:{cpf}, replace:true})
         }
-      // if(user.adm){
+      return window.location.reload()
+      // if(data.adm){
       //   return navigation("/monitoramento", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
       // }else{
       //   return navigation("/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
       // }
-      // return navigation("/login", {replace:true})
+
     } catch (error) {
       setAlerta(error.message || "Falha no Login")
       setTipoAlerta('erro')

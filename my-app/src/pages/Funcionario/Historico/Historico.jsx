@@ -3,8 +3,11 @@ import NavbarFuncionario from '../../../components/Navbar/NavbarFuncionario'
 import "./Historico.css"
 import horarios from "../../../services/horarios"
 import Alerta from '../../../components/Alertas/Alerta';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function Historico() {
+
+  const {user} = useAuth()
 
   const [historico, setHistorico] = useState([])
   const [anoSelect, setAnoSelect] = useState('')
@@ -25,12 +28,11 @@ export default function Historico() {
     const feachDate = async ()=>{
       try {
         const date = new Date()
-        const dadosAnos = await horarios.ano()
+        const dadosAnos = await horarios.ano(user.id)
         setAnos(dadosAnos.dados)
         setMesSelect(date.getMonth())
         
-        const dados = await horarios.historicoFuncionario(date.getMonth() + 1, date.getFullYear().toString())
-        console.log(dados.historico);
+        const dados = await horarios.historicoFuncionario(date.getMonth() + 1, date.getFullYear().toString(), user.id)
         
         setHistorico(dados.historico)
         return
@@ -47,7 +49,7 @@ export default function Historico() {
       try {
         const date = new Date()
 
-        const dados = await horarios.historicoFuncionario(mesSelect || date.getMonth() + 1, anoSelect || date.getFullYear().toString())
+        const dados = await horarios.historicoFuncionario(mesSelect || date.getMonth() + 1, anoSelect || date.getFullYear().toString(), user.id)
         
         setHistorico(dados.historico)
         return

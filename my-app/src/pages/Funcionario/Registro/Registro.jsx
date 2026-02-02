@@ -5,8 +5,12 @@ import { TbClockCheck, TbClockHour8Filled } from 'react-icons/tb'
 import horarios from '../../../services/horarios'
 import { ImEnter, ImExit } from "react-icons/im";
 import Alerta from '../../../components/Alertas/Alerta'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function Registro() {
+
+  const {user} = useAuth()
+
   const [hora, setHora] = useState(new Date())
   const [entrada, setEntrada] = useState('')
   const [saida, setSaida] = useState('')
@@ -20,11 +24,11 @@ export default function Registro() {
     try {
       setAbrirModal(false);
       if(!entrada){
-        const dados = await horarios.entrada()
+        const dados = await horarios.entrada(user.id)
         setAlerta(dados.message)
         return setTipoAlerta('sucesso')
       }else{
-        const dados = await horarios.saida()
+        const dados = await horarios.saida(user.id)
         setAlerta(dados.message)
         return setTipoAlerta('sucesso')
       }
@@ -37,7 +41,7 @@ export default function Registro() {
   useEffect(() => {
     const verificarEntrada = async () => {
       try {
-        const dados = await horarios.verificar()
+        const dados = await horarios.verificar(user.id)
         const { entrada, saida } = dados
         setSaida(saida ? true : false)
         setEntrada(entrada ? true : false)

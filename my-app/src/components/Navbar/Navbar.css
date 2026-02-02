@@ -29,6 +29,11 @@ ul{
   color: white;
 }
 
+.nav-icone{
+  margin-bottom: 5px;
+  font-size: 19px;
+}
+
 .nav-link{
   border-bottom: 1px solid transparent;
   opacity: 0.5;

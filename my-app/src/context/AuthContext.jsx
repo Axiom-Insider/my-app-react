@@ -5,8 +5,7 @@ import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext();
 
 export const AuthProvider = ({children})=>{
-    const [user, setUser] = useState([])
-    const [temp, setTemp] = useState('')
+    const [user, setUser] = useState(false)
     const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
@@ -15,8 +14,6 @@ export const AuthProvider = ({children})=>{
         const decoded = jwtDecode(token);
         setUser(decoded)
         }
-        const exp = localStorage.getItem("expiresin");
-        setTemp(+exp)
         setLoading(false)
     }, [])
 
@@ -30,11 +27,10 @@ export const AuthProvider = ({children})=>{
     const logout = ()=>{
         setUser(null)
         localStorage.removeItem("token")
-        localStorage.removeItem("expiresin")
     }
 
     return(
-        <AuthContext.Provider value={{user,temp, logout,}}>
+        <AuthContext.Provider value={{user, logout}}>
             {children}
         </AuthContext.Provider>
     )

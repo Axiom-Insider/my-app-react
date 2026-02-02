@@ -36,13 +36,16 @@ function NavbarFuncionario() {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ms-3">
           <li className="nav-item">
-            <Link to={"/home"} className={'nav-link' + verificadoPagina('home')} ><BsHouseDoor className="me-1" /> Home</Link>
+            <Link to={"/home"} className={'nav-link' + verificadoPagina('home')} >
+            <BsHouseDoor className="me-1 nav-icone" /> Home</Link>
           </li>
           <li className="nav-item">
-            <Link to={"/registro"} className={'nav-link' + verificadoPagina('registro')}><BsPencil className="me-1" /> Registrar Horário</Link>
+            <Link to={"/registro"} className={'nav-link' + verificadoPagina('registro')}>
+            <BsPencil className="me-1 nav-icone" /> Registrar Horário</Link>
           </li>
           <li className="nav-item">
-            <Link to={"/historico"} className={'nav-link' + verificadoPagina('historico')}><BsCalendar3 className="me-1" /> Histórico</Link>
+            <Link to={"/historico"} className={'nav-link' + verificadoPagina('historico')}>
+            <BsCalendar3 className="me-1 nav-icone" /> Histórico</Link>
           </li>
           <li className="nav-item">
             <a className={'nav-link' + verificadoPagina('sair')} onClick={()=>logout()}>

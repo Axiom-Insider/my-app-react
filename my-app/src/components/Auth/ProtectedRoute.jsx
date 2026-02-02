@@ -4,22 +4,28 @@ import ToCheck from "./TokenExn";
 
 export default function ProtectedRoute({ admin }) {
   const location = useLocation()
-  const { user} = useAuth()
-  const {temp} = useAuth()
-  const {adm} = user
+  const { user } = useAuth()
+  console.log(user);
   
-  console.log(user, temp);
-  if (user.length === 0) {
-      if (location.pathname === "/login") {
-        return <Outlet />
-      }
-      return <Navigate to={"/login"} replace />
+  if (!user) {
+    if (location.pathname === "/login") {
+      return <Outlet />
     }
+    return <Navigate to={"/login"} replace />
+  }
   
-    ToCheck(temp) 
+  ToCheck()
   
-  if (admin != adm) {
-    if (adm) {
+  if (location.pathname === "/login") {
+      if (user.adm) {
+        return <Navigate to={"/monitoramento"} state={{mensagem:"Bem-vindo(a) de volta!"}} replace />
+      } else {
+        return <Navigate to={"/home"} state={{mensagem:"Bem-vindo(a) de volta!"}} replace />
+      }
+  }
+
+  if (admin != user.adm) {
+    if (user.adm) {
       return <Navigate to={"/monitoramento"} replace />
     } else {
       return <Navigate to={"/home"} replace />

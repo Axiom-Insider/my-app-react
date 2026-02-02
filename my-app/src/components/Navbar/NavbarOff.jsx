@@ -1,12 +1,9 @@
 import './Navbar.css'
 import { MdLogin } from 'react-icons/md'
 import { RxHamburgerMenu } from "react-icons/rx";
-import {useNavigate} from 'react-router-dom'
 
 
 const NavbarOff = ()=> {
-
-  const navigate = useNavigate()
 
   return (
     <nav className="navbar navbar-expand-lg gap-3">
@@ -27,12 +24,12 @@ const NavbarOff = ()=> {
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation">
-      <span className="menu"><RxHamburgerMenu /></span>
+      <span className="menu nav-icone"><RxHamburgerMenu /></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav ms-3">
         <li className="nav-item">
-          <a className="nav-link ativo" href="/funcionario/home">
+          <a className="nav-link ativo" href="/login">
             <MdLogin className="me-1" /> Login
           </a>
         </li>

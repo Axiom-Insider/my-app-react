@@ -1,5 +1,4 @@
 import api from "../api"
-import { useAuth } from "../context/AuthContext";
 
 const getAll = async ()=>{
     try {
@@ -10,11 +9,8 @@ const getAll = async ()=>{
     }
 }
 
-const getId = async ()=>{
+const getId = async (id:number)=>{
     try {
-        const item = localStorage.getItem('funcionario');
-        if (!item) return null; 
-        const {id} = JSON.parse(item);
         
         const {data} = await api.get("/funcionario/"+id)
 

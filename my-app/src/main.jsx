@@ -64,6 +64,10 @@ const router = createBrowserRouter([
      
     ],
   },
+   {
+    path: '/primeira-entrada',
+    element: <NovaSenha />
+  },
   {
     element: <ProtectedRoute admin={false}/>,
     children: [
@@ -82,12 +86,7 @@ const router = createBrowserRouter([
   {
     path: '/historico',
     element: <Historico></Historico>
-  },
-  {
-    path: '/primeira-entrada',
-    element: <NovaSenha />
-  },
-      
+  }   
     ],
   },
 ])

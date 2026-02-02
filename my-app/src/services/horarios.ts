@@ -26,13 +26,9 @@ const verificarAll = async ()=>{
    }
 }
 
-const verificar = async ()=>{
+const verificar = async (id:number)=>{
     try {
-         const item = localStorage.getItem('funcionario');
-        if (!item) return null; 
-        const {id} = JSON.parse(item);
-
-        const {data} = await api.get("/horarios/verificar/"+ id)
+        const {data} = await api.get("/horarios/verificar/"+id)
 
         return data
     } catch (error) {
@@ -40,11 +36,8 @@ const verificar = async ()=>{
     }
 }
 
-const entrada = async ()=>{
+const entrada = async (id:number)=>{
     try {
-         const item = localStorage.getItem('funcionario');
-        if (!item) return null; 
-        const {id} = JSON.parse(item);
         const body = {id_funcionario:id}
         
         const {data} = await api.post("/horarios/entrada/", body)
@@ -55,11 +48,8 @@ const entrada = async ()=>{
     }
 }
 
-const saida = async ()=>{
+const saida = async (id:number)=>{
     try {
-         const item = localStorage.getItem('funcionario');
-        if (!item) return null; 
-        const {id} = JSON.parse(item);
         const body = {id_funcionario:id}
         const {data} = await api.post("/horarios/saida/", body)
 
@@ -69,12 +59,8 @@ const saida = async ()=>{
     }
 }
 
-const historicoFuncionario = async (mes:string, ano:string)=>{
+const historicoFuncionario = async (mes:string, ano:string, id:number)=>{
     try {
-         const item = localStorage.getItem('funcionario');
-        if (!item) return null; 
-        const {id} = JSON.parse(item);
-        console.log(id, mes, ano);
         const mesNumber = +mes;
 
         const {data} = await api.get(`/horarios/historico/${id}/${mesNumber + 1}/${ano}`)
@@ -117,12 +103,8 @@ const estatisticas = async (id_funcionario:number, mes:string, ano:string)=>{
     }
 }
 
-const ano = async ()=>{
+const ano = async (id:number)=>{
     try {
-        const item = localStorage.getItem('funcionario');
-       if (!item) return null; 
-       const {id} = JSON.parse(item);
-       
        const {data} = await api.get(`/horarios/ano/${id}`)
 
        return data;

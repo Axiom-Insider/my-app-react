@@ -7,8 +7,11 @@ import horario from '../../../services/horarios';
 import { FaCheckSquare, FaHourglassHalf } from 'react-icons/fa';
 import Alerta from '../../../components/Alertas/Alerta';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function HomeFuncionario() {
+
+  const {user} = useAuth()
 
   const [data] = useState(new Date())
   const location = useLocation()
@@ -32,9 +35,11 @@ export default function HomeFuncionario() {
   useEffect(() => {
     const feachData = async () => {
       try {
-        const dadosFuncionario = await funcionario.getId()
+        const dadosFuncionario = await funcionario.getId(user.id)
+        console.log(dadosFuncionario);
+        
         const { nome, matricula, cargo } = dadosFuncionario
-        const dadosHora = await horario.verificar()
+        const dadosHora = await horario.verificar(user.id)
         const {entrada, saida} = dadosHora
 
         setNome(nome)
@@ -49,7 +54,7 @@ export default function HomeFuncionario() {
      
     }
     feachData()
-  }, [])
+  }, [ ])
 
 
   //alerta

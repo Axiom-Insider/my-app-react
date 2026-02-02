@@ -2,14 +2,12 @@ import api from "../api"
 
 
 const loginDay = async (cpf: string, senha: string) => {
-
     try {
         const { data } = await api.post("/auth/login", { cpf, senha })
         if (!data.primeiraEntrada) {
             return data
         }
         localStorage.setItem("token", data.token)
-        localStorage.setItem("expiresin", data.expiresIn)
         return data
     } catch (error) {
         throw error.response?.data || { message: "Erro ao fazer login" }
