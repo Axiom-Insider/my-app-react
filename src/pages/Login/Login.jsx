@@ -72,11 +72,6 @@ export default function Login() {
           return navigation("/primeira-entrada", {state:{cpf}, replace:true})
         }
       return window.location.reload()
-      // if(data.adm){
-      //   return navigation("/monitoramento", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-      // }else{
-      //   return navigation("/home", {state:{mensagem:"Bem-vindo(a) de volta!"}, replace:true})
-      // }
 
     } catch (error) {
       setAlerta(error.message || "Falha no Login")
